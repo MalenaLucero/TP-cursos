@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import base.DAO.AdminDB;
+import base.enums.EnrollmentState;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.MenuTeacher;
 import base.menu.StudentMenu;
+import base.model.Enrollment;
 import base.util.MenuUtil;
 
 //1. ABML de profes

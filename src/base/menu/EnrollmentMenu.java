@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import base.DAO.EnrollmentDAO;
 import base.controller.EnrollmentController;
+import base.enums.EnrollmentState;
 import base.model.Enrollment;
 
 public class EnrollmentMenu {
@@ -36,12 +37,18 @@ public class EnrollmentMenu {
 			break;
 		case 5:
 			Enrollment editEnrollment = EnrollmentDAO.findById(connection, 10);
-			editEnrollment.setState("aprobado");
+			editEnrollment.setCourseState("aprobado");
 			editEnrollment.setYear(2020);
 			EnrollmentController.edit(connection, editEnrollment);
 			break;
 		case 6:
 			EnrollmentController.delete(connection, 11);
+			break;
+		case 7:
+			EnrollmentController.changeEnrollmentState(connection, 5, 5, EnrollmentState.cancelado.getValue());
+			break;
+		case 8:
+			EnrollmentController.changeEnrollmentState(connection, 5, 5, EnrollmentState.activo.getValue());
 			break;
 		}
 	}

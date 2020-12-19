@@ -38,20 +38,19 @@ public class EnrollmentDAO {
 		return enrollment;
 	}
 	
-	public static List<Enrollment> findByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
+	public static Enrollment findByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
 		String listString = "SELECT * FROM inscripcion WHERE id_curso = ? AND id_alumno = ?";
 		PreparedStatement findEnrollments = connection.prepareStatement(listString);
 		findEnrollments.setInt(1, id_course);
 		findEnrollments.setInt(2, id_student);
 		ResultSet res = findEnrollments.executeQuery();
-		List<Enrollment> enrollments = new ArrayList<Enrollment>();
-		while(res.next()) {
-			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
+		Enrollment enrollment = null;
+		if(res.next()) {
+			enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
 					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
 					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-			enrollments.add(enrollment);
 		}
-		return enrollments;
+		return enrollment;
 	}
 	
 	public static int insert(Enrollment enrollment, Connection connection) throws SQLException {
@@ -82,7 +81,7 @@ public class EnrollmentDAO {
 		} else {
 			addEnrollment.setInt(8, enrollment.getAverage_grade());
 		}
-		addEnrollment.setString(9, enrollment.getState());
+		addEnrollment.setString(9, enrollment.getCourseState());
 		addEnrollment.setInt(10, enrollment.getYear());
 		return addEnrollment.executeUpdate();
 	}
@@ -116,7 +115,7 @@ public class EnrollmentDAO {
 		} else {
 			editEnrollment.setInt(8, enrollment.getAverage_grade());
 		}
-		editEnrollment.setString(9, enrollment.getState());
+		editEnrollment.setString(9, enrollment.getCourseState());
 		editEnrollment.setInt(10, enrollment.getYear());
 		editEnrollment.setInt(11, enrollment.getId());
 		return editEnrollment.executeUpdate();

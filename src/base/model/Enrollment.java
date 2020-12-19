@@ -1,39 +1,43 @@
 package base.model;
 
+import base.enums.CourseState;
+import base.enums.Division;
+import base.enums.EnrollmentState;
+
 public class Enrollment {
 	private int id;
 	private int id_course;
 	private int id_student;
-	private String enrollment_state;
+	private EnrollmentState enrollment_state;
 	private int id_teacher;
-	private String division;
+	private Division division;
 	private int grade1;
 	private int grade2;
 	private int average_grade;
-	private String state;
+	private CourseState course_state;
 	private int year;
 	
 	public Enrollment(int id_course, int id_student) {
 		this.id_course = id_course;
 		this.id_student = id_student;
-		this.enrollment_state = "activo";
-		this.division = "A";
-		this.state = "en curso";
+		this.enrollment_state = EnrollmentState.activo;
+		this.division = Division.A;
+		this.course_state = CourseState.cursando;
 		this.year = 2021;
 	}
 	
 	public Enrollment(int id, int id_course, int id_student, String enrollment_state, int id_teacher,
-			String division, int grade1, int grade2, int average_grade, String state, int year) {
+			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
 		this.id = id;
 		this.id_course = id_course;
 		this.id_student = id_student;
-		this.enrollment_state = enrollment_state;
+		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
 		this.id_teacher = id_teacher;
-		this.division = division;
+		this.division = Division.valueOf(division);
 		this.grade1 = grade1;
 		this.grade2 = grade2;
 		this.average_grade = average_grade;
-		this.state = state;
+		this.course_state = CourseState.valueOf(course_state);
 		this.year = year;
 	}
 
@@ -69,12 +73,12 @@ public class Enrollment {
 		}
 	}
 
-	public String getState() {
-		return state;
+	public String getCourseState() {
+		return course_state.getValue();
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setCourseState(String course_state) {
+		this.course_state = CourseState.valueOf(course_state);
 	}
 
 	public int getYear() {
@@ -86,11 +90,11 @@ public class Enrollment {
 	}
 	
 	public String getEnrollment_state() {
-		return enrollment_state;
+		return enrollment_state.getValue();
 	}
 
 	public void setEnrollment_state(String enrollment_state) {
-		this.enrollment_state = enrollment_state;
+		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
 	}
 
 	public int getId_teacher() {
@@ -102,11 +106,11 @@ public class Enrollment {
 	}
 
 	public String getDivision() {
-		return division;
+		return division.getValue();
 	}
 
 	public void setDivision(String division) {
-		this.division = division;
+		this.division = Division.valueOf(division);
 	}
 
 	public int getGrade1() {
@@ -130,7 +134,7 @@ public class Enrollment {
 			return String.format("ID: %s - ID alumno: %s - ID curso: %s", id, id_student, id_course);
 		} else {
 			return String.format("ID: %s - ID alumno: %s - ID curso: %s - Estado: %s - Promedio: %s - Año: %s",
-								id, id_student, id_course, state, average_grade, year);
+								id, id_student, id_course, course_state, average_grade, year);
 		}
 	}
 }

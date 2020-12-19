@@ -31,29 +31,18 @@ public class EnrollmentController {
 	}
 	
 	public static void getByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
-		List<Enrollment> enrollments = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
-		if(enrollments.size() == 0) {
+		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
+		if(enrollment == null) {
 			System.err.println("No se encontraron inscripciones");
 		} else {
-			for(Enrollment enrollment: enrollments) {
-				System.out.println(enrollment);
-			}
+			System.out.println(enrollment);
 		}
 	}
 	
 	public static void insert(Connection connection, Enrollment enrollment) throws SQLException {
 		System.out.println("Agregar inscripcion");
-		List<Enrollment> overlappingEnrollments = EnrollmentDAO.findByCourseAndStudent(connection, enrollment.getId_course(), enrollment.getId_student());
-		boolean isSameYear = false;
-		for(Enrollment overlappingEnrollment: overlappingEnrollments) {
-			if(overlappingEnrollment.getYear() == enrollment.getYear()) isSameYear = true;
-		}
-		if(!isSameYear) {
-			int res = EnrollmentDAO.insert(enrollment, connection);
-			ResponseUtil.addMessage(res);
-		} else {
-			System.err.println("El alumno ya esta inscripto en el curso");
-		}	
+		int res = EnrollmentDAO.insert(enrollment, connection);
+		ResponseUtil.addMessage(res);
 	}
 
 	public static void edit(Connection connection, Enrollment enrollment) throws SQLException {
@@ -66,5 +55,13 @@ public class EnrollmentController {
 		System.out.println("Eliminar inscripcion");
 		int res = EnrollmentDAO.delete(id, connection);
 		ResponseUtil.deleteMessage(res);
+	}
+	
+	public static void changeEnrollmentState(Connection connection, int id_course, int id_student, String state) throws SQLException {
+		System.out.println("Cancelar inscripcion");
+		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
+		enrollment.setEnrollment_state(state);
+		int res = EnrollmentDAO.edit(connection, enrollment);
+		ResponseUtil.editMessage(res);
 	}
 }
