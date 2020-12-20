@@ -3,6 +3,7 @@ package base.model;
 import base.enums.CourseState;
 import base.enums.Division;
 import base.enums.EnrollmentState;
+import base.util.ValidationUtil;
 
 public class Enrollment {
 	private int id;
@@ -66,9 +67,7 @@ public class Enrollment {
 	}
 
 	public void setAverage_grade(int average_grade) {
-		if(average_grade < 1 || average_grade > 10) {
-			System.out.println("Promedio invalido");
-		} else {
+		if(ValidationUtil.isGradeValid(average_grade)) {
 			this.average_grade = average_grade;
 		}
 	}
@@ -118,7 +117,9 @@ public class Enrollment {
 	}
 
 	public void setGrade1(int grade1) {
-		this.grade1 = grade1;
+		if(ValidationUtil.isGradeValid(grade1)) {
+			this.grade1 = grade1;
+		}
 	}
 
 	public int getGrade2() {
@@ -126,7 +127,9 @@ public class Enrollment {
 	}
 
 	public void setGrade2(int grade2) {
-		this.grade2 = grade2;
+		if(ValidationUtil.isGradeValid(grade2)) {
+			this.grade2 = grade2;
+		}
 	}
 
 	public String toString() {

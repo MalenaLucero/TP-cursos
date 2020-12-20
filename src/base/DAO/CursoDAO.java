@@ -47,9 +47,14 @@ public class CursoDAO {
 	}
 	
 	public static int insert(Curso course, Connection connection) throws SQLException {
-		String insertString = "INSERT INTO curso (nombre) values (?)";
+		String insertString = "INSERT INTO curso (nombre, id_catedra) values (?, ?)";
 		PreparedStatement addCourse = connection.prepareStatement(insertString);
 		addCourse.setString(1, course.getName());
+		if(course.getCatedra() == 0) {
+			addCourse.setNull(2, java.sql.Types.NULL);
+		} else {
+			addCourse.setInt(2, course.getCatedra());
+		}
 		return addCourse.executeUpdate();
 	}
 	

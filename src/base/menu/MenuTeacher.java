@@ -2,6 +2,8 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import base.DAO.TeacherDAO;
 import base.controller.TeacherController;
@@ -42,6 +44,24 @@ public class MenuTeacher {
 		case 6:
 			TeacherController.delete(connection, 10);
 			break;
+		case 7:
+			uploadTeacherBatch(connection);
+			break;
 		}
+	}
+	
+	private static void uploadTeacherBatch(Connection connection) throws SQLException {
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		createTeachersList("prueba prueba prueba", teachers);
+		//for(Teacher teacher: teachers) TeacherDAO.insert(teacher, connection);
+	}
+	
+	private static void createTeachersList(String nombre, List<Teacher> teachers) {
+		String[] strings = nombre.split(" ");
+		String name = strings[0];
+		String lastname = strings[1];
+		String kanji = strings[2];
+		Teacher teacher = new Teacher(name, lastname, kanji);
+		teachers.add(teacher);
 	}
 }

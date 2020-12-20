@@ -14,6 +14,12 @@ public class Teacher {
 		this.lastname = lastname;
 	}
 	
+	public Teacher(String name, String lastname, String alternative_name1) {
+		this.name = name;
+		this.lastname = lastname;
+		this.alternative_name1 = alternative_name1;
+	}
+	
 	public Teacher(int id, String name, String lastname, String alternative_name1,
 					String alternative_name2, String description, String image) {
 		this.id = id;
