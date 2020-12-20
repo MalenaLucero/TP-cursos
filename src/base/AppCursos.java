@@ -51,10 +51,13 @@ public class AppCursos {
 	}
 
 	private static void runTests(Connection connection) throws SQLException {
-		//CourseTest.testCrud(connection);
-		//StudentTest.testCrud(connection);
-		//TeacherTest.testCrud(connection);
+		CourseTest.testCrud(connection);
+		StudentTest.testCrud(connection);
+		TeacherTest.testCrud(connection);
 		EnrollmentTest.testCrud(connection);
+		EnrollmentTest.testChangeState(connection);
+		EnrollmentTest.testStudentsSearch(connection);
+		EnrollmentTest.testGradesSearch(connection);
 	}
 
 	private static void course(Connection connection) throws SQLException {
