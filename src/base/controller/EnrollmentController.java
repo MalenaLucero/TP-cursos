@@ -3,6 +3,7 @@ package base.controller;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import base.DAO.EnrollmentDAO;
 import base.model.Enrollment;
@@ -86,7 +87,14 @@ public class EnrollmentController {
 		}
 	}
 	
-	public static void getStudentGrades(Connection connection, int id_enrollment) {
-		
+	public static void getGrades(Connection connection, int id_enrollment) throws SQLException {
+		Map<String, Object> gradesMap = EnrollmentDAO.getGrades(connection, id_enrollment);
+		Student student = (Student) gradesMap.get("student");
+		Enrollment enrollment = (Enrollment) gradesMap.get("enrollment");
+		System.out.println(student);
+		System.out.println("Nota 1: " + enrollment.getGrade1());
+		System.out.println("Nota 2: " + enrollment.getGrade2());
+		System.out.println("Promedio: " + enrollment.getAverage_grade());
+		System.out.println("Estado de la cursada: " + enrollment.getCourseState());
 	}
 }

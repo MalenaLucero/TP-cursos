@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import base.model.Enrollment;
 import base.model.Student;
@@ -158,5 +160,42 @@ public class EnrollmentDAO {
 			students.add(student);
 		}
 		return students;
+	}
+	
+	public static List<Enrollment> getByCatedra(Connection connection, int id_catedra) throws SQLException{
+		String listString = "SELECT i.* FROM INSCRIPCION i, curso c"
+				+ " WHERE i.id_curso = c.id and c.id_catedra = ? ORDER BY id_alumno ASC";
+		PreparedStatement listEnrollments = connection.prepareStatement(listString);
+		listEnrollments.setInt(1, id_catedra);
+		ResultSet res = listEnrollments.executeQuery();
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		while(res.next()) {
+			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
+					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
+					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+			enrollments.add(enrollment);
+		}
+		return enrollments;
+	}
+	
+	public static Map<String, Object> getGrades(Connection connection, int id_enrollment) throws SQLException{
+		String listString = "SELECT a.nombre, a.apellido, a.nombre_alternativo, i.*"
+				+ " FROM inscripcion i, alumno a WHERE i.id_alumno = a.id and i.id = ?";
+		PreparedStatement listEnrollments = connection.prepareStatement(listString);
+		listEnrollments.setInt(1, id_enrollment);
+		ResultSet res = listEnrollments.executeQuery();
+		Map<String, Object> gradesMap = new HashMap<String, Object>();
+		Student student = null;
+		Enrollment enrollment = null;
+		if(res.next()) {
+			student = new Student(res.getInt("id_alumno"), res.getString("nombre"),
+					res.getString("apellido"), res.getString("nombre_alternativo"));
+			enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
+					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
+					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+		}
+		gradesMap.put("student", student);
+		gradesMap.put("enrollment", enrollment);
+		return gradesMap;
 	}
 }

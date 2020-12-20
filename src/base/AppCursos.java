@@ -58,7 +58,7 @@ public class AppCursos {
 	
 	private static void enrollment(Connection connection) throws SQLException {
 		EnrollmentMenu.printMenu();
-		int option = 10;
+		int option = 11;
 		EnrollmentMenu.chooseMenuOption(connection, option);
 	}
 	

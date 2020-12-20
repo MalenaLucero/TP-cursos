@@ -61,6 +61,15 @@ public class EnrollmentMenu {
 		case 10:
 			EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
 			break;
+		case 11:
+			EnrollmentController.getGrades(connection, 41);
+			break;
+		case 98:
+			int catedras[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+			for (int i = 0; i < catedras.length; i++) {
+				deleteRepeatedStudents(connection, catedras[i]);
+			}
+			break;
 		case 99:
 			uploadEnrollmentBatch(connection);
 		}
@@ -93,5 +102,29 @@ public class EnrollmentMenu {
 		Enrollment enrollment = new Enrollment(id_course, id_student, enrollment_state, id_teacher,
 				division, grade1, grade2, average_grade, course_state, year);
 		enrollments.add(enrollment);
+	}
+	
+	public static void deleteRepeatedStudents(Connection connection, int id_catedra) throws SQLException {
+		List<Enrollment> enrollments = EnrollmentDAO.getByCatedra(connection, id_catedra);
+		List<Enrollment> firstAppearance = new ArrayList<Enrollment>();
+		List<Enrollment> repetitions = new ArrayList<Enrollment>();
+		for(Enrollment enrollment: enrollments) {
+			boolean isPresent = false;
+			for(Enrollment firstTime: firstAppearance) {
+				if(firstTime.getId_student() == enrollment.getId_student()) {
+					isPresent = true;
+				}
+			}
+			if(isPresent) {
+				repetitions.add(enrollment);
+			} else {
+				firstAppearance.add(enrollment);
+			}
+		}
+		System.out.println("Repetitions");
+		for(Enrollment a: repetitions) {
+			System.out.println(a);
+			EnrollmentDAO.delete(a.getId(), connection);
+		}
 	}
 }
