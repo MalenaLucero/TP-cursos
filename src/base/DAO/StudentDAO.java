@@ -47,18 +47,17 @@ public class StudentDAO {
 		return student;
 	}
 	
-	public static List<Student> findByNameAndLastname(Connection connection, String name, String lastname) throws SQLException {
+	public static Student findByNameAndLastname(Connection connection, String name, String lastname) throws SQLException {
 		String listString = "SELECT * from alumno WHERE nombre = ? AND apellido = ?";
 		PreparedStatement findStudents = connection.prepareStatement(listString);
 		findStudents.setString(1, name);
 		findStudents.setString(2, lastname);
 		ResultSet res = findStudents.executeQuery();
-		List<Student> students = new ArrayList<Student>();
-		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+		Student student = null;
+		if(res.next()) {
+			student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
 		}
-		return students;
+		return student;
 	}
 	
 	public static List<Student> findByLastname(Connection connection, String lastname) throws SQLException {

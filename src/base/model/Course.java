@@ -1,20 +1,20 @@
 package base.model;
 
-public class Curso {
+public class Course {
 	private int id;
 	private String name;
 	private int id_catedra;
 	
-	public Curso(String name) {
+	public Course(String name) {
 		this.name = name;
 	}
 	
-	public Curso(String name, int id_catedra) {
+	public Course(String name, int id_catedra) {
 		this.id_catedra = id_catedra;
 		this.name = name;
 	}
 	
-	public Curso(int id, String name, int id_catedra) {
+	public Course(int id, String name, int id_catedra) {
 		this.id = id;
 		this.name = name;
 		this.id_catedra = id_catedra;

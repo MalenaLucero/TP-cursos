@@ -28,7 +28,7 @@ public class EnrollmentMenu {
 	public static void chooseMenuOption(Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			EnrollmentController.listAll(connection);
+			EnrollmentController.listAll(connection, 50);
 			break;
 		case 2:
 			EnrollmentController.getById(connection, 1);

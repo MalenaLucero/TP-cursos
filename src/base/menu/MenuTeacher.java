@@ -30,7 +30,7 @@ public class MenuTeacher {
 			TeacherController.getById(connection, 3);
 			break;
 		case 3:
-			TeacherController.getByLastname(connection, "Kim");
+			TeacherController.getByLastname(connection, "Namjoon", "Kim");
 			break;
 		case 4:
 			Teacher teacher = new Teacher("prueba", "prueba");

@@ -8,6 +8,10 @@ import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.MenuTeacher;
 import base.menu.StudentMenu;
+import base.test.CourseTest;
+import base.test.EnrollmentTest;
+import base.test.StudentTest;
+import base.test.TeacherTest;
 import base.util.MenuUtil;
 
 //1. ABML de profes
@@ -25,14 +29,14 @@ public class AppCursos {
 		Connection connection = AdminDB.obtenerConexion();
 		System.out.println("Bienvenido al sistema de cursos");
 		MenuUtil.printMainMenu();
-		int option = 3;
+		int option = 99;
 	
 		switch(option) {
 		case 1:
-			courses(connection);
+			course(connection);
 			break;
 		case 2: 
-			students(connection);
+			student(connection);
 			break;
 		case 3:
 			enrollment(connection);
@@ -40,17 +44,26 @@ public class AppCursos {
 		case 4:
 			teacher(connection);
 			break;
+		case 99:
+			runTests(connection);
 		}
 		System.out.println("Programa finalizado");
 	}
 
-	private static void courses(Connection connection) throws SQLException {
+	private static void runTests(Connection connection) throws SQLException {
+		//CourseTest.testCrud(connection);
+		//StudentTest.testCrud(connection);
+		//TeacherTest.testCrud(connection);
+		EnrollmentTest.testCrud(connection);
+	}
+
+	private static void course(Connection connection) throws SQLException {
 		CourseMenu.printMenu();
 		int option = 1;
 		CourseMenu.chooseMenuOption(connection, option);
 	}
 	
-	private static void students(Connection connection) throws SQLException {
+	private static void student(Connection connection) throws SQLException {
 		StudentMenu.printMenu();
 		int option = 7;
 		StudentMenu.chooseMenuOption(connection, option);

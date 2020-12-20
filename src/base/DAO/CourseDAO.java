@@ -7,66 +7,58 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import base.model.Curso;
+import base.model.Course;
 
-public class CursoDAO {
-	public static List<Curso> getAll(Connection connection) throws SQLException {
+public class CourseDAO {
+	public static List<Course> getAll(Connection connection) throws SQLException {
 		String listString = "SELECT * from curso";
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		ResultSet res = listCourses.executeQuery();
-		List<Curso> courses = new ArrayList<Curso>();
+		List<Course> courses = new ArrayList<Course>();
 		while(res.next()) {
-			Curso curso = new Curso(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+			Course curso = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
 			courses.add(curso);
 		}
 		return courses;
 	}
 	
-	public static Curso findById(Connection connection, int id) throws SQLException {
+	public static Course findById(Connection connection, int id) throws SQLException {
 		String listString = "SELECT * from curso where id=?";
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		listCourses.setInt(1, id);
 		ResultSet res = listCourses.executeQuery();
-		Curso course = null;
+		Course course = null;
 		if(res.next()) {
-			course = new Curso(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+			course = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
 		}
 		return course;
 	}
 	
-	public static Curso findByName(Connection connection, String name) throws SQLException {
+	public static Course findByName(Connection connection, String name) throws SQLException {
 		String listString = "SELECT * from curso where nombre=?";
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		listCourses.setString(1, name);
 		ResultSet res = listCourses.executeQuery();
-		Curso course = null;
+		Course course = null;
 		if(res.next()) {
-			course = new Curso(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+			course = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
 		}
 		return course;
 	}
 	
-	public static int insert(Curso course, Connection connection) throws SQLException {
+	public static int insert(Course course, Connection connection) throws SQLException {
 		String insertString = "INSERT INTO curso (nombre, id_catedra) values (?, ?)";
 		PreparedStatement addCourse = connection.prepareStatement(insertString);
 		addCourse.setString(1, course.getName());
-		if(course.getCatedra() == 0) {
-			addCourse.setNull(2, java.sql.Types.NULL);
-		} else {
-			addCourse.setInt(2, course.getCatedra());
-		}
+		Util.setPossibleNullInt(addCourse, 2, course.getCatedra());
 		return addCourse.executeUpdate();
 	}
 	
-	public static int edit(Connection connection, Curso course) throws SQLException {
+	public static int edit(Connection connection, Course course) throws SQLException {
 		String editString = "UPDATE curso SET nombre = ?, id_catedra = ? WHERE id = ?";
 		PreparedStatement editCourse = connection.prepareStatement(editString);
 		editCourse.setString(1, course.getName());
-		if(course.getCatedra() == 0) {
-			editCourse.setNull(2, java.sql.Types.NULL);
-		} else {
-			editCourse.setInt(2, course.getCatedra());
-		}
+		Util.setPossibleNullInt(editCourse, 2, course.getCatedra());
 		editCourse.setInt(3, course.getId());
 		return editCourse.executeUpdate();
 	}

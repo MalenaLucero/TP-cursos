@@ -31,15 +31,13 @@ public class TeacherController {
 		}
 	}
 	
-	public static void getByLastname(Connection connection, String lastname) throws SQLException {
-		System.out.println("Buscar docentes por apellido");
-		List<Teacher> teachers = TeacherDAO.findByLastname(connection, lastname);
-		if(teachers.size() == 0) {
-			System.err.println("No se encontraron docentes");
+	public static void getByLastname(Connection connection, String name, String lastname) throws SQLException {
+		System.out.println("Buscar docente por nombre y apellido");
+		Teacher teacher = TeacherDAO.findByNameLastname(connection, name, lastname);
+		if(teacher == null) {
+			System.err.println("No se encontro el docente");
 		} else {
-			for(Teacher teacher: teachers) {
-				System.out.println(teacher);
-			}
+			System.out.println(teacher);
 		}
 	}
 	

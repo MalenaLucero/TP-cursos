@@ -22,6 +22,7 @@ public class StudentController {
 	}
 	
 	public static void getById(Connection connection, int id) throws SQLException {
+		System.out.println("Buscar alumno por ID");
 		Student student = StudentDAO.findById(connection, id);
 		if(student == null) {
 			System.err.println("No se encontro el alumno");
@@ -31,6 +32,7 @@ public class StudentController {
 	}
 	
 	public static void getByLastname(Connection connection, String lastname) throws SQLException {
+		System.out.println("Buscar alumno por apellido");
 		List<Student> students = StudentDAO.findByLastname(connection, lastname);
 		if(students.size() == 0) {
 			System.err.println("No se encontraron alumnos");
@@ -43,8 +45,8 @@ public class StudentController {
 	
 	public static void insert(Connection connection, Student student) throws SQLException {
 		System.out.println("Agregar alumno");
-		List<Student> overlappingStudents = StudentDAO.findByNameAndLastname(connection, student.getName(), student.getLastname());
-		if(overlappingStudents.size() == 0) {
+		Student overlappingStudent = StudentDAO.findByNameAndLastname(connection, student.getName(), student.getLastname());
+		if(overlappingStudent == null) {
 			int res = StudentDAO.insert(student, connection);
 			ResponseUtil.addMessage(res);
 		} else {

@@ -11,9 +11,9 @@ import base.model.Student;
 import base.util.ResponseUtil;
 
 public class EnrollmentController {
-	public static void listAll(Connection connection) throws SQLException {
-		System.out.println("Listado de inscripciones");
-		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection);
+	public static void listAll(Connection connection, int limit) throws SQLException {
+		System.out.println("Listado de inscripciones. Limite: " + limit);
+		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection, limit);
 		if(enrollments.size() == 0) {
 			System.err.println("No se encontraron inscripciones");
 		} else {
@@ -24,6 +24,7 @@ public class EnrollmentController {
 	}
 	
 	public static void getById(Connection connection, int id) throws SQLException {
+		System.out.println("Buscar inscripcion por ID");
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
 		if(enrollment == null) {
 			System.err.println("No se encontro la inscripcion");
@@ -33,6 +34,7 @@ public class EnrollmentController {
 	}
 	
 	public static void getByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
+		System.out.println("Buscar inscripcion por curso y alumno");
 		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
 		if(enrollment == null) {
 			System.err.println("No se encontraron inscripciones");

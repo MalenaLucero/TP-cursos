@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import base.DAO.CursoDAO;
-import base.controller.CursoController;
-import base.model.Curso;
+import base.DAO.CourseDAO;
+import base.controller.CourseController;
+import base.model.Course;
 
 public class CourseMenu {
 	public static void printMenu() {
@@ -24,25 +24,25 @@ public class CourseMenu {
 	public static void chooseMenuOption(Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			CursoController.listAll(connection);
+			CourseController.listAll(connection);
 			break;
 		case 2:
-			CursoController.getById(connection, 1);
+			CourseController.getById(connection, 1);
 			break;
 		case 3:
-			CursoController.getByName(connection, "mongo db");
+			CourseController.getByName(connection, "mongo db");
 			break;
 		case 4:
-			Curso course = new Curso("python");
-			CursoController.insert(connection, course);
+			Course course = new Course("python");
+			CourseController.insert(connection, course);
 			break;
 		case 5:
-			Curso editCourse = CursoDAO.findById(connection, 15);
+			Course editCourse = CourseDAO.findById(connection, 15);
 			editCourse.setCatedra(5);
-			CursoController.edit(connection, editCourse);
+			CourseController.edit(connection, editCourse);
 			break;
 		case 6:
-			CursoController.delete(connection, 17);
+			CourseController.delete(connection, 17);
 			break;
 		case 7:
 			uploadCoursesBatch(connection);
@@ -50,14 +50,14 @@ public class CourseMenu {
 	}
 
 	private static void uploadCoursesBatch(Connection connection) throws SQLException {
-		List<Curso> cursos = new ArrayList<Curso>();
+		List<Course> cursos = new ArrayList<Course>();
 		createCoursesList("prueba", cursos);
 		//for(Curso curso: cursos) CursoDAO.insert(curso, connection);
 	}
 	
-	private static void createCoursesList(String nombre, List<Curso> cursos) {
+	private static void createCoursesList(String nombre, List<Course> cursos) {
 		int catedra = 0;
-		Curso curso = new Curso(nombre, catedra);
+		Course curso = new Course(nombre, catedra);
 		cursos.add(curso);
 	}
 }

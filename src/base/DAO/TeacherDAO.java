@@ -36,18 +36,18 @@ public class TeacherDAO {
 		return teacher;
 	}
 	
-	public static List<Teacher> findByLastname(Connection connection, String lastname) throws SQLException {
-		String listString = "SELECT * FROM docente WHERE apellido = ?";
+	public static Teacher findByNameLastname(Connection connection, String name, String lastname) throws SQLException {
+		String listString = "SELECT * FROM docente WHERE nombre = ? AND apellido = ?";
 		PreparedStatement findTeachers = connection.prepareStatement(listString);
-		findTeachers.setString(1, lastname);
+		findTeachers.setString(1, name);
+		findTeachers.setString(2, lastname);
 		ResultSet res = findTeachers.executeQuery();
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		while(res.next()) {
-			Teacher teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo1"),
+		Teacher teacher = null;
+		if(res.next()) {
+			teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo1"),
 					res.getString("nombre_alternativo2"), res.getString("descripcion"), res.getString("imagen"));
-			teachers.add(teacher);
 		}
-		return teachers;
+		return teacher;
 	}
 	
 	public static int insert(Teacher teacher, Connection connection) throws SQLException {

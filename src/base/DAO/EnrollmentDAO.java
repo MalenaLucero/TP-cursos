@@ -13,9 +13,10 @@ import base.model.Enrollment;
 import base.model.Student;
 
 public class EnrollmentDAO {
-	public static List<Enrollment> getAll(Connection connection) throws SQLException {
-		String listString = "SELECT * FROM inscripcion";
+	public static List<Enrollment> getAll(Connection connection, int limit) throws SQLException {
+		String listString = "SELECT * FROM inscripcion LIMIT ?";
 		PreparedStatement listEnrollments = connection.prepareStatement(listString);
+		listEnrollments.setInt(1, limit);
 		ResultSet res = listEnrollments.executeQuery();
 		List<Enrollment> enrollments = new ArrayList<Enrollment>();
 		while(res.next()) {
@@ -63,27 +64,11 @@ public class EnrollmentDAO {
 		addEnrollment.setInt(1, enrollment.getId_course());
 		addEnrollment.setInt(2, enrollment.getId_student());
 		addEnrollment.setString(3, enrollment.getEnrollment_state());
-		if(enrollment.getId_teacher() == 0) {
-			addEnrollment.setNull(4, java.sql.Types.NULL);
-		} else {
-			addEnrollment.setInt(4, enrollment.getId_teacher());
-		}
+		Util.setPossibleNullInt(addEnrollment, 4, enrollment.getId_teacher());
 		addEnrollment.setString(5, enrollment.getDivision());
-		if(enrollment.getGrade1() == 0) {
-			addEnrollment.setNull(6, java.sql.Types.NULL);
-		} else {
-			addEnrollment.setInt(6, enrollment.getGrade1());
-		}
-		if(enrollment.getGrade2() == 0) {
-			addEnrollment.setNull(7, java.sql.Types.NULL);
-		} else {
-			addEnrollment.setInt(7, enrollment.getGrade2());
-		}
-		if(enrollment.getAverage_grade() == 0) {
-			addEnrollment.setNull(8, java.sql.Types.NULL);
-		} else {
-			addEnrollment.setInt(8, enrollment.getAverage_grade());
-		}
+		Util.setPossibleNullInt(addEnrollment, 6, enrollment.getGrade1());
+		Util.setPossibleNullInt(addEnrollment, 7, enrollment.getGrade2());
+		Util.setPossibleNullInt(addEnrollment, 8, enrollment.getAverage_grade());
 		addEnrollment.setString(9, enrollment.getCourseState());
 		addEnrollment.setInt(10, enrollment.getYear());
 		return addEnrollment.executeUpdate();
@@ -97,27 +82,11 @@ public class EnrollmentDAO {
 		editEnrollment.setInt(1, enrollment.getId_course());
 		editEnrollment.setInt(2, enrollment.getId_student());
 		editEnrollment.setString(3, enrollment.getEnrollment_state());
-		if(enrollment.getId_teacher() == 0) {
-			editEnrollment.setNull(4, java.sql.Types.NULL);
-		} else {
-			editEnrollment.setInt(4, enrollment.getId_teacher());
-		}
+		Util.setPossibleNullInt(editEnrollment, 4, enrollment.getId_teacher());
 		editEnrollment.setString(5, enrollment.getDivision());
-		if(enrollment.getGrade1() == 0) {
-			editEnrollment.setNull(6, java.sql.Types.NULL);
-		} else {
-			editEnrollment.setInt(6, enrollment.getGrade1());
-		}
-		if(enrollment.getGrade2() == 0) {
-			editEnrollment.setNull(7, java.sql.Types.NULL);
-		} else {
-			editEnrollment.setInt(7, enrollment.getGrade2());
-		}
-		if(enrollment.getAverage_grade() == 0) {
-			editEnrollment.setNull(8, java.sql.Types.NULL);
-		} else {
-			editEnrollment.setInt(8, enrollment.getAverage_grade());
-		}
+		Util.setPossibleNullInt(editEnrollment, 6, enrollment.getGrade1());
+		Util.setPossibleNullInt(editEnrollment, 7, enrollment.getGrade2());
+		Util.setPossibleNullInt(editEnrollment, 8, enrollment.getAverage_grade());
 		editEnrollment.setString(9, enrollment.getCourseState());
 		editEnrollment.setInt(10, enrollment.getYear());
 		editEnrollment.setInt(11, enrollment.getId());
