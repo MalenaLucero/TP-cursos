@@ -22,6 +22,19 @@ public class StudentDAO {
 		return students;
 	}
 	
+	public static List<Student> getRandom(Connection connection, int quantity) throws SQLException {
+		String listString = "SELECT * FROM alumno ORDER BY RAND() LIMIT ?";
+		PreparedStatement listStudents = connection.prepareStatement(listString);
+		listStudents.setInt(1, quantity);
+		ResultSet res = listStudents.executeQuery();
+		List<Student> students = new ArrayList<Student>();
+		while(res.next()) {
+			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+			students.add(student);
+		}
+		return students;
+	}
+	
 	public static Student findById(Connection connection, int id) throws SQLException {
 		String listString = "SELECT * from alumno WHERE id= ?";
 		PreparedStatement findStudent = connection.prepareStatement(listString);

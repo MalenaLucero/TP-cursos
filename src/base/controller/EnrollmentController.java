@@ -6,6 +6,7 @@ import java.util.List;
 
 import base.DAO.EnrollmentDAO;
 import base.model.Enrollment;
+import base.model.Student;
 import base.util.ResponseUtil;
 
 public class EnrollmentController {
@@ -63,5 +64,29 @@ public class EnrollmentController {
 		enrollment.setEnrollment_state(state);
 		int res = EnrollmentDAO.edit(connection, enrollment);
 		ResponseUtil.editMessage(res);
+	}
+	
+	public static void getStudentsByCourse(Connection connection, int id_course) throws SQLException {
+		System.out.println("Alumnos del curso con ID " + id_course);
+		List<Student> students = EnrollmentDAO.getStudentsByCourse(connection, id_course);
+		if(students.size() > 0) {
+			for(Student student: students) System.out.println(student);
+		} else {
+			System.out.println("El curso no tiene alumnos");
+		}
+	}
+	
+	public static void getStudentsByCourseAndDivision(Connection connection, int id_course, String division) throws SQLException {
+		System.out.println("Alumnos del curso con ID " + id_course + " comision " + division);
+		List<Student> students = EnrollmentDAO.getStudentsByCourseAndDivision(connection, id_course, division);
+		if(students.size() > 0) {
+			for(Student student: students) System.out.println(student);
+		} else {
+			System.out.println("El curso no tiene alumnos");
+		}
+	}
+	
+	public static void getStudentGrades(Connection connection, int id_enrollment) {
+		
 	}
 }

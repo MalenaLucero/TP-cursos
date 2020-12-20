@@ -2,11 +2,16 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import base.DAO.EnrollmentDAO;
+import base.DAO.StudentDAO;
 import base.controller.EnrollmentController;
 import base.enums.EnrollmentState;
 import base.model.Enrollment;
+import base.model.Student;
 
 public class EnrollmentMenu {
 	public static void printMenu() {
@@ -50,6 +55,43 @@ public class EnrollmentMenu {
 		case 8:
 			EnrollmentController.changeEnrollmentState(connection, 5, 5, EnrollmentState.activo.getValue());
 			break;
+		case 9:
+			EnrollmentController.getStudentsByCourse(connection, 5);
+			break;
+		case 10:
+			EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
+			break;
+		case 99:
+			uploadEnrollmentBatch(connection);
 		}
+	}
+
+	private static void uploadEnrollmentBatch(Connection connection) throws SQLException {
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		Random rand = new Random();  
+		int id_teacher = rand.nextInt(8) + 12;
+		int courses[] = {};
+		for(int i=0; i < courses.length; i++) {
+			int quantity = rand.nextInt(8) + 3;
+			List<Student> students = StudentDAO.getRandom(connection, quantity);
+			for(Student student: students) {
+				createEnrollmentList(student.getId(), courses[i], id_teacher, enrollments);
+			}
+		}
+		//for(Enrollment enrollment: enrollments) EnrollmentDAO.insert(enrollment, connection);
+	}
+
+	private static void createEnrollmentList(int id_student, int id_course, int id_teacher, List<Enrollment> enrollments) {
+		Random rand = new Random();  
+		String enrollment_state = "activo";
+		String division = "B";
+		int grade1 = rand.nextInt(7) + 4;
+		int grade2 = rand.nextInt(7) + 4;
+		int average_grade = (grade1 + grade2) / 2;
+		String course_state = average_grade > 5 ? "aprobado" : "desaprobado";
+		int year = 2020;
+		Enrollment enrollment = new Enrollment(id_course, id_student, enrollment_state, id_teacher,
+				division, grade1, grade2, average_grade, course_state, year);
+		enrollments.add(enrollment);
 	}
 }

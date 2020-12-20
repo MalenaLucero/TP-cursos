@@ -27,6 +27,20 @@ public class Enrollment {
 		this.year = 2021;
 	}
 	
+	public Enrollment(int id_course, int id_student, String enrollment_state, int id_teacher,
+			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
+		this.id_course = id_course;
+		this.id_student = id_student;
+		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
+		this.id_teacher = id_teacher;
+		this.division = Division.valueOf(division);
+		this.grade1 = grade1;
+		this.grade2 = grade2;
+		this.average_grade = average_grade;
+		this.course_state = CourseState.valueOf(course_state);
+		this.year = year;
+	}
+	
 	public Enrollment(int id, int id_course, int id_student, String enrollment_state, int id_teacher,
 			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
 		this.id = id;
@@ -136,8 +150,8 @@ public class Enrollment {
 		if(this.average_grade == 0) {
 			return String.format("ID: %s - ID alumno: %s - ID curso: %s", id, id_student, id_course);
 		} else {
-			return String.format("ID: %s - ID alumno: %s - ID curso: %s - Estado: %s - Promedio: %s - Año: %s",
-								id, id_student, id_course, course_state, average_grade, year);
+			return String.format("ID: %s - ID alumno: %s - ID curso: %s - Estado: %s - Notas: %s, %s, %s - Año: %s",
+								id, id_student, id_course, course_state, grade1, grade2, average_grade, year);
 		}
 	}
 }

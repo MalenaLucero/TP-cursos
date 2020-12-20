@@ -25,7 +25,7 @@ public class AppCursos {
 		Connection connection = AdminDB.obtenerConexion();
 		System.out.println("Bienvenido al sistema de cursos");
 		MenuUtil.printMainMenu();
-		int option = 2;
+		int option = 3;
 	
 		switch(option) {
 		case 1:
@@ -58,7 +58,7 @@ public class AppCursos {
 	
 	private static void enrollment(Connection connection) throws SQLException {
 		EnrollmentMenu.printMenu();
-		int option = 2;
+		int option = 10;
 		EnrollmentMenu.chooseMenuOption(connection, option);
 	}
 	

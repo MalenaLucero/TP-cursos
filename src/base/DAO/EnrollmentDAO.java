@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import base.model.Enrollment;
+import base.model.Student;
 
 public class EnrollmentDAO {
 	public static List<Enrollment> getAll(Connection connection) throws SQLException {
@@ -126,5 +127,36 @@ public class EnrollmentDAO {
 		PreparedStatement deleteEnrollment = connection.prepareStatement(deleteString);
 		deleteEnrollment.setInt(1, id);
 		return deleteEnrollment.executeUpdate();
+	}
+	
+	public static List<Student> getStudentsByCourse(Connection connection, int id_course) throws SQLException{
+		String listString = "SELECT a.* FROM inscripcion i, alumno a, curso c"
+				+ " WHERE i.id_alumno = a.id and i.id_curso = c.id and c.id = ?"
+				+ " ORDER BY a.nombre ASC";
+		PreparedStatement listStudents = connection.prepareStatement(listString);
+		listStudents.setInt(1, id_course);
+		ResultSet res = listStudents.executeQuery();
+		List<Student> students = new ArrayList<Student>();
+		while(res.next()) {
+			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+			students.add(student);
+		}
+		return students;
+	}
+	
+	public static List<Student> getStudentsByCourseAndDivision(Connection connection, int id_course, String division) throws SQLException{
+		String listString = "SELECT a.* FROM inscripcion i, alumno a, curso c"
+				+ " WHERE i.id_alumno = a.id and i.id_curso = c.id and c.id = ? AND i.comision = ?"
+				+ " ORDER BY a.nombre ASC";
+		PreparedStatement listStudents = connection.prepareStatement(listString);
+		listStudents.setInt(1, id_course);
+		listStudents.setString(2, division);
+		ResultSet res = listStudents.executeQuery();
+		List<Student> students = new ArrayList<Student>();
+		while(res.next()) {
+			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+			students.add(student);
+		}
+		return students;
 	}
 }
