@@ -45,7 +45,8 @@ public class CourseMenu {
 			CourseController.edit(connection, editCourse);
 			break;
 		case 6:
-			CourseController.delete(connection, 17);
+			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del curso:");
+			CourseController.delete(connection, deleteId);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();
@@ -54,7 +55,7 @@ public class CourseMenu {
 	}
 
 	private static Course createCourse(Scanner sc) {
-		String name = InputUtil.inputStringNotBlack(sc, "Ingrese el nombre del curso");
+		String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nombre del curso");
 		int id_catedra = InputUtil.inputInt(sc, "Ingresar ID de catedra (o 0 si se desconoce)");
 		return new Course(name, id_catedra);
 	}
@@ -62,14 +63,15 @@ public class CourseMenu {
 	private static Course editCourse(Scanner sc, Connection connection) throws SQLException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del curso a editar:");
 		Course course = CourseDAO.findById(connection, id);
-		System.out.println("Editar nombre del curso (y/n)");
-		System.out.println("Valor actual: " + course.getName());
-		String res = sc.next();
-		if(res.equalsIgnoreCase("y")) {
-			System.out.println("Ingrese el nuevo nombre");
-			sc.nextLine();
-			String name = sc.nextLine();
+		boolean editName = Util.confirmEditMessage(sc, "nombre", course.getName());
+		if(editName) {
+			String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
 			course.setName(name);
+		}
+		boolean editCatedra = Util.confirmEditMessage(sc, "catedra", Integer.toString(course.getCatedra()));
+		if(editCatedra) {
+			int catedra = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			course.setCatedra(catedra);
 		}
 		return course;
 	}

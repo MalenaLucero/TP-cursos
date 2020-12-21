@@ -13,13 +13,23 @@ public class InputUtil {
 		return sc.nextInt();
 	}
 	
+	public static String inputSingleWord(Scanner sc, String message) {
+		PrintUtil.printMessage(message);
+		return sc.next();
+	}
+	
 	public static String inputString(Scanner sc, String message) {
 		PrintUtil.printMessage(message);
 		sc.nextLine();
 		return sc.nextLine();
 	}
 	
-	public static String inputStringNotBlack(Scanner sc, String message) {
+	public static String inputLine(Scanner sc, String message) {
+		PrintUtil.printMessage(message);
+		return sc.nextLine();
+	}
+	
+	public static String inputStringNotBlank(Scanner sc, String message) {
 		String input = null;
 		while(StringUtil.isBlank(input)) {
 			PrintUtil.printMessage(message);

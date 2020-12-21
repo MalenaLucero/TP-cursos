@@ -2,65 +2,61 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-import base.DAO.StudentDAO;
 import base.controller.StudentController;
 import base.model.Student;
+import base.util.InputUtil;
 
 public class StudentMenu {
 	public static void printMenu() {
+		System.out.println();
 		System.out.println("------ MENU DE ALUMNOS ------");
 		System.out.println("1. Listar alumnos");
-		System.out.println("2. Buscar alumno");
-		System.out.println("3. Agregar alumno");
-		System.out.println("4. Modificar alumno");
-		System.out.println("5. Eliminar alumno");
+		System.out.println("2. Buscar alumno por ID");
+		System.out.println("3. Buscar alumnos por apellido");
+		System.out.println("4. Agregar alumno");
+		System.out.println("5. Editar alumno");
+		System.out.println("6. Eliminar alumno");
 		System.out.println("0. Volver al menu principal");
-		System.out.println();
 	}
 	
-	public static void chooseMenuOption(Connection connection, int option) throws SQLException {
+	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
 			StudentController.listAll(connection);
 			break;
 		case 2:
-			StudentController.getById(connection, 2);
+			int id = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
+			StudentController.getById(connection, id);
 			break;
 		case 3:
-			StudentController.getByLastname(connection, "Kurou");
+			String lastname = InputUtil.inputString(sc, "Ingrese apellido:");
+			StudentController.getByLastname(connection, lastname);
 			break;
 		case 4:
-			Student student = new Student("Touru", "Oikawa", "及川徹");
+			Student student = createStudent(sc);
 			StudentController.insert(connection, student);
 			break;
 		case 5:
-			Student editStudent = StudentDAO.findById(connection, 6);
-			editStudent.setAlternative_name("木兎光太郎");
+			Student editStudent = editStudent(sc, connection);
 			StudentController.edit(connection, editStudent);
 			break;
 		case 6:
-			StudentController.delete(connection, 2);
+			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
+			StudentController.delete(connection, deleteId);
 			break;
-		case 7:
-			uploadStudentBatch(connection);
 		}
 	}
-
-	private static void uploadStudentBatch(Connection connection) throws SQLException {
-		List<Student> students = new ArrayList<Student>();
-		createStudentList("prueba prueba kanji", students);
-		//for(Student student: students) StudentDAO.insert(student, connection);
+	
+	private static Student createStudent(Scanner sc) {
+		String name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre");
+		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
+		return new Student(name, lastname, null);
 	}
 	
-	private static void createStudentList(String nombre, List<Student> students) {
-		String[] strings = nombre.split(" ");
-		String name = strings[0];
-		String lastname = strings[1];
-		String kanji = strings[2];
-		Student student = new Student(name, lastname, kanji);
-		students.add(student);
+	private static base.model.Student editStudent(Scanner sc, Connection connection) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -74,14 +74,19 @@ public class AppCursos {
 		int option = InputUtil.inputInt(sc);
 		while(option != 0) {
 			CourseMenu.chooseMenuOption(sc, connection, option);
+			CourseMenu.printMenu();
 			option = InputUtil.inputInt(sc);
 		}
 	}
 	
 	private static void student(Scanner sc, Connection connection) throws SQLException {
 		StudentMenu.printMenu();
-		int option = 1;
-		StudentMenu.chooseMenuOption(connection, option);
+		int option = InputUtil.inputInt(sc);
+		while(option != 0) {
+			StudentMenu.chooseMenuOption(sc, connection, option);
+			StudentMenu.printMenu();
+			option = InputUtil.inputInt(sc);
+		}
 	}
 	
 	private static void enrollment(Scanner sc, Connection connection) throws SQLException {
