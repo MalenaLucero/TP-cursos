@@ -1,22 +1,24 @@
 package base.model;
 
+import base.util.StringUtil;
+
 public class Course {
 	private int id;
 	private String name;
 	private int id_catedra;
 	
 	public Course(String name) {
-		this.name = name;
+		setName(name);
 	}
 	
 	public Course(String name, int id_catedra) {
 		this.id_catedra = id_catedra;
-		this.name = name;
+		setName(name);
 	}
 	
 	public Course(int id, String name, int id_catedra) {
 		this.id = id;
-		this.name = name;
+		setName(name);
 		this.id_catedra = id_catedra;
 	}
 
@@ -25,7 +27,9 @@ public class Course {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if(!StringUtil.isBlank(name)) {
+			this.name = name;
+		} 
 	}
 	
 	public int getCatedra() {
@@ -45,6 +49,6 @@ public class Course {
 	}
 
 	public String toString() {
-		return String.format("ID: %s - Curso: %s", id, name);
+		return String.format("ID: %s - Curso: %s - ID Catedra: %s", id, name, id_catedra);
 	}
 }

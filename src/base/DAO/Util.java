@@ -10,6 +10,5 @@ public class Util {
 		} else {
 			statement.setInt(index, number);
 		}
-		
 	}
 }

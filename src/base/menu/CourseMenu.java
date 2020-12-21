@@ -2,62 +2,75 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 import base.DAO.CourseDAO;
 import base.controller.CourseController;
 import base.model.Course;
+import base.util.InputUtil;
+import base.util.PrintUtil;
 
 public class CourseMenu {
 	public static void printMenu() {
+		System.out.println();
 		System.out.println("------ MENU DE CURSOS ------");
 		System.out.println("1. Listar cursos");
-		System.out.println("2. Buscar curso");
-		System.out.println("3. Agregar curso");
-		System.out.println("4. Modificar curso");
-		System.out.println("5. Eliminar curso");
+		System.out.println("2. Buscar curso por ID");
+		System.out.println("3. Buscar curso por nombre");
+		System.out.println("4. Agregar curso");
+		System.out.println("5. Editar curso");
+		System.out.println("6. Eliminar curso");
 		System.out.println("0. Volver al menu principal");
-		System.out.println();
 	}
 	
-	public static void chooseMenuOption(Connection connection, int option) throws SQLException {
+	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
 			CourseController.listAll(connection);
 			break;
 		case 2:
-			CourseController.getById(connection, 1);
+			int id = InputUtil.inputInt(sc, "Ingrese ID del curso:");
+			CourseController.getById(connection, id);
 			break;
 		case 3:
-			CourseController.getByName(connection, "mongo db");
+			String name = InputUtil.inputString(sc, "Ingrese nombre del curso:");
+			CourseController.getByName(connection, name);
 			break;
 		case 4:
-			Course course = new Course("python");
+			Course course = createCourse(sc);
 			CourseController.insert(connection, course);
 			break;
 		case 5:
-			Course editCourse = CourseDAO.findById(connection, 15);
-			editCourse.setCatedra(5);
+			Course editCourse = editCourse(sc, connection);
 			CourseController.edit(connection, editCourse);
 			break;
 		case 6:
 			CourseController.delete(connection, 17);
 			break;
-		case 7:
-			uploadCoursesBatch(connection);
+		default:
+			PrintUtil.invalidOptionMessage();
+			break;
 		}
 	}
 
-	private static void uploadCoursesBatch(Connection connection) throws SQLException {
-		List<Course> cursos = new ArrayList<Course>();
-		createCoursesList("prueba", cursos);
-		//for(Curso curso: cursos) CursoDAO.insert(curso, connection);
+	private static Course createCourse(Scanner sc) {
+		String name = InputUtil.inputStringNotBlack(sc, "Ingrese el nombre del curso");
+		int id_catedra = InputUtil.inputInt(sc, "Ingresar ID de catedra (o 0 si se desconoce)");
+		return new Course(name, id_catedra);
 	}
 	
-	private static void createCoursesList(String nombre, List<Course> cursos) {
-		int catedra = 0;
-		Course curso = new Course(nombre, catedra);
-		cursos.add(curso);
+	private static Course editCourse(Scanner sc, Connection connection) throws SQLException {
+		int id = InputUtil.inputInt(sc, "Ingrese ID del curso a editar:");
+		Course course = CourseDAO.findById(connection, id);
+		System.out.println("Editar nombre del curso (y/n)");
+		System.out.println("Valor actual: " + course.getName());
+		String res = sc.next();
+		if(res.equalsIgnoreCase("y")) {
+			System.out.println("Ingrese el nuevo nombre");
+			sc.nextLine();
+			String name = sc.nextLine();
+			course.setName(name);
+		}
+		return course;
 	}
 }
