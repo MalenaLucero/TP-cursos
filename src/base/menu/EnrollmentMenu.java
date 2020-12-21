@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import base.DAO.EnrollmentDAO;
 import base.DAO.StudentDAO;
@@ -15,17 +16,23 @@ import base.model.Student;
 
 public class EnrollmentMenu {
 	public static void printMenu() {
-		System.out.println("------ MENU DE INSCRIPCION ------");
-		System.out.println("1. Listar");
-		System.out.println("2. Buscar");
-		System.out.println("3. Agregar");
-		System.out.println("4. Modificar");
-		System.out.println("5. Eliminar");
-		System.out.println("0. Volver al menu principal");
 		System.out.println();
+		System.out.println("------ MENU DE INSCRIPCION ------");
+		System.out.println("1. Listar inscripciones");
+		System.out.println("2. Buscar inscripcion por ID");
+		System.out.println("3. Buscar inscripcion por curso y alumno");
+		System.out.println("4. Agregar inscripcion");
+		System.out.println("5. Modificar inscripcion");
+		System.out.println("6. Eliminar inscripcion");
+		System.out.println("7. Cancelar inscripcion");
+		System.out.println("8. Activar inscripcion");
+		System.out.println("9. Listar alumnos por curso");
+		System.out.println("10. Listar alumnos por curso y comision");
+		System.out.println("11. Buscar notas por ID de inscripcion");
+		System.out.println("0. Volver al menu principal");
 	}
 	
-	public static void chooseMenuOption(Connection connection, int option) throws SQLException {
+	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
 			EnrollmentController.listAll(connection, 50);

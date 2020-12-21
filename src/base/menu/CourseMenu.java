@@ -63,13 +63,11 @@ public class CourseMenu {
 	private static Course editCourse(Scanner sc, Connection connection) throws SQLException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del curso a editar:");
 		Course course = CourseDAO.findById(connection, id);
-		boolean editName = Util.confirmEditMessage(sc, "nombre", course.getName());
-		if(editName) {
+		if(Util.confirmEditMessage(sc, "nombre", course.getName())) {
 			String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
 			course.setName(name);
 		}
-		boolean editCatedra = Util.confirmEditMessage(sc, "catedra", Integer.toString(course.getCatedra()));
-		if(editCatedra) {
+		if(Util.confirmEditMessage(sc, "catedra", Integer.toString(course.getCatedra()))) {
 			int catedra = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			course.setCatedra(catedra);
 		}

@@ -1,6 +1,6 @@
-package base.util;
+package base.menu;
 
-public class MenuUtil {
+public class MainMenu {
 	public static void printMainMenu() {
 		System.out.println();
 		System.out.println("------ MENU PRINCIPAL ------");

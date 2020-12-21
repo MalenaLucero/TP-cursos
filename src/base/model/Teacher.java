@@ -14,10 +14,13 @@ public class Teacher {
 		this.lastname = lastname;
 	}
 	
-	public Teacher(String name, String lastname, String alternative_name1) {
+	public Teacher(String name, String lastname, String alternative_name1, String alternative_name2, String description, String image) {
 		this.name = name;
 		this.lastname = lastname;
 		this.alternative_name1 = alternative_name1;
+		this.alternative_name2 = alternative_name2;
+		this.description = description;
+		this.image = image;
 	}
 	
 	public Teacher(int id, String name, String lastname, String alternative_name1,
@@ -43,12 +46,12 @@ public class Teacher {
 		this.name = name;
 	}
 
-	public String getLastnane() {
+	public String getLastname() {
 		return lastname;
 	}
 
-	public void setLastnane(String lastmane) {
-		this.lastname = lastmane;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getAlternative_name1() {

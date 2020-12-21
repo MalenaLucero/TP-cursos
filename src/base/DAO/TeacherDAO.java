@@ -55,7 +55,7 @@ public class TeacherDAO {
 								+ "values (?, ?, ?, ?, ?, ?)";
 		PreparedStatement addTeacher = connection.prepareStatement(insertString);
 		addTeacher.setString(1, teacher.getName());
-		addTeacher.setString(2, teacher.getLastnane());
+		addTeacher.setString(2, teacher.getLastname());
 		addTeacher.setString(3, teacher.getAlternative_name1());
 		addTeacher.setString(4, teacher.getAlternative_name2());
 		addTeacher.setString(5, teacher.getDescription());
@@ -68,7 +68,7 @@ public class TeacherDAO {
 							+ "nombre_alternativo2 = ?, descripcion = ?, imagen = ? WHERE id = ?";
 		PreparedStatement editTeacher = connection.prepareStatement(editString);
 		editTeacher.setString(1, teacher.getName());
-		editTeacher.setString(2, teacher.getLastnane());
+		editTeacher.setString(2, teacher.getLastname());
 		editTeacher.setString(3, teacher.getAlternative_name1());
 		editTeacher.setString(4, teacher.getAlternative_name2());
 		editTeacher.setString(5, teacher.getDescription());

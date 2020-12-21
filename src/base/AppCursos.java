@@ -8,13 +8,13 @@ import base.DAO.AdminDB;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.MenuTeacher;
+import base.menu.MainMenu;
 import base.menu.StudentMenu;
 import base.test.CourseTest;
 import base.test.EnrollmentTest;
 import base.test.StudentTest;
 import base.test.TeacherTest;
 import base.util.InputUtil;
-import base.util.MenuUtil;
 import base.util.PrintUtil;
 
 //1. ABML de profes
@@ -30,7 +30,7 @@ import base.util.PrintUtil;
 public class AppCursos {
 	public static void main(String[] args) {
 		System.out.println("Bienvenido al sistema de cursos");
-		MenuUtil.printMainMenu();
+		MainMenu.printMainMenu();
 		Scanner sc = new Scanner(System.in);
 		int option = InputUtil.inputInt(sc);
 		
@@ -60,7 +60,7 @@ public class AppCursos {
 					PrintUtil.invalidOptionMessage();
 					break;
 				}
-				MenuUtil.printMainMenu();
+				MainMenu.printMainMenu();
 				option = InputUtil.inputInt(sc);
 			}
 		} catch(Exception e) {
@@ -91,14 +91,22 @@ public class AppCursos {
 	
 	private static void enrollment(Scanner sc, Connection connection) throws SQLException {
 		EnrollmentMenu.printMenu();
-		int option = 1;
-		EnrollmentMenu.chooseMenuOption(connection, option);
+		int option = InputUtil.inputInt(sc);
+		while(option != 0) {
+			EnrollmentMenu.chooseMenuOption(sc, connection, option);
+			EnrollmentMenu.printMenu();
+			option = InputUtil.inputInt(sc);
+		}
 	}
 	
 	private static void teacher(Scanner sc,Connection connection) throws SQLException {
 		MenuTeacher.printMenu();
-		int option = 1;
-		MenuTeacher.chooseMenuOption(connection, option);
+		int option = InputUtil.inputInt(sc);
+		while(option != 0) {
+			MenuTeacher.chooseMenuOption(sc, connection, option);
+			MenuTeacher.printMenu();
+			option = InputUtil.inputInt(sc);
+		}
 	}
 	
 	private static void runTests(Connection connection) throws SQLException {

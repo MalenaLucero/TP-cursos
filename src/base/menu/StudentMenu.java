@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import base.DAO.StudentDAO;
 import base.controller.StudentController;
 import base.model.Student;
 import base.util.InputUtil;
@@ -52,11 +53,28 @@ public class StudentMenu {
 	private static Student createStudent(Scanner sc) {
 		String name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre");
 		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
-		return new Student(name, lastname, null);
+		String alternative_name = null;
+		if(Util.confirmOptionalField(sc, "nombre alternativo")) {
+			alternative_name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre alternativo:");
+		}
+		return new Student(name, lastname, alternative_name);
 	}
 	
-	private static base.model.Student editStudent(Scanner sc, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
+	private static base.model.Student editStudent(Scanner sc, Connection connection) throws SQLException {
+		int id = InputUtil.inputInt(sc, "Ingrese ID del alumno a editar:");
+		Student student = StudentDAO.findById(connection, id);
+		if(Util.confirmEditMessage(sc, "nombre", student.getName())) {
+			String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			student.setName(name);
+		}
+		if(Util.confirmEditMessage(sc, "apellido", student.getLastname())) {
+			String lastname = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			student.setLastname(lastname);
+		}
+		if(Util.confirmEditMessage(sc, "nombre alternativo", student.getAlternative_name())) {
+			String altName = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			student.setAlternative_name(altName);
+		}
+		return student;
 	}
 }
