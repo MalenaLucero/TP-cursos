@@ -42,6 +42,6 @@ public class EnrollmentTest {
 	}
 	
 	public static void testGradesSearch(Connection connection) throws SQLException {
-		EnrollmentController.getGrades(connection, 14);
+		EnrollmentController.getGradesByEnrollment(connection, 14);
 	}
 }

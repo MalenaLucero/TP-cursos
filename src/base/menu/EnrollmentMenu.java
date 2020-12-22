@@ -29,6 +29,7 @@ public class EnrollmentMenu {
 		System.out.println("9. Listar alumnos por curso");
 		System.out.println("10. Listar alumnos por curso y comision");
 		System.out.println("11. Buscar notas por ID de inscripcion");
+		System.out.println("12. Buscar notas por ID de alumno");
 		System.out.println("0. Volver al menu principal");
 	}
 	
@@ -69,7 +70,10 @@ public class EnrollmentMenu {
 			EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
 			break;
 		case 11:
-			EnrollmentController.getGrades(connection, 41);
+			EnrollmentController.getGradesByEnrollment(connection, 41);
+			break;
+		case 12:
+			EnrollmentController.getGradesByStudent(connection, 1);
 			break;
 		case 98:
 			int catedras[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
