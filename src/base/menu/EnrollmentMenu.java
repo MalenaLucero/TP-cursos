@@ -60,12 +60,6 @@ public class EnrollmentMenu {
 			String division = InputUtil.inputSingleWord(sc, "Ingrese la comision");
 			EnrollmentController.getStudentsByCourseAndDivision(connection, idCourse, division);
 			break;
-		case 11:
-			EnrollmentController.getGradesByEnrollment(connection, 41);
-			break;
-		case 12:
-			EnrollmentController.getGradesByStudent(connection, 1);
-			break;
 		}
 	}
 

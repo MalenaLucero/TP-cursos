@@ -8,6 +8,7 @@ import base.DAO.AdminDB;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.EnrollmentStateMenu;
+import base.menu.GradeMenu;
 import base.menu.TeacherMenu;
 import base.menu.MainMenu;
 import base.menu.StudentMenu;
@@ -127,8 +128,14 @@ public class AppCursos {
 		}
 	}
 	
-	private static void grade(Scanner sc, Connection connection) {
-		// TODO Auto-generated method stub
+	private static void grade(Scanner sc, Connection connection) throws SQLException {
+		GradeMenu.printMenu();
+		int option = InputUtil.inputInt(sc);
+		while(option != 0) {
+			GradeMenu.chooseMenuOption(sc, connection, option);
+			GradeMenu.printMenu();
+			option = InputUtil.inputInt(sc);
+		}
 	}
 	
 	private static void runTests(Connection connection) throws SQLException {
@@ -137,7 +144,6 @@ public class AppCursos {
 		TeacherTest.testCrud(connection);
 		EnrollmentTest.testCrud(connection);
 		EnrollmentTest.testStudentsSearch(connection);
-		EnrollmentTest.testGradesSearch(connection);
 		EnrollmentStateTest.testStateChange(connection);
 	}
 }

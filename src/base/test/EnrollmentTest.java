@@ -26,8 +26,4 @@ public class EnrollmentTest {
 		EnrollmentController.getStudentsByCourse(connection, 1);
 		EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
 	}
-	
-	public static void testGradesSearch(Connection connection) throws SQLException {
-		EnrollmentController.getGradesByEnrollment(connection, 14);
-	}
 }

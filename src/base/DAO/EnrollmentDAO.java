@@ -5,11 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import base.model.Course;
 import base.model.Enrollment;
 import base.model.Student;
 
@@ -161,50 +158,5 @@ public class EnrollmentDAO {
 			enrollments.add(enrollment);
 		}
 		return enrollments;
-	}
-	
-	public static Map<String, Object> getGradesByEnrollment(Connection connection, int id_enrollment) throws SQLException{
-		String listString = "SELECT a.nombre, a.apellido, a.nombre_alternativo, i.*"
-				+ " FROM inscripcion i, alumno a WHERE i.id_alumno = a.id and i.id = ?";
-		PreparedStatement listEnrollments = connection.prepareStatement(listString);
-		listEnrollments.setInt(1, id_enrollment);
-		ResultSet res = listEnrollments.executeQuery();
-		Map<String, Object> gradesMap = new HashMap<String, Object>();
-		Student student = null;
-		Enrollment enrollment = null;
-		if(res.next()) {
-			student = new Student(res.getInt("id_alumno"), res.getString("nombre"),
-					res.getString("apellido"), res.getString("nombre_alternativo"));
-			enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-		}
-		gradesMap.put("student", student);
-		gradesMap.put("enrollment", enrollment);
-		return gradesMap;
-	}
-	
-	public static List<Map<String, Object>> getGradesByStudent(Connection connection, int id_student) throws SQLException{
-		String listString = "SELECT c.nombre AS nombre_curso, c.id_catedra, a.*, i.*"
-				+ " FROM inscripcion i, alumno a, curso c"
-				+ " WHERE i.id_alumno = a.id AND c.id = i.id_curso AND i.id_alumno = ?";
-		PreparedStatement listEnrollments = connection.prepareStatement(listString);
-		listEnrollments.setInt(1, id_student);
-		ResultSet res = listEnrollments.executeQuery();
-		List<Map<String, Object>> gradesList = new ArrayList<Map<String, Object>>();
-		while(res.next()) {
-			Student student = new Student(res.getInt("id_alumno"), res.getString("nombre"),
-					res.getString("apellido"), res.getString("nombre_alternativo"));
-			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-			Course course = new Course(res.getInt("id_curso"), res.getString("nombre_curso"), res.getInt("id_catedra"));
-			Map<String, Object> gradesMap = new HashMap<String, Object>();
-			gradesMap.put("student", student);
-			gradesMap.put("enrollment", enrollment);
-			gradesMap.put("course", course);
-			gradesList.add(gradesMap);
-		}
-		return gradesList;
 	}
 }
