@@ -10,43 +10,35 @@ import base.model.Enrollment;
 import base.util.ResponseUtil;
 
 public class EnrollmentStateController {
-	public static void activateEnrollment(int id, Connection connection) throws SQLException {
-		System.out.println("Activar inscripcion con ID " + id);
+	public static void changeByEnrollmentId(int id, Connection connection, EnrollmentState state) throws SQLException {
+		generateMessage(state, "inscripcion con ID " + id);
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
 		if(enrollment == null) {
 			System.out.println("Inscripcion no encontrada");
 		} else {
-			if(enrollment.getEnrollment_state().equals(EnrollmentState.activo.getValue())) {
-				System.err.println("La inscripcion ya esta activada");
+			if(enrollment.getEnrollment_state().equals(state.getValue())) {
+				System.err.println("La inscripcion ya tiene estado " + state.getValue());
 			} else {
-				changeEnrollmentState(connection, enrollment, EnrollmentState.activo.getValue());
+				changeEnrollmentState(connection, enrollment, state.getValue());
 			} 
 		}
 	}
 	
-	public static void cancelEnrollment(int id, Connection connection) throws SQLException {
-		System.out.println("Cancelar inscripcion con ID " + id);
-		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
-		if(enrollment == null) {
-			System.out.println("Inscripcion no encontrada");
-		} else {
-			if(enrollment.getEnrollment_state().equals(EnrollmentState.cancelado.getValue())) {
-				System.err.println("La inscripcion ya esta cancelada");
-			} else {
-				changeEnrollmentState(connection, enrollment, EnrollmentState.cancelado.getValue());
-			} 
-		}
-	}
-	
-	public static void activateEnrollmentsByStudent(Connection connection, int id_student) throws SQLException {
-		System.out.println("Activar inscripciones del alumno con ID " + id_student);
-		int res = EnrollmentStateDAO.changeByStudent(connection, id_student, EnrollmentState.activo.getValue());
+	public static void changeByStudentId(Connection connection, int id_student, EnrollmentState state) throws SQLException {
+		generateMessage(state, "inscripciones del alumno con ID " + id_student);
+		int res = EnrollmentStateDAO.changeByStudent(connection, id_student, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);
 	}
 	
-	public static void cancelEnrollmentsByStudent(Connection connection, int id_student) throws SQLException {
-		System.out.println("Cancelar inscripciones del alumno con ID " + id_student);
-		int res = EnrollmentStateDAO.changeByStudent(connection, id_student, EnrollmentState.cancelado.getValue());
+	public static void changeByCourse(Connection connection, int id_course, EnrollmentState state) throws SQLException {
+		generateMessage(state, "inscripciones del curso con ID " + id_course);
+		int res = EnrollmentStateDAO.changeByCourse(connection, id_course, state.getValue());
+		ResponseUtil.numberOfModifiedElements(res);
+	}
+	
+	public static void changeByCourseAndDivision(Connection connection, int id_course, String division, EnrollmentState state) throws SQLException {
+		generateMessage(state, "inscripciones del curso con ID " + id_course + " comision " + division);
+		int res = EnrollmentStateDAO.changeByCourseAndDivision(connection, id_course, division, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);
 	}
 
@@ -54,5 +46,13 @@ public class EnrollmentStateController {
 		enrollment.setEnrollment_state(state);
 		int res = EnrollmentDAO.edit(connection, enrollment);
 		ResponseUtil.editMessage(res);
+	}
+	
+	private static void generateMessage(EnrollmentState state, String message) {
+		if(state.getValue().equals(EnrollmentState.activo.getValue())) {
+			System.out.println("Activar " + message);
+		} else {
+			System.out.println("Cancelar " + message);
+		}
 	}
 }

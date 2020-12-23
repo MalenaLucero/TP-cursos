@@ -58,6 +58,9 @@ public class AppCursos {
 				case 5:
 					enrollmentState(sc, connection);
 					break;
+				case 6:
+					grade(sc, connection);
+					break;
 				case 99:
 					runTests(connection);
 					break;
@@ -124,6 +127,10 @@ public class AppCursos {
 		}
 	}
 	
+	private static void grade(Scanner sc, Connection connection) {
+		// TODO Auto-generated method stub
+	}
+	
 	private static void runTests(Connection connection) throws SQLException {
 		CourseTest.testCrud(connection);
 		StudentTest.testCrud(connection);
@@ -132,6 +139,5 @@ public class AppCursos {
 		EnrollmentTest.testStudentsSearch(connection);
 		EnrollmentTest.testGradesSearch(connection);
 		EnrollmentStateTest.testStateChange(connection);
-		
 	}
 }
