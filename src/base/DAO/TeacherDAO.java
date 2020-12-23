@@ -16,9 +16,7 @@ public class TeacherDAO {
 		ResultSet res = listTeachers.executeQuery();
 		List<Teacher> teachers = new ArrayList<Teacher>();
 		while(res.next()) {
-			Teacher teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo1"),
-								res.getString("nombre_alternativo2"), res.getString("descripcion"), res.getString("imagen"));
-			teachers.add(teacher);
+			teachers.add(generateTeacher(res));
 		}
 		return teachers;
 	}
@@ -30,8 +28,7 @@ public class TeacherDAO {
 		ResultSet res = findTeacher.executeQuery();
 		Teacher teacher = null;
 		if(res.next()) {
-			teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo1"),
-					res.getString("nombre_alternativo2"), res.getString("descripcion"), res.getString("imagen"));
+			teacher = generateTeacher(res);
 		}
 		return teacher;
 	}
@@ -44,8 +41,7 @@ public class TeacherDAO {
 		ResultSet res = findTeachers.executeQuery();
 		Teacher teacher = null;
 		if(res.next()) {
-			teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo1"),
-					res.getString("nombre_alternativo2"), res.getString("descripcion"), res.getString("imagen"));
+			teacher = generateTeacher(res);
 		}
 		return teacher;
 	}
@@ -82,5 +78,11 @@ public class TeacherDAO {
 		PreparedStatement deleteEnrollment = connection.prepareStatement(deleteString);
 		deleteEnrollment.setInt(1, id);
 		return deleteEnrollment.executeUpdate();
+	}
+	
+	private static Teacher generateTeacher(ResultSet res) throws SQLException {
+		return new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"),
+				res.getString("nombre_alternativo1"), res.getString("nombre_alternativo2"),
+				res.getString("descripcion"), res.getString("imagen"));
 	}
 }

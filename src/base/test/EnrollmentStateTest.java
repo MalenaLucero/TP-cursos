@@ -10,10 +10,10 @@ import base.util.PrintUtil;
 public class EnrollmentStateTest {
 	public static void testStateChange(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en editar estado de inscripcion");
-		EnrollmentStateController.changeByEnrollmentId(14, connection, EnrollmentState.cancelado);
-		EnrollmentStateController.changeByEnrollmentId(14, connection, EnrollmentState.activo);
-		EnrollmentStateController.changeByStudentId(connection, 1, EnrollmentState.cancelado);
-		EnrollmentStateController.changeByStudentId(connection, 1, EnrollmentState.activo);
+		EnrollmentStateController.changeByEnrollment(14, connection, EnrollmentState.cancelado);
+		EnrollmentStateController.changeByEnrollment(14, connection, EnrollmentState.activo);
+		EnrollmentStateController.changeByStudent(connection, 1, EnrollmentState.cancelado);
+		EnrollmentStateController.changeByStudent(connection, 1, EnrollmentState.activo);
 		EnrollmentStateController.changeByCourseAndDivision(connection, 1, "A", EnrollmentState.cancelado);
 		EnrollmentStateController.changeByCourseAndDivision(connection, 1, "A", EnrollmentState.activo);
 		EnrollmentStateController.changeByCourse(connection, 1, EnrollmentState.cancelado);

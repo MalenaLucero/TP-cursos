@@ -16,8 +16,7 @@ public class CourseDAO {
 		ResultSet res = listCourses.executeQuery();
 		List<Course> courses = new ArrayList<Course>();
 		while(res.next()) {
-			Course curso = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
-			courses.add(curso);
+			courses.add(generateCourse(res));
 		}
 		return courses;
 	}
@@ -29,7 +28,7 @@ public class CourseDAO {
 		ResultSet res = listCourses.executeQuery();
 		Course course = null;
 		if(res.next()) {
-			course = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+			course = generateCourse(res);
 		}
 		return course;
 	}
@@ -41,7 +40,7 @@ public class CourseDAO {
 		ResultSet res = listCourses.executeQuery();
 		Course course = null;
 		if(res.next()) {
-			course = new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+			course = generateCourse(res);
 		}
 		return course;
 	}
@@ -68,5 +67,9 @@ public class CourseDAO {
 		PreparedStatement deleteCourse = connection.prepareStatement(deleteString);
 		deleteCourse.setInt(1, id);
 		return deleteCourse.executeUpdate();
+	}
+	
+	private static Course generateCourse(ResultSet res) throws SQLException {
+		return new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
 	}
 }

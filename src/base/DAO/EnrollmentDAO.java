@@ -18,10 +18,7 @@ public class EnrollmentDAO {
 		ResultSet res = listEnrollments.executeQuery();
 		List<Enrollment> enrollments = new ArrayList<Enrollment>();
 		while(res.next()) {
-			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-			enrollments.add(enrollment);
+			enrollments.add(generateEnrollment(res));
 		}
 		return enrollments;
 	}
@@ -33,9 +30,7 @@ public class EnrollmentDAO {
 		ResultSet res = findEnrollment.executeQuery();
 		Enrollment enrollment = null;
 		if(res.next()) {
-			enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+			enrollment = generateEnrollment(res);
 		}
 		return enrollment;
 	}
@@ -47,10 +42,7 @@ public class EnrollmentDAO {
 		ResultSet res = listEnrollments.executeQuery();
 		List<Enrollment> enrollments = new ArrayList<Enrollment>();
 		while(res.next()) {
-			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-			enrollments.add(enrollment);
+			enrollments.add(generateEnrollment(res));
 		}
 		return enrollments;
 	}
@@ -63,9 +55,7 @@ public class EnrollmentDAO {
 		ResultSet res = findEnrollments.executeQuery();
 		Enrollment enrollment = null;
 		if(res.next()) {
-			enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+			enrollment = generateEnrollment(res);
 		}
 		return enrollment;
 	}
@@ -122,8 +112,7 @@ public class EnrollmentDAO {
 		ResultSet res = listStudents.executeQuery();
 		List<Student> students = new ArrayList<Student>();
 		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+			students.add(generateStudent(res));
 		}
 		return students;
 	}
@@ -138,8 +127,7 @@ public class EnrollmentDAO {
 		ResultSet res = listStudents.executeQuery();
 		List<Student> students = new ArrayList<Student>();
 		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+			students.add(generateStudent(res));
 		}
 		return students;
 	}
@@ -152,11 +140,18 @@ public class EnrollmentDAO {
 		ResultSet res = listEnrollments.executeQuery();
 		List<Enrollment> enrollments = new ArrayList<Enrollment>();
 		while(res.next()) {
-			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
-					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
-					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
-			enrollments.add(enrollment);
+			enrollments.add(generateEnrollment(res));
 		}
 		return enrollments;
+	}
+	
+	private static Enrollment generateEnrollment(ResultSet res) throws SQLException {
+		return new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
+				res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
+				res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+	}
+	
+	private static Student generateStudent(ResultSet res) throws SQLException {
+		return new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
 	}
 }

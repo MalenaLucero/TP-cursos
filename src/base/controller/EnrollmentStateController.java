@@ -10,7 +10,7 @@ import base.model.Enrollment;
 import base.util.ResponseUtil;
 
 public class EnrollmentStateController {
-	public static void changeByEnrollmentId(int id, Connection connection, EnrollmentState state) throws SQLException {
+	public static void changeByEnrollment(int id, Connection connection, EnrollmentState state) throws SQLException {
 		generateMessage(state, "inscripcion con ID " + id);
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
 		if(enrollment == null) {
@@ -24,7 +24,7 @@ public class EnrollmentStateController {
 		}
 	}
 	
-	public static void changeByStudentId(Connection connection, int id_student, EnrollmentState state) throws SQLException {
+	public static void changeByStudent(Connection connection, int id_student, EnrollmentState state) throws SQLException {
 		generateMessage(state, "inscripciones del alumno con ID " + id_student);
 		int res = EnrollmentStateDAO.changeByStudent(connection, id_student, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);

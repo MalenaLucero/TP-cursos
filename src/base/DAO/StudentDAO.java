@@ -16,8 +16,7 @@ public class StudentDAO {
 		ResultSet res = listStudents.executeQuery();
 		List<Student> students = new ArrayList<Student>();
 		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+			students.add(generateStudent(res));
 		}
 		return students;
 	}
@@ -29,8 +28,7 @@ public class StudentDAO {
 		ResultSet res = listStudents.executeQuery();
 		List<Student> students = new ArrayList<Student>();
 		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+			students.add(generateStudent(res));
 		}
 		return students;
 	}
@@ -42,7 +40,7 @@ public class StudentDAO {
 		ResultSet res = findStudent.executeQuery();
 		Student student = null;
 		if(res.next()) {
-			student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+			student = generateStudent(res);
 		}
 		return student;
 	}
@@ -55,7 +53,7 @@ public class StudentDAO {
 		ResultSet res = findStudents.executeQuery();
 		Student student = null;
 		if(res.next()) {
-			student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+			student = generateStudent(res);
 		}
 		return student;
 	}
@@ -67,8 +65,7 @@ public class StudentDAO {
 		ResultSet res = findStudents.executeQuery();
 		List<Student> students = new ArrayList<Student>();
 		while(res.next()) {
-			Student student = new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
-			students.add(student);
+			students.add(generateStudent(res));
 		}
 		return students;
 	}
@@ -97,5 +94,9 @@ public class StudentDAO {
 		PreparedStatement deleteStudent = connection.prepareStatement(deleteString);
 		deleteStudent.setInt(1, id);
 		return deleteStudent.executeUpdate();
+	}
+	
+	private static Student generateStudent(ResultSet res) throws SQLException {
+		return new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
 	}
 }

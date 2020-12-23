@@ -27,19 +27,19 @@ public class EnrollmentStateMenu {
 		switch(option) {
 		case 1:
 			int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
-			EnrollmentStateController.changeByEnrollmentId(id, connection, EnrollmentState.activo);
+			EnrollmentStateController.changeByEnrollment(id, connection, EnrollmentState.activo);
 			break;
 		case 2:
 			int id_enrollment = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
-			EnrollmentStateController.changeByEnrollmentId(id_enrollment, connection, EnrollmentState.cancelado);
+			EnrollmentStateController.changeByEnrollment(id_enrollment, connection, EnrollmentState.cancelado);
 			break;
 		case 3:
 			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			EnrollmentStateController.changeByStudentId(connection, id_student, EnrollmentState.activo);
+			EnrollmentStateController.changeByStudent(connection, id_student, EnrollmentState.activo);
 			break;
 		case 4:
 			int idStudent = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			EnrollmentStateController.changeByStudentId(connection, idStudent, EnrollmentState.cancelado);
+			EnrollmentStateController.changeByStudent(connection, idStudent, EnrollmentState.cancelado);
 		case 5:
 			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			String division = InputUtil.inputSingleWord(sc, "Ingrese comision");

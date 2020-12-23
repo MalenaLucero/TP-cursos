@@ -14,11 +14,13 @@ import base.model.Enrollment;
 import base.model.Student;
 
 public class GradeDAO {
+	private static final String SELECT = "SELECT i.*, a.nombre, a.apellido, a.nombre_alternativo, " +
+										"c.nombre AS nombre_curso, c.id_catedra " + 
+										"FROM inscripcion i, alumno a, curso c " + 
+										"WHERE i.id_alumno = a.id AND i.id_curso = c.id ";
+	
 	public static Map<String, Object> getByStudentAndCourse(Connection connection, int id_student, int id_course) throws SQLException {
-		String string = "SELECT i.*, a.nombre, a.apellido, a.nombre_alternativo, c.nombre AS nombre_curso, c.id_catedra " + 
-						"FROM inscripcion i, alumno a, curso c " + 
-						"WHERE i.id_alumno = a.id AND i.id_curso = c.id " + 
-						"AND i.id_alumno = ? AND i.id_curso = ?";
+		String string = SELECT + "AND i.id_alumno = ? AND i.id_curso = ?";
 		PreparedStatement query = connection.prepareStatement(string);
 		query.setInt(1, id_student);
 		query.setInt(2, id_course);
@@ -31,12 +33,14 @@ public class GradeDAO {
 	}
 	
 	public static List<Map<String, Object>> getByStudent(Connection connection, int id_student) throws SQLException {
-		String string = "SELECT i.*, a.nombre, a.apellido, a.nombre_alternativo, c.nombre AS nombre_curso, c.id_catedra " +
-						"FROM inscripcion i, alumno a, curso c " + 
-						"WHERE i.id_alumno = a.id AND i.id_curso = c.id AND i.id_alumno = ?";
+		String string = SELECT + "AND i.id_alumno = ?";
 		PreparedStatement query = connection.prepareStatement(string);
 		query.setInt(1, id_student);
 		ResultSet res = query.executeQuery();
+		return generateMapList(res);
+	}
+	
+	private static List<Map<String, Object>> generateMapList(ResultSet res) throws SQLException {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		while(res.next()) {
 			Map<String, Object> data = createDataMap(res);
