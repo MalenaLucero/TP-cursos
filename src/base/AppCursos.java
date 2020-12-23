@@ -7,10 +7,12 @@ import java.util.Scanner;
 import base.DAO.AdminDB;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
-import base.menu.MenuTeacher;
+import base.menu.EnrollmentStateMenu;
+import base.menu.TeacherMenu;
 import base.menu.MainMenu;
 import base.menu.StudentMenu;
 import base.test.CourseTest;
+import base.test.EnrollmentStateTest;
 import base.test.EnrollmentTest;
 import base.test.StudentTest;
 import base.test.TeacherTest;
@@ -48,10 +50,13 @@ public class AppCursos {
 					student(sc, connection);
 					break;
 				case 3:
-					enrollment(sc, connection);
+					teacher(sc, connection);
 					break;
 				case 4:
-					teacher(sc, connection);
+					enrollment(sc, connection);
+					break;
+				case 5:
+					enrollmentState(sc, connection);
 					break;
 				case 99:
 					runTests(connection);
@@ -100,11 +105,21 @@ public class AppCursos {
 	}
 	
 	private static void teacher(Scanner sc,Connection connection) throws SQLException {
-		MenuTeacher.printMenu();
+		TeacherMenu.printMenu();
 		int option = InputUtil.inputInt(sc);
 		while(option != 0) {
-			MenuTeacher.chooseMenuOption(sc, connection, option);
-			MenuTeacher.printMenu();
+			TeacherMenu.chooseMenuOption(sc, connection, option);
+			TeacherMenu.printMenu();
+			option = InputUtil.inputInt(sc);
+		}
+	}
+	
+	private static void enrollmentState(Scanner sc, Connection connection) throws SQLException {
+		EnrollmentStateMenu.printMenu();
+		int option = InputUtil.inputInt(sc);
+		while(option != 0) {
+			EnrollmentStateMenu.chooseMenuOption(sc, connection, option);
+			EnrollmentStateMenu.printMenu();
 			option = InputUtil.inputInt(sc);
 		}
 	}
@@ -114,8 +129,9 @@ public class AppCursos {
 		StudentTest.testCrud(connection);
 		TeacherTest.testCrud(connection);
 		EnrollmentTest.testCrud(connection);
-		EnrollmentTest.testChangeState(connection);
 		EnrollmentTest.testStudentsSearch(connection);
 		EnrollmentTest.testGradesSearch(connection);
+		EnrollmentStateTest.testStateChange(connection);
+		
 	}
 }

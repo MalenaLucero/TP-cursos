@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import base.DAO.TeacherDAO;
 import base.controller.TeacherController;
 import base.model.Teacher;
+import base.util.PrintUtil;
 
 public class TeacherTest {
 	public static void testCrud(Connection connection) throws SQLException {
+		PrintUtil.printMessage("Pruebas en el CRUD de docentes");
 		TeacherController.listAll(connection);
 		TeacherController.getById(connection, 3);
 		TeacherController.getByLastname(connection, "Yoongi", "Min");

@@ -9,7 +9,7 @@ import base.controller.TeacherController;
 import base.model.Teacher;
 import base.util.InputUtil;
 
-public class MenuTeacher {
+public class TeacherMenu {
 	public static void printMenu() {
 		System.out.println();
 		System.out.println("------ MENU DE DOCENTES ------");

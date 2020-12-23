@@ -83,6 +83,11 @@ public class Enrollment {
 	public void setAverage_grade(int average_grade) {
 		if(ValidationUtil.isGradeValid(average_grade)) {
 			this.average_grade = average_grade;
+			if(this.average_grade > 5) {
+				setCourseState(CourseState.aprobado.getValue());
+			} else {
+				setCourseState(CourseState.desaprobado.getValue());
+			}
 		}
 	}
 
@@ -133,6 +138,7 @@ public class Enrollment {
 	public void setGrade1(int grade1) {
 		if(ValidationUtil.isGradeValid(grade1)) {
 			this.grade1 = grade1;
+			setAverage_grade(calculateAverageGrade());
 		}
 	}
 
@@ -143,6 +149,7 @@ public class Enrollment {
 	public void setGrade2(int grade2) {
 		if(ValidationUtil.isGradeValid(grade2)) {
 			this.grade2 = grade2;
+			setAverage_grade(calculateAverageGrade());
 		}
 	}
 
@@ -153,5 +160,9 @@ public class Enrollment {
 			return String.format("ID: %s - ID alumno: %s - ID curso: %s - Estado: %s - Notas: %s, %s, %s - Año: %s",
 								id, id_student, id_course, course_state, grade1, grade2, average_grade, year);
 		}
+	}
+	
+	private int calculateAverageGrade() {
+		return (grade1 + grade2) / 2;
 	}
 }

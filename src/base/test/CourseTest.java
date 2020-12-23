@@ -6,10 +6,11 @@ import java.sql.SQLException;
 import base.DAO.CourseDAO;
 import base.controller.CourseController;
 import base.model.Course;
+import base.util.PrintUtil;
 
 public class CourseTest {
 	public static void testCrud(Connection connection) throws SQLException {
-		System.out.println("Pruebas en el CRUD de cursos");
+		PrintUtil.printMessage("Pruebas en el CRUD de cursos");
 		CourseController.listAll(connection);
 		CourseController.getById(connection, 1);
 		CourseController.getByName(connection, "piano 1");

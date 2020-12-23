@@ -11,7 +11,7 @@ import base.model.Course;
 
 public class CourseDAO {
 	public static List<Course> getAll(Connection connection) throws SQLException {
-		String listString = "SELECT * from curso";
+		String listString = "SELECT * from curso ORDER BY curso.nombre";
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		ResultSet res = listCourses.executeQuery();
 		List<Course> courses = new ArrayList<Course>();

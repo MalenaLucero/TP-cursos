@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import base.DAO.EnrollmentDAO;
-import base.enums.EnrollmentState;
 import base.model.Course;
 import base.model.Enrollment;
 import base.model.Student;
@@ -61,18 +60,6 @@ public class EnrollmentController {
 		System.out.println("Eliminar inscripcion");
 		int res = EnrollmentDAO.delete(id, connection);
 		ResponseUtil.deleteMessage(res);
-	}
-	
-	public static void changeEnrollmentState(Connection connection, int id_course, int id_student, String state) throws SQLException {
-		if(state.equals(EnrollmentState.activo.getValue())) {
-			System.out.println("Activar inscripcion");
-		} else if(state.equals(EnrollmentState.cancelado.getValue())){
-			System.out.println("Cancelar inscripcion");
-		} 
-		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
-		enrollment.setEnrollment_state(state);
-		int res = EnrollmentDAO.edit(connection, enrollment);
-		ResponseUtil.editMessage(res);
 	}
 	
 	public static void getStudentsByCourse(Connection connection, int id_course) throws SQLException {

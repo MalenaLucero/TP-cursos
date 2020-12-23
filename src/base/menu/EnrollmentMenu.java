@@ -2,17 +2,13 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import base.DAO.EnrollmentDAO;
-import base.DAO.StudentDAO;
 import base.controller.EnrollmentController;
 import base.enums.EnrollmentState;
 import base.model.Enrollment;
-import base.model.Student;
+import base.util.InputUtil;
 
 public class EnrollmentMenu {
 	public static void printMenu() {
@@ -24,12 +20,8 @@ public class EnrollmentMenu {
 		System.out.println("4. Agregar inscripcion");
 		System.out.println("5. Modificar inscripcion");
 		System.out.println("6. Eliminar inscripcion");
-		System.out.println("7. Cancelar inscripcion");
-		System.out.println("8. Activar inscripcion");
-		System.out.println("9. Listar alumnos por curso");
-		System.out.println("10. Listar alumnos por curso y comision");
-		System.out.println("11. Buscar notas por ID de inscripcion");
-		System.out.println("12. Buscar notas por ID de alumno");
+		System.out.println("7. Listar alumnos por curso");
+		System.out.println("8. Listar alumnos por curso y comision");
 		System.out.println("0. Volver al menu principal");
 	}
 	
@@ -39,35 +31,34 @@ public class EnrollmentMenu {
 			EnrollmentController.listAll(connection, 50);
 			break;
 		case 2:
-			EnrollmentController.getById(connection, 1);
+			int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
+			EnrollmentController.getById(connection, id);
 			break;
 		case 3:
-			EnrollmentController.getByCourseAndStudent(connection, 5, 1);
+			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso:");
+			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
+			EnrollmentController.getByCourseAndStudent(connection, id_course, id_student);
 			break;
 		case 4:
-			Enrollment enrollment = new Enrollment(1, 3);
+			Enrollment enrollment = createEnrollment(sc);
 			EnrollmentController.insert(connection, enrollment);
 			break;
 		case 5:
-			Enrollment editEnrollment = EnrollmentDAO.findById(connection, 10);
-			editEnrollment.setCourseState("aprobado");
-			editEnrollment.setYear(2020);
+			Enrollment editEnrollment = editEnrollment(sc, connection);
 			EnrollmentController.edit(connection, editEnrollment);
 			break;
 		case 6:
-			EnrollmentController.delete(connection, 11);
+			int deleteId = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
+			EnrollmentController.delete(connection, deleteId);
 			break;
 		case 7:
-			EnrollmentController.changeEnrollmentState(connection, 5, 5, EnrollmentState.cancelado.getValue());
+			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso:");
+			EnrollmentController.getStudentsByCourse(connection, courseId);
 			break;
 		case 8:
-			EnrollmentController.changeEnrollmentState(connection, 5, 5, EnrollmentState.activo.getValue());
-			break;
-		case 9:
-			EnrollmentController.getStudentsByCourse(connection, 5);
-			break;
-		case 10:
-			EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
+			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso:");
+			String division = InputUtil.inputSingleWord(sc, "Ingrese la comision");
+			EnrollmentController.getStudentsByCourseAndDivision(connection, idCourse, division);
 			break;
 		case 11:
 			EnrollmentController.getGradesByEnrollment(connection, 41);
@@ -75,67 +66,71 @@ public class EnrollmentMenu {
 		case 12:
 			EnrollmentController.getGradesByStudent(connection, 1);
 			break;
-		case 98:
-			int catedras[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-			for (int i = 0; i < catedras.length; i++) {
-				deleteRepeatedStudents(connection, catedras[i]);
-			}
-			break;
-		case 99:
-			uploadEnrollmentBatch(connection);
 		}
 	}
 
-	private static void uploadEnrollmentBatch(Connection connection) throws SQLException {
-		List<Enrollment> enrollments = new ArrayList<Enrollment>();
-		Random rand = new Random();  
-		int id_teacher = rand.nextInt(8) + 12;
-		int courses[] = {};
-		for(int i=0; i < courses.length; i++) {
-			int quantity = rand.nextInt(8) + 3;
-			List<Student> students = StudentDAO.getRandom(connection, quantity);
-			for(Student student: students) {
-				createEnrollmentList(student.getId(), courses[i], id_teacher, enrollments);
-			}
+	private static Enrollment createEnrollment(Scanner sc) {
+		int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
+		int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
+		Enrollment enrollment = new Enrollment(id_course, id_student);
+		if(Util.confirmOptionalField(sc, "comision y docente")) {
+			String division = InputUtil.inputSingleWord(sc, "Ingresar la comision");
+			enrollment.setDivision(division.toUpperCase());
+			int id_docente = InputUtil.inputInt(sc, "Ingresar ID del docente");
+			enrollment.setId_teacher(id_docente);
 		}
-		//for(Enrollment enrollment: enrollments) EnrollmentDAO.insert(enrollment, connection);
+		if(Util.confirmOptionalField(sc, "estado de inscripcion (valor por default: activo)")) {
+			int state = InputUtil.inputInt(sc, "Ingrese 1 para cargar estado de inscripcion como CANCELADO");
+			if(state == 1) enrollment.setEnrollment_state(EnrollmentState.cancelado.getValue());
+		}
+		if(Util.confirmOptionalField(sc, "notas")) {
+			int grade1 = InputUtil.inputInt(sc, "Ingrese la nota 1");
+			int grade2 = InputUtil.inputInt(sc, "Ingrese la nota 2");
+			enrollment.setGrade1(grade1);
+			enrollment.setGrade2(grade2);
+		}
+		if(Util.confirmOptionalField(sc, "ciclo lectivo (valor por default: 2021)")) {
+			int year = InputUtil.inputInt(sc, "Ingrese el ciclo lectivo");
+			enrollment.setYear(year);
+		}
+		return enrollment;
 	}
 
-	private static void createEnrollmentList(int id_student, int id_course, int id_teacher, List<Enrollment> enrollments) {
-		Random rand = new Random();  
-		String enrollment_state = "activo";
-		String division = "B";
-		int grade1 = rand.nextInt(7) + 4;
-		int grade2 = rand.nextInt(7) + 4;
-		int average_grade = (grade1 + grade2) / 2;
-		String course_state = average_grade > 5 ? "aprobado" : "desaprobado";
-		int year = 2020;
-		Enrollment enrollment = new Enrollment(id_course, id_student, enrollment_state, id_teacher,
-				division, grade1, grade2, average_grade, course_state, year);
-		enrollments.add(enrollment);
-	}
-	
-	public static void deleteRepeatedStudents(Connection connection, int id_catedra) throws SQLException {
-		List<Enrollment> enrollments = EnrollmentDAO.getByCatedra(connection, id_catedra);
-		List<Enrollment> firstAppearance = new ArrayList<Enrollment>();
-		List<Enrollment> repetitions = new ArrayList<Enrollment>();
-		for(Enrollment enrollment: enrollments) {
-			boolean isPresent = false;
-			for(Enrollment firstTime: firstAppearance) {
-				if(firstTime.getId_student() == enrollment.getId_student()) {
-					isPresent = true;
-				}
-			}
-			if(isPresent) {
-				repetitions.add(enrollment);
-			} else {
-				firstAppearance.add(enrollment);
-			}
+	private static Enrollment editEnrollment(Scanner sc, Connection connection) throws SQLException {
+		int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion a editar:");
+		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
+		if(Util.confirmEditMessage(sc, "curso", Integer.toString(enrollment.getId_course()))) {
+			int id_course = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setId_course(id_course);
 		}
-		System.out.println("Repetitions");
-		for(Enrollment a: repetitions) {
-			System.out.println(a);
-			EnrollmentDAO.delete(a.getId(), connection);
+		if(Util.confirmEditMessage(sc, "alumno", Integer.toString(enrollment.getId_student()))) {
+			int id_student = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setId_student(id_student);
 		}
+		if(Util.confirmEditMessage(sc, "estado de inscripcion", enrollment.getEnrollment_state())) {
+			String state = InputUtil.inputSingleWord(sc, "Ingrese el nuevo valor");
+			enrollment.setEnrollment_state(state.toLowerCase());
+		}
+		if(Util.confirmEditMessage(sc, "docente", Integer.toString(enrollment.getId_teacher()))) {
+			int id_teacher = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setId_teacher(id_teacher);
+		}
+		if(Util.confirmEditMessage(sc, "comision", enrollment.getDivision())) {
+			String division = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			enrollment.setDivision(division.toUpperCase());
+		}
+		if(Util.confirmEditMessage(sc, "nota 1", Integer.toString(enrollment.getGrade1()))) {
+			int grade1 = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setGrade1(grade1);
+		}
+		if(Util.confirmEditMessage(sc, "nota 2", Integer.toString(enrollment.getGrade2()))) {
+			int grade2 = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setGrade2(grade2);
+		}
+		if(Util.confirmEditMessage(sc, "ciclo lectivo", Integer.toString(enrollment.getYear()))) {
+			int year = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
+			enrollment.setYear(year);
+		}
+		return enrollment;
 	}
 }

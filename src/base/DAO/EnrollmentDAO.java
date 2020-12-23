@@ -43,6 +43,21 @@ public class EnrollmentDAO {
 		return enrollment;
 	}
 	
+	public static List<Enrollment> findByStudent(Connection connection, int id_student) throws SQLException {
+		String listString = "SELECT * FROM inscripcion WHERE id_alumno = ?";
+		PreparedStatement listEnrollments = connection.prepareStatement(listString);
+		listEnrollments.setInt(1, id_student);
+		ResultSet res = listEnrollments.executeQuery();
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		while(res.next()) {
+			Enrollment enrollment = new Enrollment(res.getInt("id"), res.getInt("id_curso"), res.getInt("id_alumno"),
+					res.getString("estado_inscripcion"), res.getInt("id_docente"), res.getString("comision"), res.getInt("nota1"),
+					res.getInt("nota2"), res.getInt("promedio"), res.getString("estado_cursada"), res.getInt("ciclo_lectivo"));
+			enrollments.add(enrollment);
+		}
+		return enrollments;
+	}
+	
 	public static Enrollment findByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
 		String listString = "SELECT * FROM inscripcion WHERE id_curso = ? AND id_alumno = ?";
 		PreparedStatement findEnrollments = connection.prepareStatement(listString);
