@@ -20,5 +20,7 @@ public class TeacherTest {
 		editTeacher.setName("NOMBRE");
 		TeacherController.edit(connection, editTeacher);
 		TeacherController.delete(connection, editTeacher.getId());
+		TeacherController.getCoursesByTeacher(connection, 3);
+		TeacherController.getBySimilarity(connection, "민");
 	}
 }

@@ -87,6 +87,6 @@ public class Teacher {
 	}
 	
 	public String toString() {
-		return String.format("ID: %s - Docente: %s %s - Imagen: %s", id, name, lastname, image);
+		return String.format("ID: %s - Docente: %s %s (%s)", id, name, lastname, alternative_name1);
 	}
 }

@@ -12,33 +12,19 @@ public class CourseController {
 	public static void listAll(Connection connection) throws SQLException {
 		System.out.println("Listado de cursos");
 		List<Course> courses = CourseDAO.getAll(connection);
-		if(courses.size() == 0) {
-			System.err.println("No se encontraron cursos");
-		} else {
-			for(Course course: courses) {
-				System.out.println(course);
-			}
-		}
+		printCourses(courses);
 	}
 	
 	public static void getById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar curso por ID");
 		Course course = CourseDAO.findById(connection, id);
-		if(course == null) {
-			System.err.println("No se encontro el curso");
-		} else {
-			System.out.println(course);
-		}
+		printCourse(course);
 	}
 	
 	public static void getByName(Connection connection, String name) throws SQLException {
 		System.out.println("Buscar curso por nombre");
 		Course course = CourseDAO.findByName(connection, name);
-		if(course == null) {
-			System.err.println("No se encontro el curso");
-		} else {
-			System.out.println(course);
-		}
+		printCourse(course);
 	}
 	
 	public static void insert(Connection connection, Course course) throws SQLException {
@@ -61,5 +47,23 @@ public class CourseController {
 		System.out.println("Eliminar curso");
 		int res = CourseDAO.delete(id, connection);
 		ResponseUtil.deleteMessage(res);
+	}
+	
+	private static void printCourse(Course course) {
+		if(course == null) {
+			System.err.println("No se encontro el curso");
+		} else {
+			System.out.println(course);
+		}
+	}
+	
+	private static void printCourses(List<Course> courses) {
+		if(courses.size() == 0) {
+			System.err.println("No se encontraron cursos");
+		} else {
+			for(Course course: courses) {
+				System.out.println(course);
+			}
+		}
 	}
 }

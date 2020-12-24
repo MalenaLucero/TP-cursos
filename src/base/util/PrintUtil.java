@@ -15,4 +15,10 @@ public class PrintUtil {
 		System.out.println();
 		System.out.println("Opcion invalida. Ingresala de nuevo.");
 	}
+	
+	public static void printIfNotBlank(String commonMessage, String blank) {
+		if(!StringUtil.isBlank(blank)) {
+			System.out.println(commonMessage + blank);
+		}
+	}
 }

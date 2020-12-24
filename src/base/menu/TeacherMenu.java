@@ -16,10 +16,12 @@ public class TeacherMenu {
 		System.out.println("1. Listar docentes");
 		System.out.println("2. Buscar docente por ID");
 		System.out.println("3. Buscar docente por nombre y apellido");
-		System.out.println("4. Agregar docente");
-		System.out.println("5. Modificar docente");
-		System.out.println("6. Eliminar docente");
-		System.out.println("7. Listar materias por docente");
+		System.out.println("4. Buscar docente por similitud");
+		System.out.println("5. Ver perfil completo de docente");
+		System.out.println("6. Listar materias por docente");
+		System.out.println("7. Agregar docente");
+		System.out.println("8. Modificar docente");
+		System.out.println("9. Eliminar docente");
 		System.out.println("0. Volver al menu principal");
 	}
 	
@@ -38,14 +40,26 @@ public class TeacherMenu {
 			TeacherController.getByLastname(connection, name, lastname);
 			break;
 		case 4:
+			String searchString = InputUtil.inputSingleWord(sc, "Ingrese palabra:");
+			TeacherController.getBySimilarity(connection, searchString);
+			break;
+		case 5:
+			int profile = InputUtil.inputInt(sc, "Ingrese ID del docente:");
+			TeacherController.getCompleteProfile(connection, profile);
+			break;
+		case 6:
+			int idCourses = InputUtil.inputInt(sc, "Ingrese ID del docente:");
+			TeacherController.getCoursesByTeacher(connection, idCourses);
+			break;
+		case 7:
 			Teacher teacher = createTeacher(sc);
 			TeacherController.insert(connection, teacher);
 			break;
-		case 5:
+		case 8:
 			Teacher editTeacher = editTeacher(sc, connection);
 			TeacherController.edit(connection, editTeacher);
 			break;
-		case 6:
+		case 9:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del docente:");
 			TeacherController.delete(connection, deleteId);
 			break;

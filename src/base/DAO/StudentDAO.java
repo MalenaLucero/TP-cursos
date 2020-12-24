@@ -14,11 +14,7 @@ public class StudentDAO {
 		String listString = "SELECT * FROM alumno";
 		PreparedStatement listStudents = connection.prepareStatement(listString);
 		ResultSet res = listStudents.executeQuery();
-		List<Student> students = new ArrayList<Student>();
-		while(res.next()) {
-			students.add(generateStudent(res));
-		}
-		return students;
+		return generateStudentList(res);
 	}
 	
 	public static List<Student> getRandom(Connection connection, int quantity) throws SQLException {
@@ -26,11 +22,7 @@ public class StudentDAO {
 		PreparedStatement listStudents = connection.prepareStatement(listString);
 		listStudents.setInt(1, quantity);
 		ResultSet res = listStudents.executeQuery();
-		List<Student> students = new ArrayList<Student>();
-		while(res.next()) {
-			students.add(generateStudent(res));
-		}
-		return students;
+		return generateStudentList(res);
 	}
 	
 	public static Student findById(Connection connection, int id) throws SQLException {
@@ -38,11 +30,7 @@ public class StudentDAO {
 		PreparedStatement findStudent = connection.prepareStatement(listString);
 		findStudent.setInt(1, id);
 		ResultSet res = findStudent.executeQuery();
-		Student student = null;
-		if(res.next()) {
-			student = generateStudent(res);
-		}
-		return student;
+		return res.next() ? generateStudent(res) : null;
 	}
 	
 	public static Student findByNameAndLastname(Connection connection, String name, String lastname) throws SQLException {
@@ -51,11 +39,7 @@ public class StudentDAO {
 		findStudents.setString(1, name);
 		findStudents.setString(2, lastname);
 		ResultSet res = findStudents.executeQuery();
-		Student student = null;
-		if(res.next()) {
-			student = generateStudent(res);
-		}
-		return student;
+		return res.next() ? generateStudent(res) : null;
 	}
 	
 	public static List<Student> findByLastname(Connection connection, String lastname) throws SQLException {
@@ -63,11 +47,7 @@ public class StudentDAO {
 		PreparedStatement findStudents = connection.prepareStatement(listString);
 		findStudents.setString(1, lastname);
 		ResultSet res = findStudents.executeQuery();
-		List<Student> students = new ArrayList<Student>();
-		while(res.next()) {
-			students.add(generateStudent(res));
-		}
-		return students;
+		return generateStudentList(res);
 	}
 	
 	public static int insert(Student student, Connection connection) throws SQLException {
@@ -98,5 +78,13 @@ public class StudentDAO {
 	
 	private static Student generateStudent(ResultSet res) throws SQLException {
 		return new Student(res.getInt("id"), res.getString("nombre"), res.getString("apellido"), res.getString("nombre_alternativo"));
+	}
+	
+	private static List<Student> generateStudentList(ResultSet res) throws SQLException{
+		List<Student> students = new ArrayList<Student>();
+		while(res.next()) {
+			students.add(generateStudent(res));
+		}
+		return students;
 	}
 }

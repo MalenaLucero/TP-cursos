@@ -27,6 +27,12 @@ public class Enrollment {
 		this.year = 2021;
 	}
 	
+	public Enrollment(int id_course, String division, int year) {
+		this.id_course = id_course;
+		this.division = Division.valueOf(division);
+		this.year = year;
+	}
+	
 	public Enrollment(int id_course, int id_student, String enrollment_state, int id_teacher,
 			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
 		this.id_course = id_course;

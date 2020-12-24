@@ -5,8 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import base.model.Course;
+import base.model.Enrollment;
 import base.model.Teacher;
 
 public class TeacherDAO {
@@ -14,11 +18,7 @@ public class TeacherDAO {
 		String listString = "SELECT * FROM docente";
 		PreparedStatement listTeachers = connection.prepareStatement(listString);
 		ResultSet res = listTeachers.executeQuery();
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		while(res.next()) {
-			teachers.add(generateTeacher(res));
-		}
-		return teachers;
+		return generateTeacherList(res);
 	}
 	
 	public static Teacher findById(Connection connection, int id) throws SQLException {
@@ -26,11 +26,7 @@ public class TeacherDAO {
 		PreparedStatement findTeacher = connection.prepareStatement(listString);
 		findTeacher.setInt(1, id);
 		ResultSet res = findTeacher.executeQuery();
-		Teacher teacher = null;
-		if(res.next()) {
-			teacher = generateTeacher(res);
-		}
-		return teacher;
+		return res.next() ? generateTeacher(res) : null;
 	}
 	
 	public static Teacher findByNameLastname(Connection connection, String name, String lastname) throws SQLException {
@@ -39,11 +35,7 @@ public class TeacherDAO {
 		findTeachers.setString(1, name);
 		findTeachers.setString(2, lastname);
 		ResultSet res = findTeachers.executeQuery();
-		Teacher teacher = null;
-		if(res.next()) {
-			teacher = generateTeacher(res);
-		}
-		return teacher;
+		return res.next() ? generateTeacher(res) : null;
 	}
 	
 	public static int insert(Teacher teacher, Connection connection) throws SQLException {
@@ -80,9 +72,52 @@ public class TeacherDAO {
 		return deleteEnrollment.executeUpdate();
 	}
 	
+	public static List<Map<String, Object>> getCoursesByTeacher(Connection connection, int id_teacher) throws SQLException {
+		String coursesString = "SELECT d.*, c.nombre AS nombre_curso, i.id_curso, i.comision, i.ciclo_lectivo " + 
+							"FROM inscripcion i, curso c, docente d " + 
+							"WHERE i.id_docente = d.id and i.id_curso = c.id and i.id_docente = ? " + 
+							"AND i.ciclo_lectivo = 2020 GROUP BY i.id_curso ORDER BY c.nombre";
+		PreparedStatement query = connection.prepareStatement(coursesString);
+		query.setInt(1, id_teacher);
+		ResultSet res = query.executeQuery();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		while(res.next()) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Teacher teacher = generateTeacher(res);
+			Course course = new Course(res.getString("nombre_curso"));
+			Enrollment enrollment = new Enrollment(res.getInt("id_curso"),
+					res.getString("comision"), res.getInt("ciclo_lectivo"));
+			map.put("teacher", teacher);
+			map.put("course", course);
+			map.put("enrollment", enrollment);
+			list.add(map);
+		}
+		return list;
+	}
+	
+	public static List<Teacher> getBySimilarity(Connection connection, String searchString) throws SQLException {
+		String string = "SELECT * FROM docente WHERE nombre LIKE ? or apellido LIKE ? " + 
+						"OR nombre_alternativo1 LIKE ? OR nombre_alternativo2 LIKE ?";
+		PreparedStatement listTeachers = connection.prepareStatement(string);
+		listTeachers.setString(1, "%" + searchString + "%");
+		listTeachers.setString(2, "%" + searchString + "%");
+		listTeachers.setString(3, "%" + searchString + "%");
+		listTeachers.setString(4, "%" + searchString + "%");
+		ResultSet res = listTeachers.executeQuery();
+		return generateTeacherList(res);
+	}
+	
 	private static Teacher generateTeacher(ResultSet res) throws SQLException {
 		return new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"),
 				res.getString("nombre_alternativo1"), res.getString("nombre_alternativo2"),
 				res.getString("descripcion"), res.getString("imagen"));
+	}
+	
+	private static List<Teacher> generateTeacherList(ResultSet res) throws SQLException {
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		while(res.next()) {
+			teachers.add(generateTeacher(res));
+		}
+		return teachers;
 	}
 }

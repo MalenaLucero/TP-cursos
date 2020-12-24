@@ -14,11 +14,7 @@ public class CourseDAO {
 		String listString = "SELECT * from curso ORDER BY curso.nombre";
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		ResultSet res = listCourses.executeQuery();
-		List<Course> courses = new ArrayList<Course>();
-		while(res.next()) {
-			courses.add(generateCourse(res));
-		}
-		return courses;
+		return generateCourseList(res);
 	}
 	
 	public static Course findById(Connection connection, int id) throws SQLException {
@@ -26,11 +22,7 @@ public class CourseDAO {
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		listCourses.setInt(1, id);
 		ResultSet res = listCourses.executeQuery();
-		Course course = null;
-		if(res.next()) {
-			course = generateCourse(res);
-		}
-		return course;
+		return res.next() ? generateCourse(res) : null;
 	}
 	
 	public static Course findByName(Connection connection, String name) throws SQLException {
@@ -38,11 +30,7 @@ public class CourseDAO {
 		PreparedStatement listCourses = connection.prepareStatement(listString);
 		listCourses.setString(1, name);
 		ResultSet res = listCourses.executeQuery();
-		Course course = null;
-		if(res.next()) {
-			course = generateCourse(res);
-		}
-		return course;
+		return res.next() ? generateCourse(res) : null;
 	}
 	
 	public static int insert(Course course, Connection connection) throws SQLException {
@@ -71,5 +59,13 @@ public class CourseDAO {
 	
 	private static Course generateCourse(ResultSet res) throws SQLException {
 		return new Course(res.getInt("id"), res.getString("nombre"), res.getInt("id_catedra"));
+	}
+	
+	private static List<Course> generateCourseList(ResultSet res) throws SQLException{
+		List<Course> courses = new ArrayList<Course>();
+		while(res.next()) {
+			courses.add(generateCourse(res));
+		}
+		return courses;
 	}
 }
