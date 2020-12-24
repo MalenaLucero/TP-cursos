@@ -1,5 +1,7 @@
 package base.model;
 
+import base.util.StringUtil;
+
 public class Student {
 	private int id;
 	private String name;
@@ -33,7 +35,7 @@ public class Student {
 	}
 
 	public void setName(String name) {
-		if(name == null || name.length() == 0) {
+		if(StringUtil.isBlank(name)) {
 			System.out.println("Nombre invalido");
 		} else {
 			this.name = name;
@@ -45,7 +47,7 @@ public class Student {
 	}
 
 	public void setLastname(String lastname) {
-		if(lastname == null || lastname.length() == 0) {
+		if(StringUtil.isBlank(lastname)) {
 			System.out.println("Apellido invalido");
 		} else {
 			this.lastname = lastname;
@@ -61,10 +63,10 @@ public class Student {
 	}
 	
 	public String toString() {
-		if(alternative_name != null && alternative_name.length() != 0) {
-			return String.format("ID: %s - Alumno: %s %s (%s)", id, name, lastname, alternative_name);
-		} else {
+		if(StringUtil.isBlank(alternative_name)) {
 			return String.format("ID: %s - Alumno: %s %s", id, name, lastname);
+		} else {
+			return String.format("ID: %s - Alumno: %s %s (%s)", id, name, lastname, alternative_name);
 		}
 	}
 }
