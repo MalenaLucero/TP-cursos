@@ -19,6 +19,7 @@ public class TeacherMenu {
 		System.out.println("4. Agregar docente");
 		System.out.println("5. Modificar docente");
 		System.out.println("6. Eliminar docente");
+		System.out.println("7. Listar materias por docente");
 		System.out.println("0. Volver al menu principal");
 	}
 	

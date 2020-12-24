@@ -15,6 +15,7 @@ import base.menu.StudentMenu;
 import base.test.CourseTest;
 import base.test.EnrollmentStateTest;
 import base.test.EnrollmentTest;
+import base.test.GradeTest;
 import base.test.StudentTest;
 import base.test.TeacherTest;
 import base.util.InputUtil;
@@ -145,5 +146,6 @@ public class AppCursos {
 		EnrollmentTest.testCrud(connection);
 		EnrollmentTest.testStudentsSearch(connection);
 		EnrollmentStateTest.testStateChange(connection);
+		GradeTest.test(connection);
 	}
 }

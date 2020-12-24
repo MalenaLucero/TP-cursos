@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import base.controller.GradeController;
+import base.util.InputUtil;
 
 public class GradeMenu {
 	public static void printMenu() {
@@ -21,10 +22,24 @@ public class GradeMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			GradeController.getByStudentAndCourse(connection, 1, 1);
+			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
+			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
+			GradeController.getByStudentAndCourse(connection, id_student, id_course);
 			break;
 		case 2: 
-			GradeController.getByStudent(connection, 1);
+			int idStudent = InputUtil.inputInt(sc, "Ingrese ID del alumno");
+			GradeController.getByStudent(connection, idStudent);
+			break;
+		case 3:
+			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso");
+			GradeController.getByCourse(connection, idCourse);
+			break;
+		case 4:
+			GradeController.getOverallBestAverage(connection);
+			break;
+		case 5:
+			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso");
+			GradeController.getBestAverageByCourse(connection, courseId);
 			break;
 		}
 	}

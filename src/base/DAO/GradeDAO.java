@@ -40,6 +40,32 @@ public class GradeDAO {
 		return generateMapList(res);
 	}
 	
+	public static List<Map<String, Object>> getByCourse(Connection connection, int id_course) throws SQLException {
+		String string = SELECT + "AND i.id_curso = ?";
+		PreparedStatement query = connection.prepareStatement(string);
+		query.setInt(1, id_course);
+		ResultSet res = query.executeQuery();
+		return generateMapList(res);
+	}
+	
+	public static List<Map<String, Object>> getOverallBestAverage(Connection connection) throws SQLException {
+		String string = SELECT + "AND promedio = (SELECT MAX(promedio) FROM inscripcion) "
+								+ "AND i.ciclo_lectivo = 2020"; 
+		PreparedStatement query = connection.prepareStatement(string);
+		ResultSet res = query.executeQuery();
+		return generateMapList(res);
+	}
+	
+	public static List<Map<String, Object>> getBestAverageByCourse(Connection connection, int id_course) throws SQLException {
+		String string = SELECT + "AND promedio = (SELECT MAX(promedio) FROM inscripcion WHERE id_curso = ?) "
+								+ "AND i.ciclo_lectivo = 2020 AND i.id_curso = ?"; 
+		PreparedStatement query = connection.prepareStatement(string);
+		query.setInt(1, id_course);
+		query.setInt(2, id_course);
+		ResultSet res = query.executeQuery();
+		return generateMapList(res);
+	}
+	
 	private static List<Map<String, Object>> generateMapList(ResultSet res) throws SQLException {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		while(res.next()) {
