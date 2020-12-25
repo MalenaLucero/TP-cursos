@@ -2,12 +2,15 @@ package base.menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Scanner;
 
 import base.DAO.TeacherDAO;
 import base.controller.TeacherController;
 import base.model.Teacher;
 import base.util.InputUtil;
+import base.util.StringUtil;
 
 public class TeacherMenu {
 	public static void printMenu() {
@@ -25,7 +28,7 @@ public class TeacherMenu {
 		System.out.println("0. Volver al menu principal");
 	}
 	
-	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
+	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException, ParseException {
 		switch(option) {
 		case 1:
 			TeacherController.listAll(connection);
@@ -66,7 +69,7 @@ public class TeacherMenu {
 		}
 	}
 	
-	private static Teacher createTeacher(Scanner sc) {
+	private static Teacher createTeacher(Scanner sc) throws ParseException {
 		String name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre");
 		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
 		String alternative_name1 = null;
@@ -85,10 +88,14 @@ public class TeacherMenu {
 		if(Util.confirmOptionalField(sc, "url de imagen")) {
 			image = InputUtil.inputStringNotBlank(sc, "Ingrese url de la imagen:");
 		}
-		return new Teacher(name, lastname, alternative_name1, alternative_name2, description, image);
+		Date birthdate = null;
+		if(Util.confirmOptionalField(sc, "fecha de nacimiento")) {
+			birthdate = InputUtil.inputDate(sc, "Ingrese fecha de nacimiento", "yyyy-MM-dd");
+		}
+		return new Teacher(name, lastname, alternative_name1, alternative_name2, description, image, birthdate);
 	}
 	
-	private static Teacher editTeacher(Scanner sc, Connection connection) throws SQLException {
+	private static Teacher editTeacher(Scanner sc, Connection connection) throws SQLException, ParseException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del docente a editar:");
 		Teacher teacher = TeacherDAO.findById(connection, id);
 		if(Util.confirmEditMessage(sc, "nombre", teacher.getName())) {
@@ -103,7 +110,7 @@ public class TeacherMenu {
 			String alternative_name1 = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
 			teacher.setAlternative_name1(alternative_name1);
 		}
-		if(Util.confirmEditMessage(sc, "nombre", teacher.getAlternative_name2())) {
+		if(Util.confirmEditMessage(sc, "segundo nombre alternativo", teacher.getAlternative_name2())) {
 			String alternative_name2 = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
 			teacher.setAlternative_name2(alternative_name2);
 		}
@@ -114,6 +121,10 @@ public class TeacherMenu {
 		if(Util.confirmEditMessage(sc, "url de imagen", teacher.getImage())) {
 			String image = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
 			teacher.setImage(image);
+		}
+		if(Util.confirmEditMessage(sc, "fecha de nacimiento", StringUtil.dateToString(teacher.getBirthdate()))) {
+			Date birthdate = InputUtil.inputDate(sc, "Ingrese fecha de nacimiento", "yyyy-MM-dd");
+			teacher.setBirthdate(birthdate);
 		}
 		return teacher;
 	}

@@ -1,5 +1,7 @@
 package base.model;
 
+import java.util.Date;
+
 public class Teacher {
 	private int id;
 	private String name;
@@ -8,23 +10,26 @@ public class Teacher {
 	private String alternative_name2;
 	private String description;
 	private String image;
+	private Date birthdate;
 	
 	public Teacher(String name, String lastname) {
 		this.name = name;
 		this.lastname = lastname;
 	}
 	
-	public Teacher(String name, String lastname, String alternative_name1, String alternative_name2, String description, String image) {
+	public Teacher(String name, String lastname, String alternative_name1, String alternative_name2,
+					String description, String image, Date birthdate) {
 		this.name = name;
 		this.lastname = lastname;
 		this.alternative_name1 = alternative_name1;
 		this.alternative_name2 = alternative_name2;
 		this.description = description;
 		this.image = image;
+		this.birthdate = birthdate;
 	}
 	
 	public Teacher(int id, String name, String lastname, String alternative_name1,
-					String alternative_name2, String description, String image) {
+					String alternative_name2, String description, String image, Date birthdate) {
 		this.id = id;
 		this.name = name;
 		this.lastname = lastname;
@@ -32,6 +37,7 @@ public class Teacher {
 		this.alternative_name2 = alternative_name2;
 		this.description = description;
 		this.image = image;
+		this.birthdate = birthdate;
 	}
 
 	public int getId() {
@@ -84,6 +90,14 @@ public class Teacher {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public Date getBirthdate() {
+		 return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 	
 	public String toString() {

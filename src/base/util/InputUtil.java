@@ -1,5 +1,8 @@
 package base.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class InputUtil {
@@ -40,5 +43,11 @@ public class InputUtil {
 			}
 		}
 		return input;
+	}
+	
+	public static Date inputDate(Scanner sc, String message, String format) throws ParseException {
+		String input = InputUtil.inputSingleWord(sc, message + " en formato " + format);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.parse(input);
 	}
 }

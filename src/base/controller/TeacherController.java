@@ -70,6 +70,7 @@ public class TeacherController {
 		System.out.println("Apellido: " + teacher.getLastname());
 		PrintUtil.printIfNotBlank("Nombre alternativo: ", teacher.getAlternative_name1());
 		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternative_name2());
+		PrintUtil.printIfNotBlank("Fecha de nacimiento: ", StringUtil.dateToString(teacher.getBirthdate()));
 		PrintUtil.printIfNotBlank("Foto de perfil: ", teacher.getImage());
 		if(!StringUtil.isBlank(teacher.getDescription())) {
 			System.out.println("Descripcion:");

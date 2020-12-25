@@ -39,8 +39,8 @@ public class TeacherDAO {
 	}
 	
 	public static int insert(Teacher teacher, Connection connection) throws SQLException {
-		String insertString = "INSERT INTO docente (nombre, apellido, nombre_alternativo1, nombre_alternativo2, descripcion, imagen)"
-								+ "values (?, ?, ?, ?, ?, ?)";
+		String insertString = "INSERT INTO docente (nombre, apellido, nombre_alternativo1, nombre_alternativo2, " + 
+								"descripcion, imagen, fecha_nacimiento) values (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement addTeacher = connection.prepareStatement(insertString);
 		addTeacher.setString(1, teacher.getName());
 		addTeacher.setString(2, teacher.getLastname());
@@ -48,12 +48,14 @@ public class TeacherDAO {
 		addTeacher.setString(4, teacher.getAlternative_name2());
 		addTeacher.setString(5, teacher.getDescription());
 		addTeacher.setString(6, teacher.getImage());
+		Util.setPossibleNullDate(addTeacher, 7, teacher.getBirthdate());
 		return addTeacher.executeUpdate();
 	}
 	
 	public static int edit(Connection connection, Teacher teacher) throws SQLException {
 		String editString = "UPDATE docente SET nombre = ?, apellido = ?, nombre_alternativo1 = ?,"
-							+ "nombre_alternativo2 = ?, descripcion = ?, imagen = ? WHERE id = ?";
+							+ "nombre_alternativo2 = ?, descripcion = ?, imagen = ?, "
+							+ "fecha_nacimiento = ? WHERE id = ?";
 		PreparedStatement editTeacher = connection.prepareStatement(editString);
 		editTeacher.setString(1, teacher.getName());
 		editTeacher.setString(2, teacher.getLastname());
@@ -61,7 +63,8 @@ public class TeacherDAO {
 		editTeacher.setString(4, teacher.getAlternative_name2());
 		editTeacher.setString(5, teacher.getDescription());
 		editTeacher.setString(6, teacher.getImage());
-		editTeacher.setInt(7, teacher.getId());
+		Util.setPossibleNullDate(editTeacher, 7, teacher.getBirthdate());
+		editTeacher.setInt(8, teacher.getId());
 		return editTeacher.executeUpdate();
 	}
 	
@@ -108,9 +111,10 @@ public class TeacherDAO {
 	}
 	
 	private static Teacher generateTeacher(ResultSet res) throws SQLException {
-		return new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"),
+		Teacher teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"),
 				res.getString("nombre_alternativo1"), res.getString("nombre_alternativo2"),
-				res.getString("descripcion"), res.getString("imagen"));
+				res.getString("descripcion"), res.getString("imagen"), res.getDate("fecha_nacimiento"));
+		return teacher;
 	}
 	
 	private static List<Teacher> generateTeacherList(ResultSet res) throws SQLException {

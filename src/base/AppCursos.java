@@ -2,6 +2,7 @@ package base;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 import base.DAO.AdminDB;
@@ -109,7 +110,7 @@ public class AppCursos {
 		}
 	}
 	
-	private static void teacher(Scanner sc,Connection connection) throws SQLException {
+	private static void teacher(Scanner sc,Connection connection) throws SQLException, ParseException {
 		TeacherMenu.printMenu();
 		int option = InputUtil.inputInt(sc);
 		while(option != 0) {
