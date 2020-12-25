@@ -9,7 +9,7 @@ import base.model.Enrollment;
 import base.model.Student;
 import base.util.ResponseUtil;
 
-public class EnrollmentController {
+public class EnrollmentController{
 	public static void listAll(Connection connection, int limit) throws SQLException {
 		System.out.println("Listado de inscripciones. Limite: " + limit);
 		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection, limit);

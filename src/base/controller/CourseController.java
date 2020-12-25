@@ -8,7 +8,7 @@ import base.DAO.CourseDAO;
 import base.model.Course;
 import base.util.ResponseUtil;
 
-public class CourseController {
+public class CourseController{
 	public static void listAll(Connection connection) throws SQLException {
 		System.out.println("Listado de cursos");
 		List<Course> courses = CourseDAO.getAll(connection);

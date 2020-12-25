@@ -3,6 +3,7 @@ package base.controller;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import base.util.PrintUtil;
 import base.util.ResponseUtil;
 import base.util.StringUtil;
 
-public class TeacherController {
+public class TeacherController{
 	public static void listAll(Connection connection) throws SQLException {
 		System.out.println("Listado de docentes");
 		List<Teacher> teachers = TeacherDAO.getAll(connection);
@@ -73,6 +74,9 @@ public class TeacherController {
 		PrintUtil.printIfNotBlank("Nombre alternativo: ", teacher.getAlternative_name1());
 		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternative_name2());
 		PrintUtil.printIfNotBlank("Fecha de nacimiento: ", StringUtil.dateToString(teacher.getBirthdate()));
+		if(teacher.getBirthdate() != null) {
+			System.out.println("Edad: " + calculateAge(teacher.getBirthdate()) + " años");
+		}
 		PrintUtil.printIfNotBlank("Foto de perfil: ", teacher.getImage());
 		if(!StringUtil.isBlank(teacher.getDescription())) {
 			System.out.println("Descripcion:");
@@ -150,6 +154,16 @@ public class TeacherController {
 			return getNextMonthsBirthdays(connection, nextMonth);
 		} else {
 			return teachers;
+		}
+	}
+	
+	private static int calculateAge(Date birthdate) {
+		if((DateUtil.getMonth(birthdate) < DateUtil.getCurrentMonth()) ||
+			(DateUtil.getMonth(birthdate) == DateUtil.getCurrentMonth()
+			&& DateUtil.getDay(birthdate) <= DateUtil.getCurrentDay())) {
+			return DateUtil.getCurrentYear() - DateUtil.getYear(birthdate);
+		} else {
+			return DateUtil.getCurrentYear() - DateUtil.getYear(birthdate) - 1;
 		}
 	}
 }

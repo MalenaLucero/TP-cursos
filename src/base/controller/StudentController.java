@@ -12,7 +12,7 @@ import base.model.Student;
 import base.util.PrintUtil;
 import base.util.ResponseUtil;
 
-public class StudentController {
+public class StudentController{
 	public static void listAll(Connection connection) throws SQLException {
 		System.out.println("Listado de alumnos");
 		List<Student> students = StudentDAO.getAll(connection);
