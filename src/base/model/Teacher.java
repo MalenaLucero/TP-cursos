@@ -103,4 +103,8 @@ public class Teacher {
 	public String toString() {
 		return String.format("ID: %s - Docente: %s %s (%s)", id, name, lastname, alternative_name1);
 	}
+	
+	public String toStringBirthday() {
+		return String.format("Docente: %s %s - Fecha de cumpleaños: %s", name, lastname, birthdate);
+	}
 }

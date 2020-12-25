@@ -110,6 +110,14 @@ public class TeacherDAO {
 		return generateTeacherList(res);
 	}
 	
+	public static List<Teacher> getMonthsBirthdays(Connection connection, int month) throws SQLException{
+		String string = "SELECT * FROM docente WHERE MONTH(fecha_nacimiento) = ? ORDER BY DAY(fecha_nacimiento)";
+		PreparedStatement listTeachers = connection.prepareStatement(string);
+		listTeachers.setInt(1, month);
+		ResultSet res = listTeachers.executeQuery();
+		return generateTeacherList(res);
+	}
+	
 	private static Teacher generateTeacher(ResultSet res) throws SQLException {
 		Teacher teacher = new Teacher(res.getInt("id"), res.getString("nombre"), res.getString("apellido"),
 				res.getString("nombre_alternativo1"), res.getString("nombre_alternativo2"),

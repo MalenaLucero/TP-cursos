@@ -2,6 +2,7 @@ package base.controller;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import base.DAO.TeacherDAO;
 import base.model.Course;
 import base.model.Enrollment;
 import base.model.Teacher;
+import base.util.DateUtil;
 import base.util.PrintUtil;
 import base.util.ResponseUtil;
 import base.util.StringUtil;
@@ -84,6 +86,38 @@ public class TeacherController {
 		printTeachers(teachers);
 	}
 	
+	public static void getNextBirthday(Connection connection) throws SQLException {
+		PrintUtil.printMessage("Proximo cumpleaños:");
+		int currentDay = DateUtil.getCurrentDay();
+		int currentMonth = DateUtil.getCurrentMonth();
+		List<Teacher> teachers = TeacherDAO.getMonthsBirthdays(connection, currentMonth);
+		List<Teacher> nextBirthdays = new ArrayList<Teacher>();
+		for(Teacher teacher: teachers) {
+			if(currentDay <= DateUtil.getDay(teacher.getBirthdate())) {
+				nextBirthdays.add(teacher);
+			}
+		}
+		if(nextBirthdays.size() > 0) {
+			printTeacherBirthday(nextBirthdays.get(0));
+		} else if(nextBirthdays.size() == 0) {
+			List<Teacher> nextMonths = getNextMonthsBirthdays(connection, currentMonth);
+			printTeacherBirthday(nextMonths.get(0));
+		}
+	}
+	
+	public static void getCurrentMonthBirthdays(Connection connection) throws SQLException {
+		PrintUtil.printMessage("Docentes que cumplen años este mes:");
+		int currentMonth = DateUtil.getCurrentMonth();
+		List<Teacher> teachers = TeacherDAO.getMonthsBirthdays(connection, currentMonth);
+		if(teachers.size() == 0) {
+			System.err.println("No hay cumpleaños este mes");
+		} else {
+			for(Teacher teacher: teachers) {
+				printTeacherBirthday(teacher);
+			}
+		}
+	}
+	
 	private static void printTeacher(Teacher teacher) {
 		if(teacher == null) {
 			System.err.println("No se encontro el docente");
@@ -99,6 +133,23 @@ public class TeacherController {
 			for(Teacher teacher: teachers) {
 				System.out.println(teacher);
 			}
+		}
+	}
+	
+	private static void printTeacherBirthday(Teacher teacher) {
+		System.out.print(teacher.getName() + " ");
+		System.out.print(teacher.getLastname() + " ");
+		System.out.print(" Dia: " + DateUtil.getDay(teacher.getBirthdate()));
+		System.out.println("-" + DateUtil.getMonth(teacher.getBirthdate()));
+	}
+	
+	private static List<Teacher> getNextMonthsBirthdays(Connection connection, int month) throws SQLException {
+		int nextMonth = month == 12 ? 1 : month + 1;
+		List<Teacher> teachers = TeacherDAO.getMonthsBirthdays(connection, nextMonth);
+		if(teachers.size() == 0) {
+			return getNextMonthsBirthdays(connection, nextMonth);
+		} else {
+			return teachers;
 		}
 	}
 }

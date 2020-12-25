@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 import base.DAO.AdminDB;
+import base.controller.TeacherController;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.EnrollmentStateMenu;
@@ -111,6 +112,8 @@ public class AppCursos {
 	}
 	
 	private static void teacher(Scanner sc,Connection connection) throws SQLException, ParseException {
+		TeacherController.getNextBirthday(connection);
+		TeacherController.getCurrentMonthBirthdays(connection);
 		TeacherMenu.printMenu();
 		int option = InputUtil.inputInt(sc);
 		while(option != 0) {

@@ -11,6 +11,8 @@ import base.util.PrintUtil;
 public class TeacherTest {
 	public static void testCrud(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en el CRUD de docentes");
+		TeacherController.getNextBirthday(connection);
+		TeacherController.getCurrentMonthBirthdays(connection);
 		TeacherController.listAll(connection);
 		TeacherController.getById(connection, 3);
 		TeacherController.getByLastname(connection, "Yoongi", "Min");
