@@ -33,7 +33,7 @@ public class CourseMenu {
 			CourseController.getById(connection, id);
 			break;
 		case 3:
-			String name = InputUtil.inputString(sc, "Ingrese nombre del curso:");
+			String name = InputUtil.inputLine(sc, "Ingrese nombre del curso:");
 			CourseController.getByName(connection, name);
 			break;
 		case 4:
@@ -55,7 +55,7 @@ public class CourseMenu {
 	}
 
 	private static Course createCourse(Scanner sc) {
-		String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nombre del curso");
+		String name = InputUtil.inputLine(sc, "Ingrese el nombre del curso");
 		int id_catedra = InputUtil.inputInt(sc, "Ingresar ID de catedra (o 0 si se desconoce)");
 		return new Course(name, id_catedra);
 	}
@@ -64,7 +64,7 @@ public class CourseMenu {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del curso a editar:");
 		Course course = CourseDAO.findById(connection, id);
 		if(Util.confirmEditMessage(sc, "nombre", course.getName())) {
-			String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			String name = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			course.setName(name);
 		}
 		if(Util.confirmEditMessage(sc, "catedra", Integer.toString(course.getCatedra()))) {

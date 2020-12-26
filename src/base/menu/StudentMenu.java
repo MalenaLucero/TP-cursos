@@ -67,11 +67,11 @@ public class StudentMenu {
 	}
 	
 	private static Student createStudent(Scanner sc) {
-		String name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre");
+		String name = InputUtil.inputLine(sc, "Ingrese nombre");
 		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
 		String alternative_name = null;
 		if(Util.confirmOptionalField(sc, "nombre alternativo")) {
-			alternative_name = InputUtil.inputStringNotBlank(sc, "Ingrese nombre alternativo:");
+			alternative_name = InputUtil.inputLine(sc, "Ingrese nombre alternativo:");
 		}
 		return new Student(name, lastname, alternative_name);
 	}
@@ -80,15 +80,15 @@ public class StudentMenu {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del alumno a editar:");
 		Student student = StudentDAO.findById(connection, id);
 		if(Util.confirmEditMessage(sc, "nombre", student.getName())) {
-			String name = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			String name = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setName(name);
 		}
 		if(Util.confirmEditMessage(sc, "apellido", student.getLastname())) {
-			String lastname = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			String lastname = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setLastname(lastname);
 		}
 		if(Util.confirmEditMessage(sc, "nombre alternativo", student.getAlternative_name())) {
-			String altName = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			String altName = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setAlternative_name(altName);
 		}
 		return student;

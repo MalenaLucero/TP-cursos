@@ -28,7 +28,8 @@ public class EnrollmentMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			EnrollmentController.listAll(connection, 50);
+			int limit = InputUtil.inputInt(sc, "Ingrese la cantidad de registros");
+			EnrollmentController.listAll(connection, limit);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
@@ -110,7 +111,7 @@ public class EnrollmentMenu {
 			enrollment.setId_teacher(id_teacher);
 		}
 		if(Util.confirmEditMessage(sc, "comision", enrollment.getDivision())) {
-			String division = InputUtil.inputStringNotBlank(sc, "Ingrese el nuevo valor:");
+			String division = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			enrollment.setDivision(division.toUpperCase());
 		}
 		if(Util.confirmEditMessage(sc, "nota 1", Integer.toString(enrollment.getGrade1()))) {

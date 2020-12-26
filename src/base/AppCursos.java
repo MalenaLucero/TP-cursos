@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 import base.DAO.AdminDB;
-import base.controller.TeacherController;
+import base.controller.BirthdayController;
 import base.menu.CourseMenu;
 import base.menu.EnrollmentMenu;
 import base.menu.EnrollmentStateMenu;
@@ -38,7 +38,7 @@ public class AppCursos {
 		System.out.println("Bienvenido al sistema de cursos");
 		MainMenu.printMainMenu();
 		Scanner sc = new Scanner(System.in);
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		
 		try {
 			PrintUtil.printMessage("Conectando a la base de datos...");
@@ -73,7 +73,7 @@ public class AppCursos {
 					break;
 				}
 				MainMenu.printMainMenu();
-				option = InputUtil.inputInt(sc);
+				option = InputUtil.inputIntMenuOption(sc);
 			}
 		} catch(Exception e) {
 			System.out.println(e);
@@ -83,63 +83,62 @@ public class AppCursos {
 
 	private static void course(Scanner sc, Connection connection) throws SQLException {
 		CourseMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			CourseMenu.chooseMenuOption(sc, connection, option);
 			CourseMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
 	private static void student(Scanner sc, Connection connection) throws SQLException {
 		StudentMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			StudentMenu.chooseMenuOption(sc, connection, option);
 			StudentMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
 	private static void enrollment(Scanner sc, Connection connection) throws SQLException {
 		EnrollmentMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			EnrollmentMenu.chooseMenuOption(sc, connection, option);
 			EnrollmentMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
 	private static void teacher(Scanner sc,Connection connection) throws SQLException, ParseException {
-		TeacherController.getNextBirthday(connection);
-		TeacherController.getCurrentMonthBirthdays(connection);
+		BirthdayController.showBirthdays(connection);
 		TeacherMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			TeacherMenu.chooseMenuOption(sc, connection, option);
 			TeacherMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
 	private static void enrollmentState(Scanner sc, Connection connection) throws SQLException {
 		EnrollmentStateMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			EnrollmentStateMenu.chooseMenuOption(sc, connection, option);
 			EnrollmentStateMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
 	private static void grade(Scanner sc, Connection connection) throws SQLException {
 		GradeMenu.printMenu();
-		int option = InputUtil.inputInt(sc);
+		int option = InputUtil.inputIntMenuOption(sc);
 		while(option != 0) {
 			GradeMenu.chooseMenuOption(sc, connection, option);
 			GradeMenu.printMenu();
-			option = InputUtil.inputInt(sc);
+			option = InputUtil.inputIntMenuOption(sc);
 		}
 	}
 	
