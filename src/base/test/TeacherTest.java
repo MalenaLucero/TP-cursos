@@ -16,6 +16,7 @@ public class TeacherTest {
 		TeacherController.listAll(connection);
 		TeacherController.getById(connection, 3);
 		TeacherController.getByLastname(connection, "Yoongi", "Min");
+		TeacherController.getCompleteProfile(connection, 3);
 		Teacher addTeacher = new Teacher("nombre", "apellido");
 		TeacherController.insert(connection, addTeacher);
 		Teacher editTeacher = TeacherDAO.findByNameLastname(connection, addTeacher.getName(), addTeacher.getLastname());

@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import base.DAO.TeacherDAO;
+import base.externalAPI.KanjiAPI;
 import base.model.Course;
 import base.model.Enrollment;
+import base.model.Kanji;
 import base.model.Teacher;
 import base.util.DateUtil;
 import base.util.PrintUtil;
@@ -73,6 +75,12 @@ public class TeacherController{
 		System.out.println("Apellido: " + teacher.getLastname());
 		PrintUtil.printIfNotBlank("Nombre alternativo: ", teacher.getAlternative_name1());
 		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternative_name2());
+		System.out.println("Buscando significado de los kanjis en API externa...");
+		if(teacher.getAlternative_name2() == null) {
+			getKanjiMeanigs(teacher.getAlternative_name1());
+		} else {
+			getKanjiMeanigs(teacher.getAlternative_name2());
+		}
 		PrintUtil.printIfNotBlank("Fecha de nacimiento: ", StringUtil.dateToString(teacher.getBirthdate()));
 		if(teacher.getBirthdate() != null) {
 			System.out.println("Edad: " + calculateAge(teacher.getBirthdate()) + " años");
@@ -81,6 +89,17 @@ public class TeacherController{
 		if(!StringUtil.isBlank(teacher.getDescription())) {
 			System.out.println("Descripcion:");
 			System.out.println(teacher.getDescription());
+		}
+	}
+	
+	private static void getKanjiMeanigs(String kanjiName) {
+		for(int i = 0; i < kanjiName.length(); i++) {
+			String kanjiToSearch = Character.toString(kanjiName.charAt(i));
+			Kanji kanji = KanjiAPI.getKanjiData(kanjiToSearch);
+			System.out.println("Kanji: " + kanjiToSearch);
+			if(kanji != null) {
+				System.out.println("Significado: " + kanji.getMeanings());
+			}
 		}
 	}
 	

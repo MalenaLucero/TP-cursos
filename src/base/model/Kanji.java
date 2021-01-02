@@ -11,11 +11,20 @@ public class Kanji {
 		this.meanings = meanings;
 	}
 	
+	public String getMeanings() {
+		return createMeaningsString();
+	}
+	
 	public String toString() {
+		String meaningsString = createMeaningsString();
+		return String.format("Kanji: %s - Significado: %s", kanji, meaningsString);
+	}
+	
+	private String createMeaningsString() {
 		String meaningsString = "";
 		for(String meaning: meanings) {
-			meaningsString += " " + meaning;
+			meaningsString += ", " + meaning;
 		}
-		return String.format("Kanji: %s - Significado:%s", kanji, meaningsString);
+		return meaningsString.substring(2);
 	}
 }
