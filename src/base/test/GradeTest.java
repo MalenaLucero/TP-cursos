@@ -7,10 +7,10 @@ import base.controller.GradeController;
 
 public class GradeTest {
 	public static void test(Connection connection) throws SQLException {
-		GradeController.getByStudentAndCourse(connection, 1, 1);
-		GradeController.getByStudent(connection, 1);
-		GradeController.getByCourse(connection, 1);
-		GradeController.getOverallBestAverage(connection);
-		GradeController.getBestAverageByCourse(connection, 1);
+		GradeController.findByStudentIdAndCourseId(connection, 1, 1);
+		GradeController.findByStudentId(connection, 1);
+		GradeController.findByCourseId(connection, 1);
+		GradeController.findOverallBestAverage(connection);
+		GradeController.findBestAverageByCourseId(connection, 1);
 	}
 }

@@ -31,16 +31,16 @@ public class EnrollmentMenu {
 		switch(option) {
 		case 1:
 			int limit = InputUtil.inputInt(sc, "Ingrese la cantidad de registros");
-			EnrollmentController.listAll(connection, limit);
+			EnrollmentController.findAll(connection, limit);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
-			EnrollmentController.getById(connection, id);
+			EnrollmentController.findById(connection, id);
 			break;
 		case 3:
 			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso:");
 			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
-			EnrollmentController.getByCourseAndStudent(connection, id_course, id_student);
+			EnrollmentController.findByCourseIdAndStudentId(connection, id_course, id_student);
 			break;
 		case 4:
 			Enrollment enrollment = createEnrollment(sc);
@@ -56,12 +56,12 @@ public class EnrollmentMenu {
 			break;
 		case 7:
 			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso:");
-			EnrollmentController.getStudentsByCourse(connection, courseId);
+			EnrollmentController.findStudentsByCourseId(connection, courseId);
 			break;
 		case 8:
 			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso:");
 			String division = InputUtil.inputSingleWord(sc, "Ingrese la comision");
-			EnrollmentController.getStudentsByCourseAndDivision(connection, idCourse, division);
+			EnrollmentController.findStudentsByCourseIdAndDivision(connection, idCourse, division);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

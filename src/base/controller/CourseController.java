@@ -9,19 +9,19 @@ import base.model.Course;
 import base.util.ResponseUtil;
 
 public class CourseController{
-	public static void listAll(Connection connection) throws SQLException {
+	public static void findAll(Connection connection) throws SQLException {
 		System.out.println("Listado de cursos");
 		List<Course> courses = CourseDAO.getAll(connection);
 		printCourses(courses);
 	}
 	
-	public static void getById(Connection connection, int id) throws SQLException {
+	public static void findById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar curso por ID");
 		Course course = CourseDAO.findById(connection, id);
 		printCourse(course);
 	}
 	
-	public static void getByName(Connection connection, String name) throws SQLException {
+	public static void findByName(Connection connection, String name) throws SQLException {
 		System.out.println("Buscar curso por nombre");
 		Course course = CourseDAO.findByName(connection, name);
 		printCourse(course);

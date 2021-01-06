@@ -37,28 +37,28 @@ public class EnrollmentStateMenu {
 			break;
 		case 3:
 			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			EnrollmentStateController.changeByStudent(connection, id_student, EnrollmentState.activo);
+			EnrollmentStateController.changeByStudentId(connection, id_student, EnrollmentState.activo);
 			break;
 		case 4:
 			int idStudent = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			EnrollmentStateController.changeByStudent(connection, idStudent, EnrollmentState.cancelado);
+			EnrollmentStateController.changeByStudentId(connection, idStudent, EnrollmentState.cancelado);
 		case 5:
 			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			String division = InputUtil.inputSingleWord(sc, "Ingrese comision");
-			EnrollmentStateController.changeByCourseAndDivision(connection, id_course, division, EnrollmentState.activo);
+			EnrollmentStateController.changeByCourseIdAndDivision(connection, id_course, division, EnrollmentState.activo);
 			break;
 		case 6:
 			int id_course1 = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			String division1 = InputUtil.inputSingleWord(sc, "Ingrese comision");
-			EnrollmentStateController.changeByCourseAndDivision(connection, id_course1, division1, EnrollmentState.cancelado);
+			EnrollmentStateController.changeByCourseIdAndDivision(connection, id_course1, division1, EnrollmentState.cancelado);
 			break;
 		case 7:
 			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso");
-			EnrollmentStateController.changeByCourse(connection, courseId, EnrollmentState.activo);
+			EnrollmentStateController.changeByCourseId(connection, courseId, EnrollmentState.activo);
 			break;
 		case 8:
 			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso");
-			EnrollmentStateController.changeByCourse(connection, idCourse, EnrollmentState.cancelado);
+			EnrollmentStateController.changeByCourseId(connection, idCourse, EnrollmentState.cancelado);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

@@ -10,7 +10,7 @@ import base.model.Student;
 import base.util.ResponseUtil;
 
 public class EnrollmentController{
-	public static void listAll(Connection connection, int limit) throws SQLException {
+	public static void findAll(Connection connection, int limit) throws SQLException {
 		System.out.println("Listado de inscripciones. Limite: " + limit);
 		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection, limit);
 		if(enrollments.size() == 0) {
@@ -22,7 +22,7 @@ public class EnrollmentController{
 		}
 	}
 	
-	public static void getById(Connection connection, int id) throws SQLException {
+	public static void findById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar inscripcion por ID");
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
 		if(enrollment == null) {
@@ -32,7 +32,7 @@ public class EnrollmentController{
 		}
 	}
 	
-	public static void getByCourseAndStudent(Connection connection, int id_course, int id_student) throws SQLException {
+	public static void findByCourseIdAndStudentId(Connection connection, int id_course, int id_student) throws SQLException {
 		System.out.println("Buscar inscripcion por curso y alumno");
 		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
 		if(enrollment == null) {
@@ -60,7 +60,7 @@ public class EnrollmentController{
 		ResponseUtil.deleteMessage(res);
 	}
 	
-	public static void getStudentsByCourse(Connection connection, int id_course) throws SQLException {
+	public static void findStudentsByCourseId(Connection connection, int id_course) throws SQLException {
 		System.out.println("Alumnos del curso con ID " + id_course);
 		List<Student> students = EnrollmentDAO.getStudentsByCourse(connection, id_course);
 		if(students.size() > 0) {
@@ -70,7 +70,7 @@ public class EnrollmentController{
 		}
 	}
 	
-	public static void getStudentsByCourseAndDivision(Connection connection, int id_course, String division) throws SQLException {
+	public static void findStudentsByCourseIdAndDivision(Connection connection, int id_course, String division) throws SQLException {
 		System.out.println("Alumnos del curso con ID " + id_course + " comision " + division);
 		List<Student> students = EnrollmentDAO.getStudentsByCourseAndDivision(connection, id_course, division);
 		if(students.size() > 0) {

@@ -27,15 +27,15 @@ public class CourseMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			CourseController.listAll(connection);
+			CourseController.findAll(connection);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID del curso:");
-			CourseController.getById(connection, id);
+			CourseController.findById(connection, id);
 			break;
 		case 3:
 			String name = InputUtil.inputLine(sc, "Ingrese nombre del curso:");
-			CourseController.getByName(connection, name);
+			CourseController.findByName(connection, name);
 			break;
 		case 4:
 			Course course = createCourse(sc);
@@ -57,8 +57,8 @@ public class CourseMenu {
 
 	private static Course createCourse(Scanner sc) {
 		String name = InputUtil.inputLine(sc, "Ingrese el nombre del curso");
-		int id_catedra = InputUtil.inputInt(sc, "Ingresar ID de catedra (o 0 si se desconoce)");
-		return new Course(name, id_catedra);
+		int idCatedra = InputUtil.inputInt(sc, "Ingresar ID de catedra (o 0 si se desconoce)");
+		return new Course(name, idCatedra);
 	}
 	
 	private static Course editCourse(Scanner sc, Connection connection) throws SQLException {

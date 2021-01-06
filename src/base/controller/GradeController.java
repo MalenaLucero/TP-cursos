@@ -12,7 +12,7 @@ import base.model.Student;
 import base.util.PrintUtil;
 
 public class GradeController {
-	public static void getByStudentAndCourse(Connection connection, int id_student, int id_course) throws SQLException {
+	public static void findByStudentIdAndCourseId(Connection connection, int id_student, int id_course) throws SQLException {
 		PrintUtil.printMessage("Notas del alumno con ID " + id_student + " en el curso con ID " + id_course);
 		Map<String, Object> gradesMap = GradeDAO.getByStudentAndCourse(connection, id_student, id_course);
 		printStudent(gradesMap);
@@ -20,7 +20,7 @@ public class GradeController {
 		printGrades(gradesMap);
 	}
 	
-	public static void getByStudent(Connection connection, int id_student) throws SQLException {
+	public static void findByStudentId(Connection connection, int id_student) throws SQLException {
 		PrintUtil.printMessage("Notas del alumno con ID " + id_student);
 		List<Map<String, Object>> gradesList = GradeDAO.getByStudent(connection, id_student);
 		printStudent(gradesList.get(0));
@@ -30,7 +30,7 @@ public class GradeController {
 		}
 	}
 	
-	public static void getByCourse(Connection connection, int id_course) throws SQLException {
+	public static void findByCourseId(Connection connection, int id_course) throws SQLException {
 		PrintUtil.printMessage("Notas del curso con ID " + id_course);
 		List<Map<String, Object>> gradesList = GradeDAO.getByCourse(connection, id_course);
 		printCourse(gradesList.get(0));
@@ -40,7 +40,7 @@ public class GradeController {
 		}
 	}
 	
-	public static void getOverallBestAverage(Connection connection) throws SQLException {
+	public static void findOverallBestAverage(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Mejores promedios del año");
 		List<Map<String, Object>> gradesList = GradeDAO.getOverallBestAverage(connection);
 		for(Map<String, Object> gradesMap: gradesList) {
@@ -50,7 +50,7 @@ public class GradeController {
 		}
 	}
 	
-	public static void getBestAverageByCourse(Connection connection, int id_course) throws SQLException {
+	public static void findBestAverageByCourseId(Connection connection, int id_course) throws SQLException {
 		PrintUtil.printMessage("Mejores promedios del curso con ID " + id_course + " año 2020");
 		List<Map<String, Object>> gradesList = GradeDAO.getBestAverageByCourse(connection, id_course);
 		printCourse(gradesList.get(0));

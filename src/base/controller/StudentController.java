@@ -13,37 +13,37 @@ import base.util.PrintUtil;
 import base.util.ResponseUtil;
 
 public class StudentController{
-	public static void listAll(Connection connection) throws SQLException {
+	public static void findAll(Connection connection) throws SQLException {
 		System.out.println("Listado de alumnos");
 		List<Student> students = StudentDAO.getAll(connection);
 		printStudents(students);
 	}
 	
-	public static void getById(Connection connection, int id) throws SQLException {
+	public static void findById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar alumno por ID");
 		Student student = StudentDAO.findById(connection, id);
 		printStudent(student);
 	}
 	
-	public static void getByNameAndLastname(Connection connection, String name, String lastname) throws SQLException {
+	public static void findByNameAndLastname(Connection connection, String name, String lastname) throws SQLException {
 		System.out.println("Buscar alumno por nombre y apellido");
 		List<Student> students = StudentDAO.findByNameAndLastname(connection, name, lastname);
 		printStudents(students);
 	}
 	
-	public static void getByLastname(Connection connection, String lastname) throws SQLException {
+	public static void findByLastname(Connection connection, String lastname) throws SQLException {
 		System.out.println("Buscar alumno por apellido");
 		List<Student> students = StudentDAO.findByLastname(connection, lastname);
 		printStudents(students);
 	}
 	
-	public static void getBySimilarity(Connection connection, String searchString) throws SQLException {
+	public static void findBySimilarity(Connection connection, String searchString) throws SQLException {
 		System.out.println("Buscar alumno que contenga " + searchString);
 		List<Student> students = StudentDAO.findBySimilarity(connection, searchString);
 		printStudents(students);
 	}
 	
-	public static void getCompleteProfile(Connection connection, int id) throws SQLException {
+	public static void findCompleteProfile(Connection connection, int id) throws SQLException {
 		System.out.println("Perfil completo del alumno");
 		Student student = StudentDAO.findById(connection, id);
 		System.out.println("ID: " + student.getId());

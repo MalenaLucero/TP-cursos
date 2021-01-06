@@ -12,11 +12,11 @@ public class EnrollmentStateTest {
 		PrintUtil.printMessage("Pruebas en editar estado de inscripcion");
 		EnrollmentStateController.changeByEnrollment(14, connection, EnrollmentState.cancelado);
 		EnrollmentStateController.changeByEnrollment(14, connection, EnrollmentState.activo);
-		EnrollmentStateController.changeByStudent(connection, 1, EnrollmentState.cancelado);
-		EnrollmentStateController.changeByStudent(connection, 1, EnrollmentState.activo);
-		EnrollmentStateController.changeByCourseAndDivision(connection, 1, "A", EnrollmentState.cancelado);
-		EnrollmentStateController.changeByCourseAndDivision(connection, 1, "A", EnrollmentState.activo);
-		EnrollmentStateController.changeByCourse(connection, 1, EnrollmentState.cancelado);
-		EnrollmentStateController.changeByCourse(connection, 1, EnrollmentState.activo);
+		EnrollmentStateController.changeByStudentId(connection, 1, EnrollmentState.cancelado);
+		EnrollmentStateController.changeByStudentId(connection, 1, EnrollmentState.activo);
+		EnrollmentStateController.changeByCourseIdAndDivision(connection, 1, "A", EnrollmentState.cancelado);
+		EnrollmentStateController.changeByCourseIdAndDivision(connection, 1, "A", EnrollmentState.activo);
+		EnrollmentStateController.changeByCourseId(connection, 1, EnrollmentState.cancelado);
+		EnrollmentStateController.changeByCourseId(connection, 1, EnrollmentState.activo);
 	}
 }

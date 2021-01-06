@@ -33,28 +33,28 @@ public class TeacherMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException, ParseException {
 		switch(option) {
 		case 1:
-			TeacherController.listAll(connection);
+			TeacherController.findAll(connection);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID del docente:");
-			TeacherController.getById(connection, id);
+			TeacherController.findById(connection, id);
 			break;
 		case 3:
 			String name = InputUtil.inputLine(sc, "Ingrese nombre:");
 			String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
-			TeacherController.getByLastname(connection, name, lastname);
+			TeacherController.findByLastname(connection, name, lastname);
 			break;
 		case 4:
 			String searchString = InputUtil.inputSingleWord(sc, "Ingrese palabra:");
-			TeacherController.getBySimilarity(connection, searchString);
+			TeacherController.findBySimilarity(connection, searchString);
 			break;
 		case 5:
 			int profile = InputUtil.inputInt(sc, "Ingrese ID del docente:");
-			TeacherController.getCompleteProfile(connection, profile);
+			TeacherController.findCompleteProfile(connection, profile);
 			break;
 		case 6:
 			int idCourses = InputUtil.inputInt(sc, "Ingrese ID del docente:");
-			TeacherController.getCoursesByTeacher(connection, idCourses);
+			TeacherController.findCoursesByTeacherId(connection, idCourses);
 			break;
 		case 7:
 			Teacher teacher = createTeacher(sc);

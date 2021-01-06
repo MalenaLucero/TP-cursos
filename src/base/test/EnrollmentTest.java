@@ -11,9 +11,9 @@ import base.util.PrintUtil;
 public class EnrollmentTest {
 	public static void testCrud(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en CRUD de inscripciones");
-		EnrollmentController.listAll(connection, 50);
-		EnrollmentController.getById(connection, 14);
-		EnrollmentController.getByCourseAndStudent(connection, 1, 62);
+		EnrollmentController.findAll(connection, 50);
+		EnrollmentController.findById(connection, 14);
+		EnrollmentController.findByCourseIdAndStudentId(connection, 1, 62);
 		Enrollment addEnrollment = new Enrollment(1, 3);
 		EnrollmentController.insert(connection, addEnrollment);
 		Enrollment editEnrollment = EnrollmentDAO.findByCourseAndStudent(connection, addEnrollment.getIdCourse(), addEnrollment.getIdStudent());
@@ -23,7 +23,7 @@ public class EnrollmentTest {
 	}
 	
 	public static void testStudentsSearch(Connection connection) throws SQLException {
-		EnrollmentController.getStudentsByCourse(connection, 1);
-		EnrollmentController.getStudentsByCourseAndDivision(connection, 1, "A");
+		EnrollmentController.findStudentsByCourseId(connection, 1);
+		EnrollmentController.findStudentsByCourseIdAndDivision(connection, 1, "A");
 	}
 }

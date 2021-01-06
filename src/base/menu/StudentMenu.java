@@ -30,28 +30,28 @@ public class StudentMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			StudentController.listAll(connection);
+			StudentController.findAll(connection);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
-			StudentController.getById(connection, id);
+			StudentController.findById(connection, id);
 			break;
 		case 3:
 			String name = InputUtil.inputSingleWord(sc, "Ingrese el nombre:");
 			String lastName = InputUtil.inputSingleWord(sc, "Ingrese el apellido:");
-			StudentController.getByNameAndLastname(connection, name, lastName);
+			StudentController.findByNameAndLastname(connection, name, lastName);
 			break;
 		case 4:
 			String lastname = InputUtil.inputSingleWord(sc, "Ingrese el apellido:");
-			StudentController.getByLastname(connection, lastname);
+			StudentController.findByLastname(connection, lastname);
 			break;
 		case 5:
 			String searchString = InputUtil.inputSingleWord(sc, "Ingrese la palabra para buscar");
-			StudentController.getBySimilarity(connection, searchString);
+			StudentController.findBySimilarity(connection, searchString);
 			break;
 		case 6:
 			int idStudent = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			StudentController.getCompleteProfile(connection, idStudent);
+			StudentController.findCompleteProfile(connection, idStudent);
 			break;
 		case 7:
 			Student student = createStudent(sc);

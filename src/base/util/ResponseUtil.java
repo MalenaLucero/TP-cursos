@@ -2,26 +2,22 @@ package base.util;
 
 public class ResponseUtil {
 	public static void addMessage(int res) {
-		if(res == 1) {
-			System.out.println("Se agrego el elemento");
-		} else{
-			System.err.println("No se agrego el elemento");
-		}
+		actionMessage("Se agrego el elemento", res);
 	}
 	
 	public static void editMessage(int res) {
-		if(res == 1) {
-			System.out.println("Se realizo la modificacion");
-		} else{
-			System.err.println("No se realizo la modificacion");
-		}
+		actionMessage("Se realizo la modificacion", res);
 	}
 	
 	public static void deleteMessage(int res) {
+		actionMessage("Se elimino el elemento", res);
+	}
+	
+	public static void actionMessage(String message, int res) {
 		if(res == 1) {
-			System.out.println("Se elimino el elemento");
+			System.out.println(message);
 		} else{
-			System.err.println("No se elimino el elemento");
+			System.err.println("No " + message.toLowerCase());
 		}
 	}
 	

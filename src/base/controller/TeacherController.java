@@ -19,19 +19,19 @@ import base.util.ResponseUtil;
 import base.util.StringUtil;
 
 public class TeacherController{
-	public static void listAll(Connection connection) throws SQLException {
+	public static void findAll(Connection connection) throws SQLException {
 		System.out.println("Listado de docentes");
 		List<Teacher> teachers = TeacherDAO.getAll(connection);
 		printTeachers(teachers);
 	}
 	
-	public static void getById(Connection connection, int id) throws SQLException {
+	public static void findById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar docente por ID");
 		Teacher teacher = TeacherDAO.findById(connection, id);
 		printTeacher(teacher);
 	}
 	
-	public static void getByLastname(Connection connection, String name, String lastname) throws SQLException {
+	public static void findByLastname(Connection connection, String name, String lastname) throws SQLException {
 		System.out.println("Buscar docente por nombre y apellido");
 		Teacher teacher = TeacherDAO.findByNameLastname(connection, name, lastname);
 		printTeacher(teacher);
@@ -55,7 +55,7 @@ public class TeacherController{
 		ResponseUtil.deleteMessage(res);
 	}
 	
-	public static void getCoursesByTeacher(Connection connection, int id_teacher) throws SQLException {
+	public static void findCoursesByTeacherId(Connection connection, int id_teacher) throws SQLException {
 		System.out.println("Cursos del docente con ID " + id_teacher);
 		List<Map<String, Object>> list = TeacherDAO.getCoursesByTeacher(connection, id_teacher);
 		System.out.println(list.get(0).get("teacher"));
@@ -68,7 +68,7 @@ public class TeacherController{
 		}
 	}
 	
-	public static void getCompleteProfile(Connection connection, int id) throws SQLException {
+	public static void findCompleteProfile(Connection connection, int id) throws SQLException {
 		Teacher teacher = TeacherDAO.findById(connection, id);
 		System.out.println("ID " + teacher.getId());
 		System.out.println("Nombre: " + teacher.getName());
@@ -77,9 +77,9 @@ public class TeacherController{
 		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternativeName2());
 		System.out.println("Buscando significado de los kanjis en API externa...");
 		if(teacher.getAlternativeName2() == null) {
-			getKanjiMeanigs(teacher.getAlternativeName1());
+			findKanjiMeanigs(teacher.getAlternativeName1());
 		} else {
-			getKanjiMeanigs(teacher.getAlternativeName2());
+			findKanjiMeanigs(teacher.getAlternativeName2());
 		}
 		PrintUtil.printIfNotBlank("Fecha de nacimiento: ", StringUtil.dateToString(teacher.getBirthdate()));
 		if(teacher.getBirthdate() != null) {
@@ -92,7 +92,7 @@ public class TeacherController{
 		}
 	}
 	
-	private static void getKanjiMeanigs(String kanjiName) {
+	private static void findKanjiMeanigs(String kanjiName) {
 		for(int i = 0; i < kanjiName.length(); i++) {
 			String kanjiToSearch = Character.toString(kanjiName.charAt(i));
 			Kanji kanji = KanjiAPI.getKanjiData(kanjiToSearch);
@@ -103,13 +103,13 @@ public class TeacherController{
 		}
 	}
 	
-	public static void getBySimilarity(Connection connection, String searchString) throws SQLException {
+	public static void findBySimilarity(Connection connection, String searchString) throws SQLException {
 		System.out.println("Docentes con nombre similar a " + searchString);
 		List<Teacher> teachers = TeacherDAO.getBySimilarity(connection, searchString);
 		printTeachers(teachers);
 	}
 	
-	public static void getNextBirthday(Connection connection) throws SQLException {
+	public static void findNextBirthday(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Proximo cumpleaños:");
 		int currentDay = DateUtil.getCurrentDay();
 		int currentMonth = DateUtil.getCurrentMonth();
@@ -123,12 +123,12 @@ public class TeacherController{
 		if(nextBirthdays.size() > 0) {
 			printTeacherBirthday(nextBirthdays.get(0));
 		} else if(nextBirthdays.size() == 0) {
-			List<Teacher> nextMonths = getNextMonthsBirthdays(connection, currentMonth);
+			List<Teacher> nextMonths = findNextMonthsBirthdays(connection, currentMonth);
 			printTeacherBirthday(nextMonths.get(0));
 		}
 	}
 	
-	public static void getCurrentMonthBirthdays(Connection connection) throws SQLException {
+	public static void findCurrentMonthBirthdays(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Docentes que cumplen años este mes:");
 		int currentMonth = DateUtil.getCurrentMonth();
 		List<Teacher> teachers = TeacherDAO.getMonthsBirthdays(connection, currentMonth);
@@ -166,11 +166,11 @@ public class TeacherController{
 		System.out.println("-" + DateUtil.getMonth(teacher.getBirthdate()));
 	}
 	
-	private static List<Teacher> getNextMonthsBirthdays(Connection connection, int month) throws SQLException {
+	private static List<Teacher> findNextMonthsBirthdays(Connection connection, int month) throws SQLException {
 		int nextMonth = month == 12 ? 1 : month + 1;
 		List<Teacher> teachers = TeacherDAO.getMonthsBirthdays(connection, nextMonth);
 		if(teachers.size() == 0) {
-			return getNextMonthsBirthdays(connection, nextMonth);
+			return findNextMonthsBirthdays(connection, nextMonth);
 		} else {
 			return teachers;
 		}

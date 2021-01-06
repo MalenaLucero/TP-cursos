@@ -11,19 +11,19 @@ import base.util.PrintUtil;
 public class TeacherTest {
 	public static void testCrud(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en el CRUD de docentes");
-		TeacherController.getNextBirthday(connection);
-		TeacherController.getCurrentMonthBirthdays(connection);
-		TeacherController.listAll(connection);
-		TeacherController.getById(connection, 3);
-		TeacherController.getByLastname(connection, "Yoongi", "Min");
-		TeacherController.getCompleteProfile(connection, 3);
+		TeacherController.findNextBirthday(connection);
+		TeacherController.findCurrentMonthBirthdays(connection);
+		TeacherController.findAll(connection);
+		TeacherController.findById(connection, 3);
+		TeacherController.findByLastname(connection, "Yoongi", "Min");
+		TeacherController.findCompleteProfile(connection, 3);
 		Teacher addTeacher = new Teacher("nombre", "apellido");
 		TeacherController.insert(connection, addTeacher);
 		Teacher editTeacher = TeacherDAO.findByNameLastname(connection, addTeacher.getName(), addTeacher.getLastname());
 		editTeacher.setName("NOMBRE");
 		TeacherController.update(connection, editTeacher);
 		TeacherController.delete(connection, editTeacher.getId());
-		TeacherController.getCoursesByTeacher(connection, 3);
-		TeacherController.getBySimilarity(connection, "민");
+		TeacherController.findCoursesByTeacherId(connection, 3);
+		TeacherController.findBySimilarity(connection, "민");
 	}
 }

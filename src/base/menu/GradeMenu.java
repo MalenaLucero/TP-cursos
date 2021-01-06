@@ -26,22 +26,22 @@ public class GradeMenu {
 		case 1:
 			int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
 			int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
-			GradeController.getByStudentAndCourse(connection, id_student, id_course);
+			GradeController.findByStudentIdAndCourseId(connection, id_student, id_course);
 			break;
 		case 2: 
 			int idStudent = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			GradeController.getByStudent(connection, idStudent);
+			GradeController.findByStudentId(connection, idStudent);
 			break;
 		case 3:
 			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso");
-			GradeController.getByCourse(connection, idCourse);
+			GradeController.findByCourseId(connection, idCourse);
 			break;
 		case 4:
-			GradeController.getOverallBestAverage(connection);
+			GradeController.findOverallBestAverage(connection);
 			break;
 		case 5:
 			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso");
-			GradeController.getBestAverageByCourse(connection, courseId);
+			GradeController.findBestAverageByCourseId(connection, courseId);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

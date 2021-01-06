@@ -12,12 +12,12 @@ import base.util.PrintUtil;
 public class StudentTest {
 	public static void testCrud(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en el CRUD de alumnos");
-		StudentController.listAll(connection);
-		StudentController.getById(connection, 1);
-		StudentController.getByNameAndLastname(connection, "Tetsurou", "Kurou");
-		StudentController.getByLastname(connection, "Miya");
-		StudentController.getBySimilarity(connection, "yama");
-		StudentController.getCompleteProfile(connection, 1);
+		StudentController.findAll(connection);
+		StudentController.findById(connection, 1);
+		StudentController.findByNameAndLastname(connection, "Tetsurou", "Kurou");
+		StudentController.findByLastname(connection, "Miya");
+		StudentController.findBySimilarity(connection, "yama");
+		StudentController.findCompleteProfile(connection, 1);
 		Student addStudent = new Student("nombre", "apellido");
 		StudentController.insert(connection, addStudent);
 		List<Student> students = StudentDAO.findByNameAndLastname(connection, "nombre", "apellido");

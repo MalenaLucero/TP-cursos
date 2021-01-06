@@ -24,19 +24,19 @@ public class EnrollmentStateController {
 		}
 	}
 	
-	public static void changeByStudent(Connection connection, int id_student, EnrollmentState state) throws SQLException {
+	public static void changeByStudentId(Connection connection, int id_student, EnrollmentState state) throws SQLException {
 		generateMessage(state, "inscripciones del alumno con ID " + id_student);
 		int res = EnrollmentStateDAO.changeByStudent(connection, id_student, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);
 	}
 	
-	public static void changeByCourse(Connection connection, int id_course, EnrollmentState state) throws SQLException {
+	public static void changeByCourseId(Connection connection, int id_course, EnrollmentState state) throws SQLException {
 		generateMessage(state, "inscripciones del curso con ID " + id_course);
 		int res = EnrollmentStateDAO.changeByCourse(connection, id_course, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);
 	}
 	
-	public static void changeByCourseAndDivision(Connection connection, int id_course, String division, EnrollmentState state) throws SQLException {
+	public static void changeByCourseIdAndDivision(Connection connection, int id_course, String division, EnrollmentState state) throws SQLException {
 		generateMessage(state, "inscripciones del curso con ID " + id_course + " comision " + division);
 		int res = EnrollmentStateDAO.changeByCourseAndDivision(connection, id_course, division, state.getValue());
 		ResponseUtil.numberOfModifiedElements(res);
