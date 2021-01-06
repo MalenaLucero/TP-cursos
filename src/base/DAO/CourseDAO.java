@@ -37,7 +37,7 @@ public class CourseDAO {
 		String insertString = "INSERT INTO curso (nombre, id_catedra) values (?, ?)";
 		PreparedStatement addCourse = connection.prepareStatement(insertString);
 		addCourse.setString(1, course.getName());
-		Util.setPossibleNullInt(addCourse, 2, course.getCatedra());
+		Helper.setPossibleNullInt(addCourse, 2, course.getCatedra());
 		return addCourse.executeUpdate();
 	}
 	
@@ -45,7 +45,7 @@ public class CourseDAO {
 		String editString = "UPDATE curso SET nombre = ?, id_catedra = ? WHERE id = ?";
 		PreparedStatement editCourse = connection.prepareStatement(editString);
 		editCourse.setString(1, course.getName());
-		Util.setPossibleNullInt(editCourse, 2, course.getCatedra());
+		Helper.setPossibleNullInt(editCourse, 2, course.getCatedra());
 		editCourse.setInt(3, course.getId());
 		return editCourse.executeUpdate();
 	}

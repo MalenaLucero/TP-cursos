@@ -48,7 +48,7 @@ public class TeacherDAO {
 		addTeacher.setString(4, teacher.getAlternativeName2());
 		addTeacher.setString(5, teacher.getDescription());
 		addTeacher.setString(6, teacher.getImage());
-		Util.setPossibleNullDate(addTeacher, 7, teacher.getBirthdate());
+		Helper.setPossibleNullDate(addTeacher, 7, teacher.getBirthdate());
 		return addTeacher.executeUpdate();
 	}
 	
@@ -63,7 +63,7 @@ public class TeacherDAO {
 		editTeacher.setString(4, teacher.getAlternativeName2());
 		editTeacher.setString(5, teacher.getDescription());
 		editTeacher.setString(6, teacher.getImage());
-		Util.setPossibleNullDate(editTeacher, 7, teacher.getBirthdate());
+		Helper.setPossibleNullDate(editTeacher, 7, teacher.getBirthdate());
 		editTeacher.setInt(8, teacher.getId());
 		return editTeacher.executeUpdate();
 	}

@@ -78,23 +78,23 @@ public class TeacherMenu {
 		String name = InputUtil.inputLine(sc, "Ingrese nombre");
 		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
 		String alternative_name1 = null;
-		if(Util.confirmOptionalField(sc, "primer nombre alternativo")) {
+		if(Helper.confirmOptionalField(sc, "primer nombre alternativo")) {
 			alternative_name1 = InputUtil.inputLine(sc, "Ingrese primer nombre alternativo:");
 		}
 		String alternative_name2 = null;
-		if(Util.confirmOptionalField(sc, "segundo nombre alternativo")) {
+		if(Helper.confirmOptionalField(sc, "segundo nombre alternativo")) {
 			alternative_name2 = InputUtil.inputLine(sc, "Ingrese segundo nombre alternativo:");
 		}
 		String description = null;
-		if(Util.confirmOptionalField(sc, "descripcion")) {
+		if(Helper.confirmOptionalField(sc, "descripcion")) {
 			description = InputUtil.inputLine(sc, "Ingrese descripcion:");
 		}
 		String image = null;
-		if(Util.confirmOptionalField(sc, "url de imagen")) {
+		if(Helper.confirmOptionalField(sc, "url de imagen")) {
 			image = InputUtil.inputLine(sc, "Ingrese url de la imagen:");
 		}
 		Date birthdate = null;
-		if(Util.confirmOptionalField(sc, "fecha de nacimiento")) {
+		if(Helper.confirmOptionalField(sc, "fecha de nacimiento")) {
 			birthdate = InputUtil.inputDate(sc, "Ingrese fecha de nacimiento", "yyyy-MM-dd");
 		}
 		return new Teacher(name, lastname, alternative_name1, alternative_name2, description, image, birthdate);
@@ -103,31 +103,31 @@ public class TeacherMenu {
 	private static Teacher editTeacher(Scanner sc, Connection connection) throws SQLException, ParseException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del docente a editar:");
 		Teacher teacher = TeacherDAO.findById(connection, id);
-		if(Util.confirmEditMessage(sc, "nombre", teacher.getName())) {
+		if(Helper.confirmEditMessage(sc, "nombre", teacher.getName())) {
 			String name = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setName(name);
 		}
-		if(Util.confirmEditMessage(sc, "apellido", teacher.getLastname())) {
+		if(Helper.confirmEditMessage(sc, "apellido", teacher.getLastname())) {
 			String lastname = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setLastname(lastname);
 		}
-		if(Util.confirmEditMessage(sc, "primer nombre alternativo", teacher.getAlternativeName1())) {
+		if(Helper.confirmEditMessage(sc, "primer nombre alternativo", teacher.getAlternativeName1())) {
 			String alternative_name1 = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setAlternativeName1(alternative_name1);
 		}
-		if(Util.confirmEditMessage(sc, "segundo nombre alternativo", teacher.getAlternativeName2())) {
+		if(Helper.confirmEditMessage(sc, "segundo nombre alternativo", teacher.getAlternativeName2())) {
 			String alternative_name2 = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setAlternativeName2(alternative_name2);
 		}
-		if(Util.confirmEditMessage(sc, "descripcion", teacher.getDescription())) {
+		if(Helper.confirmEditMessage(sc, "descripcion", teacher.getDescription())) {
 			String description = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setDescription(description);
 		}
-		if(Util.confirmEditMessage(sc, "url de imagen", teacher.getImage())) {
+		if(Helper.confirmEditMessage(sc, "url de imagen", teacher.getImage())) {
 			String image = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setImage(image);
 		}
-		if(Util.confirmEditMessage(sc, "fecha de nacimiento", StringUtil.dateToString(teacher.getBirthdate()))) {
+		if(Helper.confirmEditMessage(sc, "fecha de nacimiento", StringUtil.dateToString(teacher.getBirthdate()))) {
 			Date birthdate = InputUtil.inputDate(sc, "Ingrese fecha de nacimiento", "yyyy-MM-dd");
 			teacher.setBirthdate(birthdate);
 		}

@@ -75,7 +75,7 @@ public class StudentMenu {
 		String name = InputUtil.inputLine(sc, "Ingrese nombre");
 		String lastname = InputUtil.inputLine(sc, "Ingrese apellido:");
 		String alternative_name = null;
-		if(Util.confirmOptionalField(sc, "nombre alternativo")) {
+		if(Helper.confirmOptionalField(sc, "nombre alternativo")) {
 			alternative_name = InputUtil.inputLine(sc, "Ingrese nombre alternativo:");
 		}
 		return new Student(name, lastname, alternative_name);
@@ -84,15 +84,15 @@ public class StudentMenu {
 	private static base.model.Student editStudent(Scanner sc, Connection connection) throws SQLException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID del alumno a editar:");
 		Student student = StudentDAO.findById(connection, id);
-		if(Util.confirmEditMessage(sc, "nombre", student.getName())) {
+		if(Helper.confirmEditMessage(sc, "nombre", student.getName())) {
 			String name = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setName(name);
 		}
-		if(Util.confirmEditMessage(sc, "apellido", student.getLastname())) {
+		if(Helper.confirmEditMessage(sc, "apellido", student.getLastname())) {
 			String lastname = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setLastname(lastname);
 		}
-		if(Util.confirmEditMessage(sc, "nombre alternativo", student.getAlternativeName())) {
+		if(Helper.confirmEditMessage(sc, "nombre alternativo", student.getAlternativeName())) {
 			String altName = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setAlternative_name(altName);
 		}

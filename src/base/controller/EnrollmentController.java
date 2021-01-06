@@ -10,36 +10,22 @@ import base.model.Student;
 import base.util.ResponseUtil;
 
 public class EnrollmentController{
-	public static void findAll(Connection connection, int limit) throws SQLException {
-		System.out.println("Listado de inscripciones. Limite: " + limit);
-		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection, limit);
-		if(enrollments.size() == 0) {
-			System.err.println("No se encontraron inscripciones");
-		} else {
-			for(Enrollment enrollment: enrollments) {
-				System.out.println(enrollment);
-			}
-		}
+	public static void findAll(Connection connection) throws SQLException {
+		System.out.println("Listado de inscripciones");
+		List<Enrollment> enrollments = EnrollmentDAO.getAll(connection);
+		printEnrollments(enrollments);
 	}
 	
 	public static void findById(Connection connection, int id) throws SQLException {
 		System.out.println("Buscar inscripcion por ID");
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
-		if(enrollment == null) {
-			System.err.println("No se encontro la inscripcion");
-		} else {
-			System.out.println(enrollment);
-		}
+		printEnrollment(enrollment);
 	}
 	
 	public static void findByCourseIdAndStudentId(Connection connection, int id_course, int id_student) throws SQLException {
 		System.out.println("Buscar inscripcion por curso y alumno");
 		Enrollment enrollment = EnrollmentDAO.findByCourseAndStudent(connection, id_course, id_student);
-		if(enrollment == null) {
-			System.err.println("No se encontraron inscripciones");
-		} else {
-			System.out.println(enrollment);
-		}
+		printEnrollment(enrollment);
 	}
 	
 	public static void insert(Connection connection, Enrollment enrollment) throws SQLException {
@@ -63,20 +49,40 @@ public class EnrollmentController{
 	public static void findStudentsByCourseId(Connection connection, int id_course) throws SQLException {
 		System.out.println("Alumnos del curso con ID " + id_course);
 		List<Student> students = EnrollmentDAO.getStudentsByCourse(connection, id_course);
-		if(students.size() > 0) {
-			for(Student student: students) System.out.println(student);
-		} else {
-			System.out.println("El curso no tiene alumnos");
-		}
+		printStudents(students);
 	}
 	
 	public static void findStudentsByCourseIdAndDivision(Connection connection, int id_course, String division) throws SQLException {
 		System.out.println("Alumnos del curso con ID " + id_course + " comision " + division);
 		List<Student> students = EnrollmentDAO.getStudentsByCourseAndDivision(connection, id_course, division);
-		if(students.size() > 0) {
-			for(Student student: students) System.out.println(student);
+		printStudents(students);
+	}
+	
+	private static void printEnrollment(Enrollment enrollment) {
+		if(enrollment == null) {
+			System.err.println("No se encontro la inscripcion");
 		} else {
-			System.out.println("El curso no tiene alumnos");
+			System.out.println(enrollment);
+		}
+	}
+	
+	private static void printEnrollments(List<Enrollment> enrollments) {
+		if(enrollments.size() == 0) {
+			System.err.println("No se encontraron inscripciones");
+		} else {
+			for(Enrollment enrollment: enrollments) {
+				System.out.println(enrollment);
+			}
+		}
+	}
+	
+	private static void printStudents(List<Student> students) {
+		if(students.size() == 0) {
+			System.err.println("No se encontraron alumnos");
+		} else {
+			for(Student student: students) {
+				System.out.println(student);
+			}
 		}
 	}
 }

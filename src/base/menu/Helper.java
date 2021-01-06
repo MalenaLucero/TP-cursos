@@ -5,7 +5,7 @@ import java.util.Scanner;
 import base.util.InputUtil;
 import base.util.PrintUtil;
 
-public class Util {
+public class Helper {
 	public static boolean confirmEditMessage(Scanner sc, String item, String value) {
 		String message = String.format("¿Desea editar el campo %s? (y/n) Valor actual: %s", item, value);
 		PrintUtil.printMessage(message);

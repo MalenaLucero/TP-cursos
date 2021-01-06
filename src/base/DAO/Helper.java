@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class Util {
+public class Helper {
 	public static void setPossibleNullInt(PreparedStatement statement, int index, int number) throws SQLException {
 		if(number == 0) {
 			statement.setNull(index, java.sql.Types.NULL);

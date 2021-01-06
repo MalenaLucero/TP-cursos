@@ -11,7 +11,7 @@ import base.util.PrintUtil;
 public class EnrollmentTest {
 	public static void testCrud(Connection connection) throws SQLException {
 		PrintUtil.printMessage("Pruebas en CRUD de inscripciones");
-		EnrollmentController.findAll(connection, 50);
+		EnrollmentController.findAll(connection);
 		EnrollmentController.findById(connection, 14);
 		EnrollmentController.findByCourseIdAndStudentId(connection, 1, 62);
 		Enrollment addEnrollment = new Enrollment(1, 3);

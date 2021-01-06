@@ -73,6 +73,8 @@ public class AppCursos {
 					}
 				} catch(SQLException e) {
 					PrintUtil.printExceptionMessage("Error al impactar en la base de datos", e.getMessage());
+				} catch(Exception e) {
+					PrintUtil.printExceptionMessage("Error inesperado", e.getMessage());
 				}
 				option = MainMenu.showMenuAndInput(sc);
 			}

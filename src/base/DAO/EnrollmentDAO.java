@@ -11,10 +11,9 @@ import base.model.Enrollment;
 import base.model.Student;
 
 public class EnrollmentDAO {
-	public static List<Enrollment> getAll(Connection connection, int limit) throws SQLException {
-		String listString = "SELECT * FROM inscripcion LIMIT ?";
+	public static List<Enrollment> getAll(Connection connection) throws SQLException {
+		String listString = "SELECT * FROM inscripcion";
 		PreparedStatement listEnrollments = connection.prepareStatement(listString);
-		listEnrollments.setInt(1, limit);
 		ResultSet res = listEnrollments.executeQuery();
 		return generateEnrollmentList(res);
 	}
@@ -51,11 +50,11 @@ public class EnrollmentDAO {
 		addEnrollment.setInt(1, enrollment.getIdCourse());
 		addEnrollment.setInt(2, enrollment.getIdStudent());
 		addEnrollment.setString(3, enrollment.getEnrollmentState());
-		Util.setPossibleNullInt(addEnrollment, 4, enrollment.getIdTeacher());
+		Helper.setPossibleNullInt(addEnrollment, 4, enrollment.getIdTeacher());
 		addEnrollment.setString(5, enrollment.getDivision());
-		Util.setPossibleNullInt(addEnrollment, 6, enrollment.getGrade1());
-		Util.setPossibleNullInt(addEnrollment, 7, enrollment.getGrade2());
-		Util.setPossibleNullInt(addEnrollment, 8, enrollment.getAverageGrade());
+		Helper.setPossibleNullInt(addEnrollment, 6, enrollment.getGrade1());
+		Helper.setPossibleNullInt(addEnrollment, 7, enrollment.getGrade2());
+		Helper.setPossibleNullInt(addEnrollment, 8, enrollment.getAverageGrade());
 		addEnrollment.setString(9, enrollment.getCourseState());
 		addEnrollment.setInt(10, enrollment.getYear());
 		return addEnrollment.executeUpdate();
@@ -69,11 +68,11 @@ public class EnrollmentDAO {
 		editEnrollment.setInt(1, enrollment.getIdCourse());
 		editEnrollment.setInt(2, enrollment.getIdStudent());
 		editEnrollment.setString(3, enrollment.getEnrollmentState());
-		Util.setPossibleNullInt(editEnrollment, 4, enrollment.getIdTeacher());
+		Helper.setPossibleNullInt(editEnrollment, 4, enrollment.getIdTeacher());
 		editEnrollment.setString(5, enrollment.getDivision());
-		Util.setPossibleNullInt(editEnrollment, 6, enrollment.getGrade1());
-		Util.setPossibleNullInt(editEnrollment, 7, enrollment.getGrade2());
-		Util.setPossibleNullInt(editEnrollment, 8, enrollment.getAverageGrade());
+		Helper.setPossibleNullInt(editEnrollment, 6, enrollment.getGrade1());
+		Helper.setPossibleNullInt(editEnrollment, 7, enrollment.getGrade2());
+		Helper.setPossibleNullInt(editEnrollment, 8, enrollment.getAverageGrade());
 		editEnrollment.setString(9, enrollment.getCourseState());
 		editEnrollment.setInt(10, enrollment.getYear());
 		editEnrollment.setInt(11, enrollment.getId());
@@ -100,7 +99,7 @@ public class EnrollmentDAO {
 	public static List<Student> getStudentsByCourseAndDivision(Connection connection, int id_course, String division) throws SQLException{
 		String listString = "SELECT a.* FROM inscripcion i, alumno a, curso c"
 				+ " WHERE i.id_alumno = a.id and i.id_curso = c.id and c.id = ? AND i.comision = ?"
-				+ " ORDER BY a.nombre ASC";
+				+ " ORDER BY a.nombre";
 		PreparedStatement listStudents = connection.prepareStatement(listString);
 		listStudents.setInt(1, id_course);
 		listStudents.setString(2, division);
@@ -110,7 +109,7 @@ public class EnrollmentDAO {
 	
 	public static List<Enrollment> getByCatedra(Connection connection, int id_catedra) throws SQLException{
 		String listString = "SELECT i.* FROM INSCRIPCION i, curso c"
-				+ " WHERE i.id_curso = c.id and c.id_catedra = ? ORDER BY id_alumno ASC";
+				+ " WHERE i.id_curso = c.id and c.id_catedra = ? ORDER BY id_alumno";
 		PreparedStatement listEnrollments = connection.prepareStatement(listString);
 		listEnrollments.setInt(1, id_catedra);
 		ResultSet res = listEnrollments.executeQuery();

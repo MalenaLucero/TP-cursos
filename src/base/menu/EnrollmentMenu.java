@@ -30,8 +30,7 @@ public class EnrollmentMenu {
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
 		switch(option) {
 		case 1:
-			int limit = InputUtil.inputInt(sc, "Ingrese la cantidad de registros");
-			EnrollmentController.findAll(connection, limit);
+			EnrollmentController.findAll(connection);
 			break;
 		case 2:
 			int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
@@ -73,23 +72,23 @@ public class EnrollmentMenu {
 		int id_course = InputUtil.inputInt(sc, "Ingrese ID del curso");
 		int id_student = InputUtil.inputInt(sc, "Ingrese ID del alumno");
 		Enrollment enrollment = new Enrollment(id_course, id_student);
-		if(Util.confirmOptionalField(sc, "comision y docente")) {
+		if(Helper.confirmOptionalField(sc, "comision y docente")) {
 			String division = InputUtil.inputSingleWord(sc, "Ingresar la comision");
 			enrollment.setDivision(division.toUpperCase());
 			int id_docente = InputUtil.inputInt(sc, "Ingresar ID del docente");
 			enrollment.setIdTeacher(id_docente);
 		}
-		if(Util.confirmOptionalField(sc, "estado de inscripcion (valor por default: activo)")) {
+		if(Helper.confirmOptionalField(sc, "estado de inscripcion (valor por default: activo)")) {
 			int state = InputUtil.inputInt(sc, "Ingrese 1 para cargar estado de inscripcion como CANCELADO");
 			if(state == 1) enrollment.setEnrollmentState(EnrollmentState.cancelado.getValue());
 		}
-		if(Util.confirmOptionalField(sc, "notas")) {
+		if(Helper.confirmOptionalField(sc, "notas")) {
 			int grade1 = InputUtil.inputInt(sc, "Ingrese la nota 1");
 			int grade2 = InputUtil.inputInt(sc, "Ingrese la nota 2");
 			enrollment.setGrade1(grade1);
 			enrollment.setGrade2(grade2);
 		}
-		if(Util.confirmOptionalField(sc, "ciclo lectivo (valor por default: 2021)")) {
+		if(Helper.confirmOptionalField(sc, "ciclo lectivo (valor por default: 2021)")) {
 			int year = InputUtil.inputInt(sc, "Ingrese el ciclo lectivo");
 			enrollment.setYear(year);
 		}
@@ -99,35 +98,35 @@ public class EnrollmentMenu {
 	private static Enrollment editEnrollment(Scanner sc, Connection connection) throws SQLException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion a editar:");
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
-		if(Util.confirmEditMessage(sc, "curso", Integer.toString(enrollment.getIdCourse()))) {
+		if(Helper.confirmEditMessage(sc, "curso", Integer.toString(enrollment.getIdCourse()))) {
 			int id_course = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setIdCourse(id_course);
 		}
-		if(Util.confirmEditMessage(sc, "alumno", Integer.toString(enrollment.getIdStudent()))) {
+		if(Helper.confirmEditMessage(sc, "alumno", Integer.toString(enrollment.getIdStudent()))) {
 			int id_student = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setIdStudent(id_student);
 		}
-		if(Util.confirmEditMessage(sc, "estado de inscripcion", enrollment.getEnrollmentState())) {
+		if(Helper.confirmEditMessage(sc, "estado de inscripcion", enrollment.getEnrollmentState())) {
 			String state = InputUtil.inputSingleWord(sc, "Ingrese el nuevo valor");
 			enrollment.setEnrollmentState(state.toLowerCase());
 		}
-		if(Util.confirmEditMessage(sc, "docente", Integer.toString(enrollment.getIdTeacher()))) {
+		if(Helper.confirmEditMessage(sc, "docente", Integer.toString(enrollment.getIdTeacher()))) {
 			int id_teacher = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setIdTeacher(id_teacher);
 		}
-		if(Util.confirmEditMessage(sc, "comision", enrollment.getDivision())) {
+		if(Helper.confirmEditMessage(sc, "comision", enrollment.getDivision())) {
 			String division = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			enrollment.setDivision(division.toUpperCase());
 		}
-		if(Util.confirmEditMessage(sc, "nota 1", Integer.toString(enrollment.getGrade1()))) {
+		if(Helper.confirmEditMessage(sc, "nota 1", Integer.toString(enrollment.getGrade1()))) {
 			int grade1 = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setGrade1(grade1);
 		}
-		if(Util.confirmEditMessage(sc, "nota 2", Integer.toString(enrollment.getGrade2()))) {
+		if(Helper.confirmEditMessage(sc, "nota 2", Integer.toString(enrollment.getGrade2()))) {
 			int grade2 = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setGrade2(grade2);
 		}
-		if(Util.confirmEditMessage(sc, "ciclo lectivo", Integer.toString(enrollment.getYear()))) {
+		if(Helper.confirmEditMessage(sc, "ciclo lectivo", Integer.toString(enrollment.getYear()))) {
 			int year = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
 			enrollment.setYear(year);
 		}
