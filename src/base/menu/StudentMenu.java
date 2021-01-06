@@ -8,9 +8,10 @@ import base.DAO.StudentDAO;
 import base.controller.StudentController;
 import base.model.Student;
 import base.util.InputUtil;
+import base.util.PrintUtil;
 
 public class StudentMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE ALUMNOS ------");
 		System.out.println("1. Listar alumnos");
@@ -23,6 +24,7 @@ public class StudentMenu {
 		System.out.println("8. Editar alumno");
 		System.out.println("9. Eliminar alumno");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
@@ -57,11 +59,14 @@ public class StudentMenu {
 			break;
 		case 8:
 			Student editStudent = editStudent(sc, connection);
-			StudentController.edit(connection, editStudent);
+			StudentController.update(connection, editStudent);
 			break;
 		case 9:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del alumno:");
 			StudentController.delete(connection, deleteId);
+			break;
+		default:
+			PrintUtil.invalidOptionMessage();
 			break;
 		}
 	}
@@ -87,7 +92,7 @@ public class StudentMenu {
 			String lastname = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setLastname(lastname);
 		}
-		if(Util.confirmEditMessage(sc, "nombre alternativo", student.getAlternative_name())) {
+		if(Util.confirmEditMessage(sc, "nombre alternativo", student.getAlternativeName())) {
 			String altName = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			student.setAlternative_name(altName);
 		}

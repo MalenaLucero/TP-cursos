@@ -97,16 +97,16 @@ public class StudentDAO {
 		PreparedStatement addStudent = connection.prepareStatement(insertString);
 		addStudent.setString(1, student.getName());
 		addStudent.setString(2, student.getLastname());
-		addStudent.setString(3, student.getAlternative_name());
+		addStudent.setString(3, student.getAlternativeName());
 		return addStudent.executeUpdate();
 	}
 	
-	public static int edit(Connection connection, Student student) throws SQLException {
+	public static int update(Connection connection, Student student) throws SQLException {
 		String editString = "UPDATE alumno SET nombre = ?, apellido = ?, nombre_alternativo = ? WHERE id = ?";
 		PreparedStatement editAlumno = connection.prepareStatement(editString);
 		editAlumno.setString(1, student.getName());
 		editAlumno.setString(2, student.getLastname());
-		editAlumno.setString(3, student.getAlternative_name());
+		editAlumno.setString(3, student.getAlternativeName());
 		editAlumno.setInt(4, student.getId());
 		return editAlumno.executeUpdate();
 	}

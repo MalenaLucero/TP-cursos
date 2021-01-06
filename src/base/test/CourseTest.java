@@ -18,7 +18,7 @@ public class CourseTest {
 		CourseController.insert(connection, addCourse);
 		Course editCourse = CourseDAO.findByName(connection, "prueba");
 		editCourse.setName("prueba editada");
-		CourseController.edit(connection, editCourse);
+		CourseController.update(connection, editCourse);
 		CourseController.delete(connection, editCourse.getId());
 	}
 }

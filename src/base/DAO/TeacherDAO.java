@@ -44,23 +44,23 @@ public class TeacherDAO {
 		PreparedStatement addTeacher = connection.prepareStatement(insertString);
 		addTeacher.setString(1, teacher.getName());
 		addTeacher.setString(2, teacher.getLastname());
-		addTeacher.setString(3, teacher.getAlternative_name1());
-		addTeacher.setString(4, teacher.getAlternative_name2());
+		addTeacher.setString(3, teacher.getAlternativeName1());
+		addTeacher.setString(4, teacher.getAlternativeName2());
 		addTeacher.setString(5, teacher.getDescription());
 		addTeacher.setString(6, teacher.getImage());
 		Util.setPossibleNullDate(addTeacher, 7, teacher.getBirthdate());
 		return addTeacher.executeUpdate();
 	}
 	
-	public static int edit(Connection connection, Teacher teacher) throws SQLException {
+	public static int update(Connection connection, Teacher teacher) throws SQLException {
 		String editString = "UPDATE docente SET nombre = ?, apellido = ?, nombre_alternativo1 = ?,"
 							+ "nombre_alternativo2 = ?, descripcion = ?, imagen = ?, "
 							+ "fecha_nacimiento = ? WHERE id = ?";
 		PreparedStatement editTeacher = connection.prepareStatement(editString);
 		editTeacher.setString(1, teacher.getName());
 		editTeacher.setString(2, teacher.getLastname());
-		editTeacher.setString(3, teacher.getAlternative_name1());
-		editTeacher.setString(4, teacher.getAlternative_name2());
+		editTeacher.setString(3, teacher.getAlternativeName1());
+		editTeacher.setString(4, teacher.getAlternativeName2());
 		editTeacher.setString(5, teacher.getDescription());
 		editTeacher.setString(6, teacher.getImage());
 		Util.setPossibleNullDate(editTeacher, 7, teacher.getBirthdate());

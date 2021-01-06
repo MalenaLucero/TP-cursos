@@ -7,58 +7,58 @@ import base.util.ValidationUtil;
 
 public class Enrollment {
 	private int id;
-	private int id_course;
-	private int id_student;
-	private EnrollmentState enrollment_state;
-	private int id_teacher;
+	private int idCourse;
+	private int idStudent;
+	private EnrollmentState enrollmentState;
+	private int idTeacher;
 	private Division division;
 	private int grade1;
 	private int grade2;
-	private int average_grade;
-	private CourseState course_state;
+	private int averageGrade;
+	private CourseState courseState;
 	private int year;
 	
-	public Enrollment(int id_course, int id_student) {
-		this.id_course = id_course;
-		this.id_student = id_student;
-		this.enrollment_state = EnrollmentState.activo;
+	public Enrollment(int idCourse, int idStudent) {
+		this.idCourse = idCourse;
+		this.idStudent = idStudent;
+		this.enrollmentState = EnrollmentState.activo;
 		this.division = Division.A;
-		this.course_state = CourseState.cursando;
+		this.courseState = CourseState.cursando;
 		this.year = 2021;
 	}
 	
-	public Enrollment(int id_course, String division, int year) {
-		this.id_course = id_course;
+	public Enrollment(int idCourse, String division, int year) {
+		this.idCourse = idCourse;
 		this.division = Division.valueOf(division);
 		this.year = year;
 	}
 	
-	public Enrollment(int id_course, int id_student, String enrollment_state, int id_teacher,
-			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
-		this.id_course = id_course;
-		this.id_student = id_student;
-		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
-		this.id_teacher = id_teacher;
+	public Enrollment(int idCourse, int idStudent, String enrollmentState, int idTeacher,
+			String division, int grade1, int grade2, int averageGrade, String courseState, int year) {
+		this.idCourse = idCourse;
+		this.idStudent = idStudent;
+		this.enrollmentState = EnrollmentState.valueOf(enrollmentState);
+		this.idTeacher = idTeacher;
 		this.division = Division.valueOf(division);
 		this.grade1 = grade1;
 		this.grade2 = grade2;
-		this.average_grade = average_grade;
-		this.course_state = CourseState.valueOf(course_state);
+		this.averageGrade = averageGrade;
+		this.courseState = CourseState.valueOf(courseState);
 		this.year = year;
 	}
 	
-	public Enrollment(int id, int id_course, int id_student, String enrollment_state, int id_teacher,
-			String division, int grade1, int grade2, int average_grade, String course_state, int year) {
+	public Enrollment(int id, int idCourse, int idStudent, String enrollmentState, int idTeacher,
+			String division, int grade1, int grade2, int averageGrade, String courseState, int year) {
 		this.id = id;
-		this.id_course = id_course;
-		this.id_student = id_student;
-		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
-		this.id_teacher = id_teacher;
+		this.idCourse = idCourse;
+		this.idStudent = idStudent;
+		this.enrollmentState = EnrollmentState.valueOf(enrollmentState);
+		this.idTeacher = idTeacher;
 		this.division = Division.valueOf(division);
 		this.grade1 = grade1;
 		this.grade2 = grade2;
-		this.average_grade = average_grade;
-		this.course_state = CourseState.valueOf(course_state);
+		this.averageGrade = averageGrade;
+		this.courseState = CourseState.valueOf(courseState);
 		this.year = year;
 	}
 
@@ -66,30 +66,30 @@ public class Enrollment {
 		return id;
 	}
 
-	public int getId_course() {
-		return id_course;
+	public int getIdCourse() {
+		return idCourse;
 	}
 
-	public void setId_course(int id_course) {
-		this.id_course = id_course;
+	public void setIdCourse(int idCourse) {
+		this.idCourse = idCourse;
 	}
 
-	public int getId_student() {
-		return id_student;
+	public int getIdStudent() {
+		return idStudent;
 	}
 
-	public void setId_student(int id_student) {
-		this.id_student = id_student;
+	public void setIdStudent(int idStudent) {
+		this.idStudent = idStudent;
 	}
 
-	public int getAverage_grade() {
-		return average_grade;
+	public int getAverageGrade() {
+		return averageGrade;
 	}
 
-	public void setAverage_grade(int average_grade) {
-		if(ValidationUtil.isGradeValid(average_grade)) {
-			this.average_grade = average_grade;
-			if(this.average_grade > 5) {
+	public void setAverageGrade(int averageGrade) {
+		if(ValidationUtil.isGradeValid(averageGrade)) {
+			this.averageGrade = averageGrade;
+			if(this.averageGrade > 5) {
 				setCourseState(CourseState.aprobado.getValue());
 			} else {
 				setCourseState(CourseState.desaprobado.getValue());
@@ -98,11 +98,11 @@ public class Enrollment {
 	}
 
 	public String getCourseState() {
-		return course_state.getValue();
+		return courseState.getValue();
 	}
 
-	public void setCourseState(String course_state) {
-		this.course_state = CourseState.valueOf(course_state);
+	public void setCourseState(String courseState) {
+		this.courseState = CourseState.valueOf(courseState);
 	}
 
 	public int getYear() {
@@ -113,20 +113,20 @@ public class Enrollment {
 		this.year = year;
 	}
 	
-	public String getEnrollment_state() {
-		return enrollment_state.getValue();
+	public String getEnrollmentState() {
+		return enrollmentState.getValue();
 	}
 
-	public void setEnrollment_state(String enrollment_state) {
-		this.enrollment_state = EnrollmentState.valueOf(enrollment_state);
+	public void setEnrollmentState(String enrollmentState) {
+		this.enrollmentState = EnrollmentState.valueOf(enrollmentState);
 	}
 
-	public int getId_teacher() {
-		return id_teacher;
+	public int getIdTeacher() {
+		return idTeacher;
 	}
 
-	public void setId_teacher(int id_teacher) {
-		this.id_teacher = id_teacher;
+	public void setIdTeacher(int idTeacher) {
+		this.idTeacher = idTeacher;
 	}
 
 	public String getDivision() {
@@ -144,7 +144,7 @@ public class Enrollment {
 	public void setGrade1(int grade1) {
 		if(ValidationUtil.isGradeValid(grade1)) {
 			this.grade1 = grade1;
-			setAverage_grade(calculateAverageGrade());
+			setAverageGrade(calculateAverageGrade());
 		}
 	}
 
@@ -155,16 +155,16 @@ public class Enrollment {
 	public void setGrade2(int grade2) {
 		if(ValidationUtil.isGradeValid(grade2)) {
 			this.grade2 = grade2;
-			setAverage_grade(calculateAverageGrade());
+			setAverageGrade(calculateAverageGrade());
 		}
 	}
 
 	public String toString() {
-		if(this.average_grade == 0) {
-			return String.format("ID: %s - ID alumno: %s - ID curso: %s", id, id_student, id_course);
+		if(this.averageGrade == 0) {
+			return String.format("ID: %s - ID alumno: %s - ID curso: %s", id, idStudent, idCourse);
 		} else {
 			return String.format("ID: %s - ID alumno: %s - ID curso: %s - Estado: %s - Notas: %s, %s, %s - Año: %s",
-								id, id_student, id_course, course_state, grade1, grade2, average_grade, year);
+								id, idStudent, idCourse, courseState, grade1, grade2, averageGrade, year);
 		}
 	}
 	

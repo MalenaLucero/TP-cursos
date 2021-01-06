@@ -16,7 +16,7 @@ public class EnrollmentStateController {
 		if(enrollment == null) {
 			System.out.println("Inscripcion no encontrada");
 		} else {
-			if(enrollment.getEnrollment_state().equals(state.getValue())) {
+			if(enrollment.getEnrollmentState().equals(state.getValue())) {
 				System.err.println("La inscripcion ya tiene estado " + state.getValue());
 			} else {
 				changeEnrollmentState(connection, enrollment, state.getValue());
@@ -43,8 +43,8 @@ public class EnrollmentStateController {
 	}
 
 	private static void changeEnrollmentState(Connection connection, Enrollment enrollment, String state) throws SQLException {
-		enrollment.setEnrollment_state(state);
-		int res = EnrollmentDAO.edit(connection, enrollment);
+		enrollment.setEnrollmentState(state);
+		int res = EnrollmentDAO.update(connection, enrollment);
 		ResponseUtil.editMessage(res);
 	}
 	

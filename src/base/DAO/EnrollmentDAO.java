@@ -48,32 +48,32 @@ public class EnrollmentDAO {
 		String insertString = "INSERT INTO inscripcion (id_curso, id_alumno, estado_inscripcion, id_docente, comision, nota1, nota2, promedio, estado_cursada, ciclo_lectivo)"
 								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement addEnrollment = connection.prepareStatement(insertString);
-		addEnrollment.setInt(1, enrollment.getId_course());
-		addEnrollment.setInt(2, enrollment.getId_student());
-		addEnrollment.setString(3, enrollment.getEnrollment_state());
-		Util.setPossibleNullInt(addEnrollment, 4, enrollment.getId_teacher());
+		addEnrollment.setInt(1, enrollment.getIdCourse());
+		addEnrollment.setInt(2, enrollment.getIdStudent());
+		addEnrollment.setString(3, enrollment.getEnrollmentState());
+		Util.setPossibleNullInt(addEnrollment, 4, enrollment.getIdTeacher());
 		addEnrollment.setString(5, enrollment.getDivision());
 		Util.setPossibleNullInt(addEnrollment, 6, enrollment.getGrade1());
 		Util.setPossibleNullInt(addEnrollment, 7, enrollment.getGrade2());
-		Util.setPossibleNullInt(addEnrollment, 8, enrollment.getAverage_grade());
+		Util.setPossibleNullInt(addEnrollment, 8, enrollment.getAverageGrade());
 		addEnrollment.setString(9, enrollment.getCourseState());
 		addEnrollment.setInt(10, enrollment.getYear());
 		return addEnrollment.executeUpdate();
 	}
 	
-	public static int edit(Connection connection, Enrollment enrollment) throws SQLException {
+	public static int update(Connection connection, Enrollment enrollment) throws SQLException {
 		String editString = "UPDATE inscripcion SET id_curso = ?, id_alumno = ?, estado_inscripcion = ?,"
 				+ "id_docente = ?, comision = ?, nota1 = ?, nota2 = ?, promedio = ?,"
 				+ "estado_cursada = ?, ciclo_lectivo = ? WHERE id = ?";
 		PreparedStatement editEnrollment = connection.prepareStatement(editString);
-		editEnrollment.setInt(1, enrollment.getId_course());
-		editEnrollment.setInt(2, enrollment.getId_student());
-		editEnrollment.setString(3, enrollment.getEnrollment_state());
-		Util.setPossibleNullInt(editEnrollment, 4, enrollment.getId_teacher());
+		editEnrollment.setInt(1, enrollment.getIdCourse());
+		editEnrollment.setInt(2, enrollment.getIdStudent());
+		editEnrollment.setString(3, enrollment.getEnrollmentState());
+		Util.setPossibleNullInt(editEnrollment, 4, enrollment.getIdTeacher());
 		editEnrollment.setString(5, enrollment.getDivision());
 		Util.setPossibleNullInt(editEnrollment, 6, enrollment.getGrade1());
 		Util.setPossibleNullInt(editEnrollment, 7, enrollment.getGrade2());
-		Util.setPossibleNullInt(editEnrollment, 8, enrollment.getAverage_grade());
+		Util.setPossibleNullInt(editEnrollment, 8, enrollment.getAverageGrade());
 		editEnrollment.setString(9, enrollment.getCourseState());
 		editEnrollment.setInt(10, enrollment.getYear());
 		editEnrollment.setInt(11, enrollment.getId());

@@ -23,7 +23,7 @@ public class StudentTest {
 		List<Student> students = StudentDAO.findByNameAndLastname(connection, "nombre", "apellido");
 		Student editStudent = students.get(0);
 		editStudent.setName("NOMBRE");
-		StudentController.edit(connection, editStudent);
+		StudentController.update(connection, editStudent);
 		StudentController.delete(connection, editStudent.getId());
 	}
 }

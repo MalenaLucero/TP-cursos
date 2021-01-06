@@ -7,9 +7,10 @@ import java.util.Scanner;
 import base.controller.EnrollmentStateController;
 import base.enums.EnrollmentState;
 import base.util.InputUtil;
+import base.util.PrintUtil;
 
 public class EnrollmentStateMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE ESTADO DE INSCRIPCIONES ------");
 		System.out.println("1. Activar inscripcion por ID");
@@ -21,6 +22,7 @@ public class EnrollmentStateMenu {
 		System.out.println("7. Activar inscripciones por curso");
 		System.out.println("8. Cancelar inscripciones por curso");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
@@ -57,6 +59,9 @@ public class EnrollmentStateMenu {
 		case 8:
 			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			EnrollmentStateController.changeByCourse(connection, idCourse, EnrollmentState.cancelado);
+			break;
+		default:
+			PrintUtil.invalidOptionMessage();
 			break;
 		}
 	}

@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 import base.controller.GradeController;
 import base.util.InputUtil;
+import base.util.PrintUtil;
 
 public class GradeMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE NOTAS ------");
 		System.out.println("1. Ver notas de alumno por curso");
@@ -17,6 +18,7 @@ public class GradeMenu {
 		System.out.println("4. Ver mejores promedios del instituto");
 		System.out.println("5. Ver mejores promedios por curso");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
@@ -40,6 +42,9 @@ public class GradeMenu {
 		case 5:
 			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			GradeController.getBestAverageByCourse(connection, courseId);
+			break;
+		default:
+			PrintUtil.invalidOptionMessage();
 			break;
 		}
 	}

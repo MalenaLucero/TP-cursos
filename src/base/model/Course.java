@@ -5,21 +5,21 @@ import base.util.StringUtil;
 public class Course {
 	private int id;
 	private String name;
-	private int id_catedra;
+	private int idCatedra;
 	
 	public Course(String name) {
 		setName(name);
 	}
 	
-	public Course(String name, int id_catedra) {
-		this.id_catedra = id_catedra;
+	public Course(String name, int idCatedra) {
+		this.idCatedra = idCatedra;
 		setName(name);
 	}
 	
-	public Course(int id, String name, int id_catedra) {
+	public Course(int id, String name, int idCatedra) {
 		this.id = id;
 		setName(name);
-		this.id_catedra = id_catedra;
+		this.idCatedra = idCatedra;
 	}
 
 	public String getName() {
@@ -33,11 +33,11 @@ public class Course {
 	}
 	
 	public int getCatedra() {
-		return id_catedra;
+		return idCatedra;
 	}
 
-	public void setCatedra(int id_catedra) {
-		this.id_catedra = id_catedra;
+	public void setCatedra(int idCatedra) {
+		this.idCatedra = idCatedra;
 	}
 	
 	public int getId() {
@@ -49,6 +49,6 @@ public class Course {
 	}
 
 	public String toString() {
-		return String.format("ID: %s - Curso: %s - ID Catedra: %s", id, name, id_catedra);
+		return String.format("ID: %s - Curso: %s - ID Catedra: %s", id, name, idCatedra);
 	}
 }

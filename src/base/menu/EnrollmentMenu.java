@@ -9,9 +9,10 @@ import base.controller.EnrollmentController;
 import base.enums.EnrollmentState;
 import base.model.Enrollment;
 import base.util.InputUtil;
+import base.util.PrintUtil;
 
 public class EnrollmentMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE INSCRIPCION ------");
 		System.out.println("1. Listar inscripciones");
@@ -23,6 +24,7 @@ public class EnrollmentMenu {
 		System.out.println("7. Listar alumnos por curso");
 		System.out.println("8. Listar alumnos por curso y comision");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
@@ -46,7 +48,7 @@ public class EnrollmentMenu {
 			break;
 		case 5:
 			Enrollment editEnrollment = editEnrollment(sc, connection);
-			EnrollmentController.edit(connection, editEnrollment);
+			EnrollmentController.update(connection, editEnrollment);
 			break;
 		case 6:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion:");
@@ -61,6 +63,9 @@ public class EnrollmentMenu {
 			String division = InputUtil.inputSingleWord(sc, "Ingrese la comision");
 			EnrollmentController.getStudentsByCourseAndDivision(connection, idCourse, division);
 			break;
+		default:
+			PrintUtil.invalidOptionMessage();
+			break;
 		}
 	}
 
@@ -72,11 +77,11 @@ public class EnrollmentMenu {
 			String division = InputUtil.inputSingleWord(sc, "Ingresar la comision");
 			enrollment.setDivision(division.toUpperCase());
 			int id_docente = InputUtil.inputInt(sc, "Ingresar ID del docente");
-			enrollment.setId_teacher(id_docente);
+			enrollment.setIdTeacher(id_docente);
 		}
 		if(Util.confirmOptionalField(sc, "estado de inscripcion (valor por default: activo)")) {
 			int state = InputUtil.inputInt(sc, "Ingrese 1 para cargar estado de inscripcion como CANCELADO");
-			if(state == 1) enrollment.setEnrollment_state(EnrollmentState.cancelado.getValue());
+			if(state == 1) enrollment.setEnrollmentState(EnrollmentState.cancelado.getValue());
 		}
 		if(Util.confirmOptionalField(sc, "notas")) {
 			int grade1 = InputUtil.inputInt(sc, "Ingrese la nota 1");
@@ -94,21 +99,21 @@ public class EnrollmentMenu {
 	private static Enrollment editEnrollment(Scanner sc, Connection connection) throws SQLException {
 		int id = InputUtil.inputInt(sc, "Ingrese ID de la inscripcion a editar:");
 		Enrollment enrollment = EnrollmentDAO.findById(connection, id);
-		if(Util.confirmEditMessage(sc, "curso", Integer.toString(enrollment.getId_course()))) {
+		if(Util.confirmEditMessage(sc, "curso", Integer.toString(enrollment.getIdCourse()))) {
 			int id_course = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
-			enrollment.setId_course(id_course);
+			enrollment.setIdCourse(id_course);
 		}
-		if(Util.confirmEditMessage(sc, "alumno", Integer.toString(enrollment.getId_student()))) {
+		if(Util.confirmEditMessage(sc, "alumno", Integer.toString(enrollment.getIdStudent()))) {
 			int id_student = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
-			enrollment.setId_student(id_student);
+			enrollment.setIdStudent(id_student);
 		}
-		if(Util.confirmEditMessage(sc, "estado de inscripcion", enrollment.getEnrollment_state())) {
+		if(Util.confirmEditMessage(sc, "estado de inscripcion", enrollment.getEnrollmentState())) {
 			String state = InputUtil.inputSingleWord(sc, "Ingrese el nuevo valor");
-			enrollment.setEnrollment_state(state.toLowerCase());
+			enrollment.setEnrollmentState(state.toLowerCase());
 		}
-		if(Util.confirmEditMessage(sc, "docente", Integer.toString(enrollment.getId_teacher()))) {
+		if(Util.confirmEditMessage(sc, "docente", Integer.toString(enrollment.getIdTeacher()))) {
 			int id_teacher = InputUtil.inputInt(sc, "Ingrese el nuevo valor");
-			enrollment.setId_teacher(id_teacher);
+			enrollment.setIdTeacher(id_teacher);
 		}
 		if(Util.confirmEditMessage(sc, "comision", enrollment.getDivision())) {
 			String division = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");

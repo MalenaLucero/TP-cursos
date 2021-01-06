@@ -1,7 +1,11 @@
 package base.menu;
 
+import java.util.Scanner;
+
+import base.util.InputUtil;
+
 public class MainMenu {
-	public static void printMainMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU PRINCIPAL ------");
 		System.out.println("1. Cursos");
@@ -12,5 +16,6 @@ public class MainMenu {
 		System.out.println("6. Notas");
 		System.out.println("99. Correr tests");
 		System.out.println("0. Salir");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 }

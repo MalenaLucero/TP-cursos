@@ -16,9 +16,9 @@ public class EnrollmentTest {
 		EnrollmentController.getByCourseAndStudent(connection, 1, 62);
 		Enrollment addEnrollment = new Enrollment(1, 3);
 		EnrollmentController.insert(connection, addEnrollment);
-		Enrollment editEnrollment = EnrollmentDAO.findByCourseAndStudent(connection, addEnrollment.getId_course(), addEnrollment.getId_student());
+		Enrollment editEnrollment = EnrollmentDAO.findByCourseAndStudent(connection, addEnrollment.getIdCourse(), addEnrollment.getIdStudent());
 		editEnrollment.setGrade1(8);
-		EnrollmentController.edit(connection, editEnrollment);
+		EnrollmentController.update(connection, editEnrollment);
 		EnrollmentController.delete(connection, editEnrollment.getId());
 	}
 	

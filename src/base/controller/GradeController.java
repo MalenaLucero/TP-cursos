@@ -74,7 +74,7 @@ public class GradeController {
 		Enrollment enrollment = (Enrollment) gradesMap.get("enrollment");
 		System.out.print("Nota 1: " + enrollment.getGrade1());
 		System.out.print(", Nota 2: " + enrollment.getGrade2());
-		System.out.print(", Promedio: " + enrollment.getAverage_grade());
+		System.out.print(", Promedio: " + enrollment.getAverageGrade());
 		System.out.print(", Estado de la cursada: " + enrollment.getCourseState());
 		System.out.println();
 	}

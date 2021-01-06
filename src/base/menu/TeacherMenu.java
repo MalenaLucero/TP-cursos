@@ -10,10 +10,11 @@ import base.DAO.TeacherDAO;
 import base.controller.TeacherController;
 import base.model.Teacher;
 import base.util.InputUtil;
+import base.util.PrintUtil;
 import base.util.StringUtil;
 
 public class TeacherMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE DOCENTES ------");
 		System.out.println("1. Listar docentes");
@@ -26,6 +27,7 @@ public class TeacherMenu {
 		System.out.println("8. Modificar docente");
 		System.out.println("9. Eliminar docente");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException, ParseException {
@@ -60,11 +62,14 @@ public class TeacherMenu {
 			break;
 		case 8:
 			Teacher editTeacher = editTeacher(sc, connection);
-			TeacherController.edit(connection, editTeacher);
+			TeacherController.update(connection, editTeacher);
 			break;
 		case 9:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del docente:");
 			TeacherController.delete(connection, deleteId);
+			break;
+		default:
+			PrintUtil.invalidOptionMessage();
 			break;
 		}
 	}
@@ -106,13 +111,13 @@ public class TeacherMenu {
 			String lastname = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
 			teacher.setLastname(lastname);
 		}
-		if(Util.confirmEditMessage(sc, "primer nombre alternativo", teacher.getAlternative_name1())) {
+		if(Util.confirmEditMessage(sc, "primer nombre alternativo", teacher.getAlternativeName1())) {
 			String alternative_name1 = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
-			teacher.setAlternative_name1(alternative_name1);
+			teacher.setAlternativeName1(alternative_name1);
 		}
-		if(Util.confirmEditMessage(sc, "segundo nombre alternativo", teacher.getAlternative_name2())) {
+		if(Util.confirmEditMessage(sc, "segundo nombre alternativo", teacher.getAlternativeName2())) {
 			String alternative_name2 = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");
-			teacher.setAlternative_name2(alternative_name2);
+			teacher.setAlternativeName2(alternative_name2);
 		}
 		if(Util.confirmEditMessage(sc, "descripcion", teacher.getDescription())) {
 			String description = InputUtil.inputLine(sc, "Ingrese el nuevo valor:");

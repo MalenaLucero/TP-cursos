@@ -6,8 +6,8 @@ public class Teacher {
 	private int id;
 	private String name;
 	private String lastname;
-	private String alternative_name1;
-	private String alternative_name2;
+	private String alternativeName1;
+	private String alternativeName2;
 	private String description;
 	private String image;
 	private Date birthdate;
@@ -17,24 +17,24 @@ public class Teacher {
 		this.lastname = lastname;
 	}
 	
-	public Teacher(String name, String lastname, String alternative_name1, String alternative_name2,
+	public Teacher(String name, String lastname, String alternativeName1, String alternativeName2,
 					String description, String image, Date birthdate) {
 		this.name = name;
 		this.lastname = lastname;
-		this.alternative_name1 = alternative_name1;
-		this.alternative_name2 = alternative_name2;
+		this.alternativeName1 = alternativeName1;
+		this.alternativeName2 = alternativeName2;
 		this.description = description;
 		this.image = image;
 		this.birthdate = birthdate;
 	}
 	
-	public Teacher(int id, String name, String lastname, String alternative_name1,
-					String alternative_name2, String description, String image, Date birthdate) {
+	public Teacher(int id, String name, String lastname, String alternativeName1,
+					String alternativeName2, String description, String image, Date birthdate) {
 		this.id = id;
 		this.name = name;
 		this.lastname = lastname;
-		this.alternative_name1 = alternative_name1;
-		this.alternative_name2 = alternative_name2;
+		this.alternativeName1 = alternativeName1;
+		this.alternativeName2 = alternativeName2;
 		this.description = description;
 		this.image = image;
 		this.birthdate = birthdate;
@@ -60,20 +60,20 @@ public class Teacher {
 		this.lastname = lastname;
 	}
 
-	public String getAlternative_name1() {
-		return alternative_name1;
+	public String getAlternativeName1() {
+		return alternativeName1;
 	}
 
-	public void setAlternative_name1(String alternative_name1) {
-		this.alternative_name1 = alternative_name1;
+	public void setAlternativeName1(String alternativeName1) {
+		this.alternativeName1 = alternativeName1;
 	}
 
-	public String getAlternative_name2() {
-		return alternative_name2;
+	public String getAlternativeName2() {
+		return alternativeName2;
 	}
 
-	public void setAlternative_name2(String alternative_name2) {
-		this.alternative_name2 = alternative_name2;
+	public void setAlternativeName2(String alternativeName2) {
+		this.alternativeName2 = alternativeName2;
 	}
 
 	public String getDescription() {
@@ -101,7 +101,7 @@ public class Teacher {
 	}
 	
 	public String toString() {
-		return String.format("ID: %s - Docente: %s %s (%s)", id, name, lastname, alternative_name1);
+		return String.format("ID: %s - Docente: %s %s (%s)", id, name, lastname, alternativeName1);
 	}
 	
 	public String toStringBirthday() {

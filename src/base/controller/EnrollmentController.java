@@ -48,9 +48,9 @@ public class EnrollmentController{
 		ResponseUtil.addMessage(res);
 	}
 
-	public static void edit(Connection connection, Enrollment enrollment) throws SQLException {
+	public static void update(Connection connection, Enrollment enrollment) throws SQLException {
 		System.out.println("Editar inscripcion");
-		int res = EnrollmentDAO.edit(connection, enrollment);
+		int res = EnrollmentDAO.update(connection, enrollment);
 		ResponseUtil.editMessage(res);
 	}
 	

@@ -49,7 +49,7 @@ public class StudentController{
 		System.out.println("ID: " + student.getId());
 		System.out.println("Nombre: " + student.getName());
 		System.out.println("Apellido: " + student.getLastname());
-		PrintUtil.printIfNotBlank("Nombre alternativo: ", student.getAlternative_name());
+		PrintUtil.printIfNotBlank("Nombre alternativo: ", student.getAlternativeName());
 		double average = StudentDAO.getOverallAverage(connection, id);
 		System.out.println("Promedio general: " + average);
 		List<Map<String, Object>> courseList = StudentDAO.getCourses(connection, id);
@@ -70,9 +70,9 @@ public class StudentController{
 		ResponseUtil.addMessage(res);
 	}
 
-	public static void edit(Connection connection, Student student) throws SQLException {
+	public static void update(Connection connection, Student student) throws SQLException {
 		System.out.println("Editar alumno");
-		int res = StudentDAO.edit(connection, student);
+		int res = StudentDAO.update(connection, student);
 		ResponseUtil.editMessage(res);
 	}
 	

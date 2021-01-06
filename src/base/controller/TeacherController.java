@@ -43,9 +43,9 @@ public class TeacherController{
 		ResponseUtil.addMessage(res);
 	}
 
-	public static void edit(Connection connection, Teacher teacher) throws SQLException {
+	public static void update(Connection connection, Teacher teacher) throws SQLException {
 		System.out.println("Editar docente");
-		int res = TeacherDAO.edit(connection, teacher);
+		int res = TeacherDAO.update(connection, teacher);
 		ResponseUtil.editMessage(res);
 	}
 	
@@ -73,13 +73,13 @@ public class TeacherController{
 		System.out.println("ID " + teacher.getId());
 		System.out.println("Nombre: " + teacher.getName());
 		System.out.println("Apellido: " + teacher.getLastname());
-		PrintUtil.printIfNotBlank("Nombre alternativo: ", teacher.getAlternative_name1());
-		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternative_name2());
+		PrintUtil.printIfNotBlank("Nombre alternativo: ", teacher.getAlternativeName1());
+		PrintUtil.printIfNotBlank("Segundo nombre alternativo: ", teacher.getAlternativeName2());
 		System.out.println("Buscando significado de los kanjis en API externa...");
-		if(teacher.getAlternative_name2() == null) {
-			getKanjiMeanigs(teacher.getAlternative_name1());
+		if(teacher.getAlternativeName2() == null) {
+			getKanjiMeanigs(teacher.getAlternativeName1());
 		} else {
-			getKanjiMeanigs(teacher.getAlternative_name2());
+			getKanjiMeanigs(teacher.getAlternativeName2());
 		}
 		PrintUtil.printIfNotBlank("Fecha de nacimiento: ", StringUtil.dateToString(teacher.getBirthdate()));
 		if(teacher.getBirthdate() != null) {

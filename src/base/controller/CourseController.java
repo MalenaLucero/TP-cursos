@@ -37,9 +37,9 @@ public class CourseController{
 		}
 	}
 
-	public static void edit(Connection connection, Course course) throws SQLException {
+	public static void update(Connection connection, Course course) throws SQLException {
 		System.out.println("Editar curso");
-		int res = CourseDAO.edit(connection, course);
+		int res = CourseDAO.update(connection, course);
 		ResponseUtil.editMessage(res);
 	}
 	

@@ -41,7 +41,7 @@ public class CourseDAO {
 		return addCourse.executeUpdate();
 	}
 	
-	public static int edit(Connection connection, Course course) throws SQLException {
+	public static int update(Connection connection, Course course) throws SQLException {
 		String editString = "UPDATE curso SET nombre = ?, id_catedra = ? WHERE id = ?";
 		PreparedStatement editCourse = connection.prepareStatement(editString);
 		editCourse.setString(1, course.getName());

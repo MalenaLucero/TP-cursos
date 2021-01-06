@@ -11,7 +11,7 @@ import base.util.InputUtil;
 import base.util.PrintUtil;
 
 public class CourseMenu {
-	public static void printMenu() {
+	public static int showMenuAndInput(Scanner sc) {
 		System.out.println();
 		System.out.println("------ MENU DE CURSOS ------");
 		System.out.println("1. Listar cursos");
@@ -21,6 +21,7 @@ public class CourseMenu {
 		System.out.println("5. Editar curso");
 		System.out.println("6. Eliminar curso");
 		System.out.println("0. Volver al menu principal");
+		return InputUtil.inputIntMenuOption(sc);
 	}
 	
 	public static void chooseMenuOption(Scanner sc, Connection connection, int option) throws SQLException {
@@ -42,7 +43,7 @@ public class CourseMenu {
 			break;
 		case 5:
 			Course editCourse = editCourse(sc, connection);
-			CourseController.edit(connection, editCourse);
+			CourseController.update(connection, editCourse);
 			break;
 		case 6:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del curso:");

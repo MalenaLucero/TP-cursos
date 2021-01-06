@@ -20,7 +20,6 @@ import base.test.EnrollmentTest;
 import base.test.GradeTest;
 import base.test.StudentTest;
 import base.test.TeacherTest;
-import base.util.InputUtil;
 import base.util.PrintUtil;
 
 //1. ABML de profes
@@ -36,9 +35,8 @@ import base.util.PrintUtil;
 public class AppCursos {
 	public static void main(String[] args) {
 		System.out.println("Bienvenido al sistema de cursos");
-		MainMenu.printMainMenu();
 		Scanner sc = new Scanner(System.in);
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = MainMenu.showMenuAndInput(sc);
 		
 		try {
 			PrintUtil.printMessage("Conectando a la base de datos...");
@@ -46,99 +44,90 @@ public class AppCursos {
 			System.out.println("Conexion establecida");
 			
 			while(option != 0) {
-				switch(option) {
-				case 1:
-					course(sc, connection);
-					break;
-				case 2: 
-					student(sc, connection);
-					break;
-				case 3:
-					teacher(sc, connection);
-					break;
-				case 4:
-					enrollment(sc, connection);
-					break;
-				case 5:
-					enrollmentState(sc, connection);
-					break;
-				case 6:
-					grade(sc, connection);
-					break;
-				case 99:
-					runTests(connection);
-					break;
-				default:
-					PrintUtil.invalidOptionMessage();
-					break;
+				try {
+					switch(option) {
+					case 1:
+						course(sc, connection);
+						break;
+					case 2: 
+						student(sc, connection);
+						break;
+					case 3:
+						teacher(sc, connection);
+						break;
+					case 4:
+						enrollment(sc, connection);
+						break;
+					case 5:
+						enrollmentState(sc, connection);
+						break;
+					case 6:
+						grade(sc, connection);
+						break;
+					case 99:
+						runTests(connection);
+						break;
+					default:
+						PrintUtil.invalidOptionMessage();
+						break;
+					}
+				} catch(SQLException e) {
+					PrintUtil.printExceptionMessage("Error al impactar en la base de datos", e.getMessage());
 				}
-				MainMenu.printMainMenu();
-				option = InputUtil.inputIntMenuOption(sc);
+				option = MainMenu.showMenuAndInput(sc);
 			}
 		} catch(Exception e) {
-			System.out.println(e);
+			PrintUtil.printExceptionMessage("No se pudo establecer la conexión", e.getMessage());
 		}
 		PrintUtil.printMessage("Programa finalizado");
 	}
 
 	private static void course(Scanner sc, Connection connection) throws SQLException {
-		CourseMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = CourseMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			CourseMenu.chooseMenuOption(sc, connection, option);
-			CourseMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = CourseMenu.showMenuAndInput(sc);
 		}
 	}
 	
 	private static void student(Scanner sc, Connection connection) throws SQLException {
-		StudentMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = StudentMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			StudentMenu.chooseMenuOption(sc, connection, option);
-			StudentMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = StudentMenu.showMenuAndInput(sc);
 		}
 	}
 	
 	private static void enrollment(Scanner sc, Connection connection) throws SQLException {
-		EnrollmentMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = EnrollmentMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			EnrollmentMenu.chooseMenuOption(sc, connection, option);
-			EnrollmentMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = EnrollmentMenu.showMenuAndInput(sc);
 		}
 	}
 	
 	private static void teacher(Scanner sc,Connection connection) throws SQLException, ParseException {
 		BirthdayController.showBirthdays(connection);
-		TeacherMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = TeacherMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			TeacherMenu.chooseMenuOption(sc, connection, option);
-			TeacherMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = TeacherMenu.showMenuAndInput(sc);
 		}
 	}
 	
 	private static void enrollmentState(Scanner sc, Connection connection) throws SQLException {
-		EnrollmentStateMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = EnrollmentStateMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			EnrollmentStateMenu.chooseMenuOption(sc, connection, option);
-			EnrollmentStateMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = EnrollmentStateMenu.showMenuAndInput(sc);
 		}
 	}
 	
 	private static void grade(Scanner sc, Connection connection) throws SQLException {
-		GradeMenu.printMenu();
-		int option = InputUtil.inputIntMenuOption(sc);
+		int option = GradeMenu.showMenuAndInput(sc);
 		while(option != 0) {
 			GradeMenu.chooseMenuOption(sc, connection, option);
-			GradeMenu.printMenu();
-			option = InputUtil.inputIntMenuOption(sc);
+			option = GradeMenu.showMenuAndInput(sc);
 		}
 	}
 	
