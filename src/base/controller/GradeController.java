@@ -1,11 +1,13 @@
 package base.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import base.DAO.GradeDAO;
+import base.IO.ExportData;
 import base.model.Course;
 import base.model.Enrollment;
 import base.model.Student;
@@ -27,6 +29,15 @@ public class GradeController {
 		for(Map<String, Object> gradesMap: gradesList) {
 			printCourse(gradesMap);
 			printGrades(gradesMap);
+		}
+	}
+	
+	public static void generateGradesBooklet(Connection connection, int studentId, int year) throws SQLException {
+		List<Map<String, Object>> gradesMap = GradeDAO.findByStudentIdAndYear(connection, studentId, year);
+		try {
+			ExportData.generateGradesBooklet(gradesMap);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

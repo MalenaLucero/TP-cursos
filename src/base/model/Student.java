@@ -62,6 +62,14 @@ public class Student {
 		this.alternativeName = alternativeName;
 	}
 	
+	public String getFullName() {
+		if(alternativeName != null) {
+			return String.format("%s %s (%s)", name, lastname, alternativeName);
+		} else {
+			return String.format("%s %s", name, lastname);
+		}
+	}
+	
 	public String toString() {
 		if(StringUtil.isBlank(alternativeName)) {
 			return String.format("ID: %s - Alumno: %s %s", id, name, lastname);

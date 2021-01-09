@@ -17,6 +17,7 @@ public class GradeMenu {
 		System.out.println("3. Ver todas las notas de un curso");
 		System.out.println("4. Ver mejores promedios del instituto");
 		System.out.println("5. Ver mejores promedios por curso");
+		System.out.println("6. Generar boletin de alumno");
 		System.out.println("0. Volver al menu principal");
 		return InputUtil.inputIntMenuOption(sc);
 	}
@@ -42,6 +43,13 @@ public class GradeMenu {
 		case 5:
 			int courseId = InputUtil.inputInt(sc, "Ingrese ID del curso");
 			GradeController.findBestAverageByCourseId(connection, courseId);
+			break;
+		case 6: 
+			//int studentId = InputUtil.inputInt(sc, "Ingrese ID del alumno");
+			//int year = InputUtil.inputInt(sc, "Ingrese el año de cursada");
+			int studentId = 1;
+			int year = 2020;
+			GradeController.generateGradesBooklet(connection, studentId, year);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

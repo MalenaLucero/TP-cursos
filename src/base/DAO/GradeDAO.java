@@ -40,6 +40,15 @@ public class GradeDAO {
 		return generateMapList(res);
 	}
 	
+	public static List<Map<String, Object>> findByStudentIdAndYear(Connection connection, int id_student, int year) throws SQLException {
+		String string = SELECT + "AND i.id_alumno = ? AND i.ciclo_lectivo = ?";
+		PreparedStatement query = connection.prepareStatement(string);
+		query.setInt(1, id_student);
+		query.setInt(2, year);
+		ResultSet res = query.executeQuery();
+		return generateMapList(res);
+	}
+	
 	public static List<Map<String, Object>> getByCourse(Connection connection, int id_course) throws SQLException {
 		String string = SELECT + "AND i.id_curso = ?";
 		PreparedStatement query = connection.prepareStatement(string);
