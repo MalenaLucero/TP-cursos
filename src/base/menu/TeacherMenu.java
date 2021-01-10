@@ -26,6 +26,7 @@ public class TeacherMenu {
 		System.out.println("7. Agregar docente");
 		System.out.println("8. Modificar docente");
 		System.out.println("9. Eliminar docente");
+		System.out.println("10. Exportar recibo de sueldo de docente");
 		System.out.println("0. Volver al menu principal");
 		return InputUtil.inputIntMenuOption(sc);
 	}
@@ -67,6 +68,10 @@ public class TeacherMenu {
 		case 9:
 			int deleteId = InputUtil.inputInt(sc, "Ingrese ID del docente:");
 			TeacherController.delete(connection, deleteId);
+			break;
+		case 10:
+			int teacherPaycheckId = InputUtil.inputInt(sc, "Ingrese ID del docente:");
+			TeacherController.exportPaycheck(connection, teacherPaycheckId);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

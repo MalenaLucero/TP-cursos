@@ -12,5 +12,6 @@ public class GradeTest {
 		GradeController.findByCourseId(connection, 1);
 		GradeController.findOverallBestAverage(connection);
 		GradeController.findBestAverageByCourseId(connection, 1);
+		GradeController.exportGradesBooklet(connection, 1, 2020);
 	}
 }

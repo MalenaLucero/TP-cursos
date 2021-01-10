@@ -1,5 +1,6 @@
 package base.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import base.DAO.TeacherDAO;
+import base.IO.ExportPaycheck;
 import base.externalAPI.KanjiAPI;
 import base.model.Course;
 import base.model.Enrollment;
@@ -107,6 +109,20 @@ public class TeacherController{
 		System.out.println("Docentes con nombre similar a " + searchString);
 		List<Teacher> teachers = TeacherDAO.getBySimilarity(connection, searchString);
 		printTeachers(teachers);
+	}
+	
+	public static void exportPaycheck(Connection connection, int teacherId) throws SQLException {
+		try {
+			Teacher teacher = TeacherDAO.findById(connection, teacherId);
+			if(teacher != null) {
+				ExportPaycheck.generate(TeacherDAO.getCoursesByTeacher(connection, teacherId));
+			} else {
+				System.err.println("Docente no encontrado");
+			}
+			
+		} catch (IOException e) {
+			PrintUtil.printExceptionMessage("Error al generar el recibo de sueldo", e.getMessage());
+		} 
 	}
 	
 	public static void findNextBirthday(Connection connection) throws SQLException {

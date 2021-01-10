@@ -100,6 +100,18 @@ public class Teacher {
 		this.birthdate = birthdate;
 	}
 	
+	public String getNameAndLastnameNoSpace() {
+		return String.format("%s%s", name, lastname);
+	}
+	
+	public String getFullName() {
+		if(alternativeName1 != null && alternativeName2 != null) {
+			return String.format("%s %s (%s - %s)", name, lastname, alternativeName1, alternativeName2);
+		} else {
+			return String.format("%s %s (%s)", name, lastname, alternativeName1);
+		}
+	}
+	
 	public String toString() {
 		return String.format("ID: %s - Docente: %s %s (%s)", id, name, lastname, alternativeName1);
 	}

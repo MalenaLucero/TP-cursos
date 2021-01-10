@@ -25,5 +25,6 @@ public class TeacherTest {
 		TeacherController.delete(connection, editTeacher.getId());
 		TeacherController.findCoursesByTeacherId(connection, 3);
 		TeacherController.findBySimilarity(connection, "민");
+		TeacherController.exportPaycheck(connection, 3);
 	}
 }

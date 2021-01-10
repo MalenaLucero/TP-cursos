@@ -41,4 +41,9 @@ public class DateUtil {
 	public static long getTimestamp() {
 		return new Date().getTime();
 	}
+	
+	public static String getMonthString(int number) {
+		String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+		return months[number - 1];
+	}
 }

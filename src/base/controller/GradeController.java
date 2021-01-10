@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import base.DAO.GradeDAO;
+import base.DAO.StudentDAO;
 import base.IO.ExportGradesBooklet;
 import base.model.Course;
 import base.model.Enrollment;
@@ -33,11 +34,16 @@ public class GradeController {
 	}
 	
 	public static void exportGradesBooklet(Connection connection, int studentId, int year) throws SQLException {
-		List<Map<String, Object>> gradesMap = GradeDAO.findByStudentIdAndYear(connection, studentId, year);
-		try {
-			ExportGradesBooklet.generate(gradesMap, year);
-		} catch (IOException e) {
-			PrintUtil.printExceptionMessage("Error al exportar el boletin", e.getMessage());
+		Student student = StudentDAO.findById(connection, studentId);
+		if(student != null) {
+			List<Map<String, Object>> gradesMap = GradeDAO.findByStudentIdAndYear(connection, studentId, year);
+			try {
+				ExportGradesBooklet.generate(gradesMap, year);
+			} catch (IOException e) {
+				PrintUtil.printExceptionMessage("Error al exportar el boletin", e.getMessage());
+			}
+		} else {
+			System.err.println("Alumno no encontrado");
 		}
 	}
 	
