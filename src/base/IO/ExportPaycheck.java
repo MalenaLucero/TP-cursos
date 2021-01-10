@@ -32,6 +32,7 @@ public class ExportPaycheck {
 			appendLine(writer, generateSubjectRow(subjects[i]));
 			totalPay += SUBJECT_PAY;
 		}
+		
 		double[] totalDeduction = new double[1];
 		appendLine(writer, generateDeductionRow("Jubilación", 11, totalPay, totalDeduction));
 		appendLine(writer, generateDeductionRow("Ley 19.032 INSSJP", 3, totalPay, totalDeduction));

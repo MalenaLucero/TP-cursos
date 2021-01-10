@@ -18,7 +18,6 @@ public class ExportGradesBooklet {
 		Student student = (Student)gradesList.get(0).get("student");
 		String fileName = "boletin" + student.getNameAndLastnameNoSpace() + DateUtil.getTimestamp() + ".txt";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-		
 		appendLine(writer, "BOLETIN DE CALIFICACIONES");
 		writer.newLine();
 		appendLine(writer, "Alumno: " + student.getFullName());
