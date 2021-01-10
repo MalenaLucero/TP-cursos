@@ -34,7 +34,7 @@ public class Enrollment {
 	}
 	
 	public Enrollment(int idCourse, int idStudent, String enrollmentState, int idTeacher,
-			String division, int grade1, int grade2, int averageGrade, String courseState, int year) {
+			String division, int grade1, int grade2, String courseState, int year) {
 		this.idCourse = idCourse;
 		this.idStudent = idStudent;
 		this.enrollmentState = EnrollmentState.valueOf(enrollmentState);
@@ -42,7 +42,7 @@ public class Enrollment {
 		this.division = Division.valueOf(division);
 		this.grade1 = grade1;
 		this.grade2 = grade2;
-		this.averageGrade = averageGrade;
+		this.averageGrade = calculateAverageGrade();
 		this.courseState = CourseState.valueOf(courseState);
 		this.year = year;
 	}

@@ -23,6 +23,7 @@ public class EnrollmentMenu {
 		System.out.println("6. Eliminar inscripcion");
 		System.out.println("7. Listar alumnos por curso");
 		System.out.println("8. Listar alumnos por curso y comision");
+		System.out.println("9. Importar inscripcion");
 		System.out.println("0. Volver al menu principal");
 		return InputUtil.inputIntMenuOption(sc);
 	}
@@ -61,6 +62,9 @@ public class EnrollmentMenu {
 			int idCourse = InputUtil.inputInt(sc, "Ingrese ID del curso:");
 			String division = InputUtil.inputSingleWord(sc, "Ingrese la comision");
 			EnrollmentController.findStudentsByCourseIdAndDivision(connection, idCourse, division);
+			break;
+		case 9:
+			EnrollmentController.insertImport(connection);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();

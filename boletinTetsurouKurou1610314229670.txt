@@ -1,0 +1,14 @@
+BOLETIN DE CALIFICACIONES
+
+Alumno: Tetsurou Kurou (黒尾鉄朗)
+Ciclo lectivo: 2020
+
+                | mongo db | react | piano 1 | coreano 1 | japones 1
+1° Cuatrimestre |    8     |   8   |    8    |     9     |     5    
+2° Cuatrimestre |    8     |   5   |    5    |     8     |     7    
+Nota final      |    8     |   6   |    6    |     8     |     6    
+
+Promedio general: 6.8
+
+
+Fecha de generacion: 10-1-2021

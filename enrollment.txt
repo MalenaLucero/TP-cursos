@@ -1,0 +1,9 @@
+idCourse: 11
+idStudent: 1
+enrollmentState: activo
+idTeacher: 3
+division: A
+grade1: 0
+grade2: 0
+courseState: cursando
+year: 2021

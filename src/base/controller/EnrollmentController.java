@@ -1,12 +1,15 @@
 package base.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import base.DAO.EnrollmentDAO;
+import base.IO.ImportEnrollment;
 import base.model.Enrollment;
 import base.model.Student;
+import base.util.PrintUtil;
 import base.util.ResponseUtil;
 
 public class EnrollmentController{
@@ -30,8 +33,12 @@ public class EnrollmentController{
 	
 	public static void insert(Connection connection, Enrollment enrollment) throws SQLException {
 		System.out.println("Agregar inscripcion");
-		int res = EnrollmentDAO.insert(enrollment, connection);
-		ResponseUtil.addMessage(res);
+		if (EnrollmentDAO.findByCourseAndStudent(connection, enrollment.getIdCourse(), enrollment.getIdStudent()) != null) {
+			System.err.println("El alumno ya esta inscripto");
+		} else {
+			int res = EnrollmentDAO.insert(enrollment, connection);
+			ResponseUtil.addMessage(res);
+		}
 	}
 
 	public static void update(Connection connection, Enrollment enrollment) throws SQLException {
@@ -56,6 +63,15 @@ public class EnrollmentController{
 		System.out.println("Alumnos del curso con ID " + id_course + " comision " + division);
 		List<Student> students = EnrollmentDAO.getStudentsByCourseAndDivision(connection, id_course, division);
 		printStudents(students);
+	}
+	
+	public static void insertImport(Connection connection) throws SQLException {
+		try {
+			Enrollment enrollment = ImportEnrollment.importData();
+			insert(connection, enrollment);
+		} catch (IOException e) {
+			PrintUtil.printExceptionMessage("Error al importar inscripcion", e.getMessage());
+		}
 	}
 	
 	private static void printEnrollment(Enrollment enrollment) {
@@ -84,5 +100,5 @@ public class EnrollmentController{
 				System.out.println(student);
 			}
 		}
-	}
+	} 
 }

@@ -1,0 +1,21 @@
+RECIBO DE SUELDO
+
+Nombre: Yoongi Min (민윤기 - 閔允基)
+Categoria: docente
+Periodo de pago: Enero 2021
+
+CONCEPTO                 SUJETO A RETENCION       EXENTO                   DESCUENTOS               
+flauta dulce             5700                     
+piano 1                  5700                     
+piano 2                  5700                     
+piano 3                  5700                     
+piano 4                  5700                     
+piano 5                  5700                     
+piano 6                  5700                     
+Jubilación                                                                 4389.0                   
+Ley 19.032 INSSJP                                                          1197.0                   
+Obra social                                                                1197.0                   
+
+Total bruto: 39900
+Total de descuentos: 6783.0
+Total neto: 33117.0
