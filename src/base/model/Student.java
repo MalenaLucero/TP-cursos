@@ -62,6 +62,10 @@ public class Student {
 		this.alternativeName = alternativeName;
 	}
 	
+	public String getNameAndLastnameNoSpace() {
+		return String.format("%s%s", name, lastname);
+	}
+	
 	public String getFullName() {
 		if(alternativeName != null) {
 			return String.format("%s %s (%s)", name, lastname, alternativeName);

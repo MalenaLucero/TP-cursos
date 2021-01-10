@@ -33,4 +33,12 @@ public class DateUtil {
 	public static int getCurrentYear() {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
+	
+	public static String getCurrentDateString() {
+		return String.format("%s-%s-%s", getCurrentDay(), getCurrentMonth(), getCurrentYear());
+	}
+	
+	public static long getTimestamp() {
+		return new Date().getTime();
+	}
 }

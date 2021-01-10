@@ -45,11 +45,9 @@ public class GradeMenu {
 			GradeController.findBestAverageByCourseId(connection, courseId);
 			break;
 		case 6: 
-			//int studentId = InputUtil.inputInt(sc, "Ingrese ID del alumno");
-			//int year = InputUtil.inputInt(sc, "Ingrese el año de cursada");
-			int studentId = 1;
-			int year = 2020;
-			GradeController.generateGradesBooklet(connection, studentId, year);
+			int studentId = InputUtil.inputInt(sc, "Ingrese ID del alumno");
+			int year = InputUtil.inputInt(sc, "Ingrese el año de cursada");
+			GradeController.exportGradesBooklet(connection, studentId, year);
 			break;
 		default:
 			PrintUtil.invalidOptionMessage();
